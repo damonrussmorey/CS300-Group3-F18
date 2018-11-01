@@ -1,2 +1,3 @@
 #ignored files here
-
+build
+**/*.swp
