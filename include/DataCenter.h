@@ -37,6 +37,18 @@ class Provider {
 		string phoneNumber;
 		address fullAddress;
 		unsigned int totalConsultations;
-		unsigned int totalFee;
+		unsigned double totalFee;
 		//services list
+};
+
+class Service {
+	public:
+		Service();
+		~Service();
+	protected:
+		Provider *provider;
+		Member *member;
+		string serviceCode;
+		unsigned double fee;
+		//find good ways to put in dates	
 };
