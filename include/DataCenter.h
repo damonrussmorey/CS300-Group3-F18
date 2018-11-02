@@ -9,6 +9,7 @@ Includes:
 
 #include "defs.h"
 #include <string>
+#include <vector>
 
 struct address{
 	string streetAddress;
@@ -25,7 +26,7 @@ class Member {
 		string name;
 		string phoneNumber;
 		address fullAddress;
-		//services list
+		vector<Service> servicesList;
 };
 
 class Provider {
@@ -38,7 +39,7 @@ class Provider {
 		address fullAddress;
 		unsigned int totalConsultations;
 		unsigned double totalFee;
-		//services list
+		vector<Service> servicesList;
 };
 
 class Service {
