@@ -1,6 +1,6 @@
 // Name of file: lastName_firstName_MMDDYYYY.txt
-Member name: $(providerName)
-Member number: $(providerNum)
+Member name: $(memberName)
+Member number: $(memberNum)
 $(Member street address)
 $(Member city), $(state), $(zip)
 
