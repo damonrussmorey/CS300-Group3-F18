@@ -1,1 +1,16 @@
-#stub
+// Name of file: lastName_firstName_MMDDYYYY.txt
+Member name: $(providerName)
+Member number: $(providerNum)
+$(Member street address)
+$(Member city), $(state), $(zip)
+
+Received $(amtServicesReceived) services:
+Service 1:
+$(Date of Service MM-DD-YYYY)
+$(Provider Name)
+$(Service Name)
+
+Service $(n):
+$(Date of Service MM-DD-YYYY)
+$(Provider Name)
+$(Service Name)
