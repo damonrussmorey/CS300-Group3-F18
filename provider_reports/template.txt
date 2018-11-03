@@ -1,1 +1,25 @@
-#stub
+// Name of file: lastName_firstName_MMDDYYYY.txt
+Provider name: $(providerName)
+Provider number: $(providerNum)
+$(Provider street address)
+$(Provider city), $(state), $(zip)
+
+Provided $(amtServicesProvided) services:
+Service 1:
+$(Date of Service MM-DD-YYYY)
+$(Date and time data was received by computer MM-DD-YYYY HH:MM:SS)
+$(Member Name)
+$(Member Number)
+$(Service Code)
+$(Fee to be Paid)
+
+Service $(n):
+$(Date of Service MM-DD-YYYY)
+$(Date and time data was received by computer MM-DD-YYYY HH:MM:SS)
+$(Member Name)
+$(Member Number)
+$(Service Code)
+$(Fee to be Paid)
+
+Consultations for the week: $(amtServicesProvided)
+Total fee for the week: $(Sum of the fees to be paid)
