@@ -4,3 +4,7 @@ DataCenter.cpp
 */
 
 #include "DataCenter.h"
+
+void Member::addService(Service * service) {
+	servicesList.push_back(service);
+}

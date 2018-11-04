@@ -8,48 +8,51 @@ Includes:
 */
 
 #include "defs.h"
-#include <string>
-#include <vector>
-
-struct address{
-	string streetAddress;
-	string city;
-	string state;
-	string zip;
-};
 
 class Member {
 	public:
 		Member();
 		~Member();
+		void addService(Service * service);
 	protected:
 		string name;
 		string phoneNumber;
 		address fullAddress;
-		vector<Service> servicesList;
+		vector<Service*> servicesList;
+		// This is a pointer because the services should come from a services list
+		// If a service is updated, it'll be updated here, too
 };
 
-class Provider {
+class Provider : public Member{
 	public:
 		Provider();
 		~Provider();
 	protected:
-		string name;
-		string phoneNumber;
-		address fullAddress;
 		unsigned int totalConsultations;
-		unsigned double totalFee;
-		vector<Service> servicesList;
+		double totalFee;
 };
 
 class Service {
 	public:
 		Service();
 		~Service();
+		// Although there are indeed a pair of pointers in here,
+		// we need them to be shallow copied if they're copied
+		// (as they point to pre-existing members and providers)
+		// and thus no copy constructor is provided
 	protected:
 		Provider *provider;
 		Member *member;
 		string serviceCode;
-		unsigned double fee;
+		double fee;
 		//find good ways to put in dates	
 };
+
+class DataCenter {
+	public:
+		DataCenter();
+		~DataCenter();
+	protected:
+
+};
+
