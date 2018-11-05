@@ -53,6 +53,8 @@ class DataCenter {
 		DataCenter();
 		~DataCenter();
 	protected:
-
+		// memberSet
+		// providerSet
+		// servicesSet
 };
 
