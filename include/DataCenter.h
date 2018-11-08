@@ -13,7 +13,7 @@ class Member {
 	public:
 		Member();
 		~Member();
-		void addService(Service * service);
+		virtual void addService(Service * service);
 	protected:
 		string name;
 		string phoneNumber;
@@ -27,6 +27,7 @@ class Provider : public Member{
 	public:
 		Provider();
 		~Provider();
+		void addService(Service * service);
 	protected:
 		unsigned int totalConsultations;
 		double totalFee;
@@ -40,6 +41,7 @@ class Service {
 		// we need them to be shallow copied if they're copied
 		// (as they point to pre-existing members and providers)
 		// and thus no copy constructor is provided
+		double getFee();
 	protected:
 		Provider *provider;
 		Member *member;
