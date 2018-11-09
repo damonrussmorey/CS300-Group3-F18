@@ -6,6 +6,10 @@ DataCenterTest.cpp
 #include "DataCenter.h"
 #include <iostream>
 
+/* Design considerations for tests:
+ * 	Currently on a failure it returns false. Is this good?
+ * 	If not what should we use to signal a failed test?
+ */
 bool addServiceTest() {
 	try {
 		Service dummyService;
@@ -17,5 +21,7 @@ bool addServiceTest() {
 	catch (...) {
 		// pass/fail conditions here
 		cout << "addService test failed, reason unknown." << endl;
+		return false;
 	}
+	return true;
 }
