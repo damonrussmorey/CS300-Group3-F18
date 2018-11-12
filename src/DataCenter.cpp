@@ -5,10 +5,16 @@ DataCenter.cpp
 
 #include "DataCenter.h"
 
+// Member
 void Member::addService(Service * service) {
 	servicesList.push_back(service);
 }
 
+bool Member::operator<(const Member & member) const {
+	return (member.name > name ? true : false);
+}
+
+// Provider
 void Provider::addService(Service * service) {
 	// Went with the running total thing, seemed simpler. 
 	// Didn't call parent function cause no reason to go adding more overhead.
@@ -17,14 +23,11 @@ void Provider::addService(Service * service) {
 	totalFee += service->getFee();
 }
 
-bool Member::operator<(const Member & member) const {
-	return (member.name > name ? true : false);
-}
-
 bool Provider::operator<(const Provider & provider) const {
 	return (provider.name > name ? true : false);
 }
 
+// Service
 double Service::getFee() {
 	return fee;
 }
@@ -33,6 +36,7 @@ bool Service::operator<(const Service & service) const {
 	return (service.serviceCode > serviceCode ? true : false);
 }
 
+// Data Center
 void DataCenter::addService(const Service & service) {
 	servicesSet.insert(service);
 }
