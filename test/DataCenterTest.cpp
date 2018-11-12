@@ -25,3 +25,16 @@ bool addServiceTest() {
 	}
 	return true;
 }
+
+bool providerAddServiceTest() {
+	try {
+		Service dummyService;
+		Provider dummyProvider;
+		dummyProvider.addService(&dummyService);
+	}
+	catch (...) {
+		cout << "addService test failed, reason unknown." << endl;
+		return false;
+	}
+	return true;
+}

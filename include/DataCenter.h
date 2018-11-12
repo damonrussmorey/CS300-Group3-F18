@@ -9,11 +9,14 @@ Includes:
 
 #include "defs.h"
 
+//TODO: Write copy constructors if needed
+
 class Member {
 	public:
 		Member();
 		~Member();
 		virtual void addService(Service * service);
+		bool operator<(const Member & member) const;
 	protected:
 		string name;
 		string phoneNumber;
@@ -28,6 +31,7 @@ class Provider : public Member{
 		Provider();
 		~Provider();
 		void addService(Service * service);
+		bool operator<(const Provider & Provider) const;
 	protected:
 		unsigned int totalConsultations;
 		double totalFee;
@@ -42,6 +46,7 @@ class Service {
 		// (as they point to pre-existing members and providers)
 		// and thus no copy constructor is provided
 		double getFee();
+		bool operator<(const Service & service) const;
 	protected:
 		Provider *provider;
 		Member *member;
@@ -54,6 +59,9 @@ class DataCenter {
 	public:
 		DataCenter();
 		~DataCenter();
+		void addService(const Service & service);
+		void addProvider(const Provider & provider);
+		void addMemeber(const Member & member);
 	protected:
 		set<Service> servicesSet;
 		set<Member> membersSet;

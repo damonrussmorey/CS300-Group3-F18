@@ -17,8 +17,28 @@ void Provider::addService(Service * service) {
 	totalFee += service->getFee();
 }
 
+bool Member::operator<(const Member & member) const {
+	return (member.name > name ? true : false);
+}
+
+bool Provider::operator<(const Provider & provider) const {
+	return (provider.name > name ? true : false);
+}
+
 double Service::getFee() {
 	return fee;
+}
+
+bool Service::operator<(const Service & service) const {
+	return (service.serviceCode > serviceCode ? true : false);
+}
+
+void DataCenter::addService(const Service & service) {
+	servicesSet.insert(service);
+}
+
+void DataCenter::addProvider(const Provider & provider) {
+	providerSet.insert(provider);
 }
 
 // Dummy main
