@@ -15,23 +15,23 @@ class Member {
 	public:
 		Member();
 		~Member();
-		virtual void addService(Service * service);
+		virtual void addService(Service service);
 		bool operator<(const Member & member) const;
+		virtual void clearServices();
 	protected:
 		string name;
 		string phoneNumber;
 		address fullAddress;
-		vector<Service*> servicesList;
-		// This is a pointer because the services should come from a services list
-		// If a service is updated, it'll be updated here, too
+		vector<Service> servicesList;
 };
 
 class Provider : public Member{
 	public:
 		Provider();
 		~Provider();
-		void addService(Service * service);
+		void addService(Service service);
 		bool operator<(const Provider & Provider) const;
+		void clearServices();
 	protected:
 		unsigned int totalConsultations;
 		double totalFee;
@@ -41,13 +41,13 @@ class Service {
 	public:
 		Service();
 		~Service();
+		double getFee();
+		bool operator<(const Service & service) const;
+	protected:
 		// Although there are indeed a pair of pointers in here,
 		// we need them to be shallow copied if they're copied
 		// (as they point to pre-existing members and providers)
 		// and thus no copy constructor is provided
-		double getFee();
-		bool operator<(const Service & service) const;
-	protected:
 		Provider *provider;
 		Member *member;
 		string serviceCode;

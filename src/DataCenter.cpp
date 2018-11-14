@@ -6,7 +6,7 @@ DataCenter.cpp
 #include "DataCenter.h"
 
 // Member
-void Member::addService(Service * service) {
+void Member::addService(Service service) {
 	servicesList.push_back(service);
 }
 
@@ -14,20 +14,33 @@ bool Member::operator<(const Member & member) const {
 	return (member.name > name ? true : false);
 }
 
+void Member::clearServices() {
+	servicesList.clear();
+}
+
 // Provider
-void Provider::addService(Service * service) {
+void Provider::addService(Service service) {
 	// Went with the running total thing, seemed simpler. 
 	// Didn't call parent function cause no reason to go adding more overhead.
 	servicesList.push_back(service);
 	++totalConsultations;
-	totalFee += service->getFee();
+	totalFee += service.getFee();
 }
 
 bool Provider::operator<(const Provider & provider) const {
 	return (provider.name > name ? true : false);
 }
 
+void Provider::clearServices() {
+	servicesList.clear();
+	totalConsultations = 0;
+	totalFee = 0;
+}
+
 // Service
+
+Service::~Service() {}
+
 double Service::getFee() {
 	return fee;
 }
