@@ -14,7 +14,7 @@ bool addServiceTest() {
 	try {
 		Service dummyService;
 		Member dummyMember;
-		dummyMember.addService(&dummyService);
+		dummyMember.addService(dummyService);
 		// probably do real testing here this is just a skeleton
 		// is this an integration test or a unit test? Several classes involved.
 	}
@@ -30,7 +30,7 @@ bool providerAddServiceTest() {
 	try {
 		Service dummyService;
 		Provider dummyProvider;
-		dummyProvider.addService(&dummyService);
+		dummyProvider.addService(dummyService);
 	}
 	catch (...) {
 		cout << "addService test failed, reason unknown." << endl;

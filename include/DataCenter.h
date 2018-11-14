@@ -15,7 +15,7 @@ class Member {
 	public:
 		Member();
 		~Member();
-		virtual void addService(Service service);
+		virtual void addService(Service & service);
 		bool operator<(const Member & member) const;
 		virtual void clearServices();
 	protected:
@@ -29,7 +29,7 @@ class Provider : public Member{
 	public:
 		Provider();
 		~Provider();
-		void addService(Service service);
+		void addService(Service & service);
 		bool operator<(const Provider & Provider) const;
 		void clearServices();
 	protected:
