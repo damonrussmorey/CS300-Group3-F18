@@ -4,3 +4,4 @@ ManagerTerminal.cpp
 */
 
 #include "ManagerTerminal.h"
+
