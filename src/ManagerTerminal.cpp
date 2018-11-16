@@ -218,3 +218,9 @@ void ManagerTerminal::requestReport(void) {
   //TODO
 }
 
+string ManagerTerminal::getString(string prompt) {
+	cout << prompt << endl;
+	string response;
+	getline(cin, response);
+	return response;
+}
