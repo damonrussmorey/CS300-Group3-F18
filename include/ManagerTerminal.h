@@ -3,19 +3,18 @@ Damon Morey, Philip Prater, Samuel Shippey, Son Vu, Yves Wienecke 2018©
 ManagerTerminal.h
 */
 
-#include "defs.h"
+#include "DataCenter.h"
 
-Class ManagerTerminal {
+class ManagerTerminal {
   public:
     //create manager terminal/with reference to data center
-    ManagerTerminal(DataCenter &);
+    ManagerTerminal(DataCenter *);
 
     //main interface of manager terminal
     void run(void);
 
     //force exit manager terminal from outside
     void quit(void);
-
 
   private:
     //reference to main data center object
@@ -40,4 +39,4 @@ Class ManagerTerminal {
     //helper readers
     int getOption(std::string prompt, int lower, int upper);
     std::string getString(std::string prompt);
-}
+};

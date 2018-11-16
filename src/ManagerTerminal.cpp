@@ -3,13 +3,12 @@ Damon Morey, Philip Prater, Samuel Shippey, Son Vu, Yves Wienecke 2018©
 ManagerTerminal.cpp
 */
 
+#include <iostream>
 #include "ManagerTerminal.h"
 
-using namespace std;
-
-ManagerTerminal::ManagerTermina(DataCenter &dc) {
-  this.dc = dc;
-  this.running = false;
+ManagerTerminal::ManagerTerminal(DataCenter * dc) {
+  this->dc = dc;
+  this->running = false;
 }
 
 void ManagerTerminal::quit() {
