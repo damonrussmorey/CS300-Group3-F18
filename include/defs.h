@@ -13,7 +13,7 @@ Definitions for common structures and libraries for the entire project
 
 using namespace std;
 
-struct address{
+struct address {
 	string streetAddress;
 	string city;
 	string state;

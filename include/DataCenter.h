@@ -14,6 +14,7 @@ Includes:
 class Member {
 	public:
 		Member();
+		Member(string, string, address &);
 		~Member();
 		virtual void addService(Service & service);
 		bool operator<(const Member & member) const;
@@ -40,6 +41,7 @@ class Provider : public Member{
 class Service {
 	public:
 		Service();
+		//Service(Provider*, Member*, string, double);
 		~Service();
 		double getFee();
 		bool operator<(const Service & service) const;
@@ -61,7 +63,15 @@ class DataCenter {
 		~DataCenter();
 		void addService(const Service & service);
 		void addProvider(const Provider & provider);
-		void addMemeber(const Member & member);
+		void addMember(const Member & member);
+		// TODO: unimplemented
+		bool hasService(string);
+		void removeService(string);
+		bool modifyService(string);
+		bool hasMember(string);
+		void removeMember(string);
+		bool hasProvider(string);
+		void removeProvider(string);
 	protected:
 		set<Service> servicesSet;
 		set<Member> membersSet;

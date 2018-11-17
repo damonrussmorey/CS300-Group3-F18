@@ -58,6 +58,10 @@ void DataCenter::addProvider(const Provider & provider) {
 	providerSet.insert(provider);
 }
 
+void DataCenter::addMember(const Member & member) {
+	membersSet.insert(member);
+}
+
 // Dummy main
 // Should ideally be moved elsewhere I think
 // - Sam
