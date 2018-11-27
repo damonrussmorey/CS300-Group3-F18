@@ -18,6 +18,7 @@ class Member {
 		~Member();
 		virtual void addService(Service & service);
 		bool operator<(const Member & member) const;
+		bool operator==(const Member & member) const;
 		virtual void clearServices();
 	protected:
 		string name;
@@ -32,6 +33,7 @@ class Provider : public Member{
 		~Provider();
 		void addService(Service & service);
 		bool operator<(const Provider & Provider) const;
+		bool operator==(const Provider & Provider) const;
 		void clearServices();
 	protected:
 		unsigned int totalConsultations;
@@ -41,10 +43,11 @@ class Provider : public Member{
 class Service {
 	public:
 		Service();
-		//Service(Provider*, Member*, string, double);
+		Service(Provider*, Member*, string, double);
 		~Service();
 		double getFee();
 		bool operator<(const Service & service) const;
+		bool operator==(const Service & service) const;
 	protected:
 		// Although there are indeed a pair of pointers in here,
 		// we need them to be shallow copied if they're copied
@@ -64,13 +67,14 @@ class DataCenter {
 		void addService(const Service & service);
 		void addProvider(const Provider & provider);
 		void addMember(const Member & member);
-		// TODO: unimplemented
+		// TODO: untested
 		bool hasService(string);
+		// TODO: unimplemented
+		bool hasMember(string);
+		bool hasProvider(string);
 		void removeService(string);
 		bool modifyService(string);
-		bool hasMember(string);
 		void removeMember(string);
-		bool hasProvider(string);
 		void removeProvider(string);
 	protected:
 		set<Service> servicesSet;

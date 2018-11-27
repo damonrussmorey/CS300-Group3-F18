@@ -6,12 +6,27 @@ DataCenter.cpp
 #include "DataCenter.h"
 
 // Member
+Member::Member(string n, string number, address & ad) {
+	name = n;
+	phoneNumber = number;
+	fullAddress.streetAddress = ad.streetAddress;
+	fullAddress.city = ad.city;
+	fullAddress.state = ad.state;
+	fullAddress.zip = ad.zip;
+}
+
+Member::~Member(){}
+
 void Member::addService(Service & service) {
 	servicesList.push_back(service);
 }
 
 bool Member::operator<(const Member & member) const {
 	return (member.name > name ? true : false);
+}
+
+bool Member::operator==(const Member & member) const {
+	return member.name == name;
 }
 
 void Member::clearServices() {
@@ -31,6 +46,10 @@ bool Provider::operator<(const Provider & provider) const {
 	return (provider.name > name ? true : false);
 }
 
+bool Provider::operator==(const Provider & provider) const {
+	return provider.name == name;
+}
+
 void Provider::clearServices() {
 	servicesList.clear();
 	totalConsultations = 0;
@@ -38,6 +57,12 @@ void Provider::clearServices() {
 }
 
 // Service
+Service::Service(Provider *p, Member *m, string code, double f) {
+	provider = p;
+	member = m;
+	serviceCode = code;
+	fee = f;
+}
 
 Service::~Service() {}
 
@@ -47,6 +72,10 @@ double Service::getFee() {
 
 bool Service::operator<(const Service & service) const {
 	return (service.serviceCode > serviceCode ? true : false);
+}
+
+bool Service::operator==(const Service & service) const {
+	return service.serviceCode == serviceCode;
 }
 
 // Data Center
@@ -60,6 +89,17 @@ void DataCenter::addProvider(const Provider & provider) {
 
 void DataCenter::addMember(const Member & member) {
 	membersSet.insert(member);
+}
+
+bool DataCenter::hasService(string serviceCode) {
+	Service searchService(NULL, NULL, serviceCode, 0);
+	return servicesSet.find(searchService) != servicesSet.end();
+}
+
+bool DataCenter::hasMember(string name) {
+	address dummyAddress;
+	Member searchMember(name, "dummy", dummyAddress);
+	return membersSet.find(searchMember) != membersSet.end();
 }
 
 // Dummy main
