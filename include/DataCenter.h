@@ -30,7 +30,7 @@ class Member {
 class Provider : public Member{
 	public:
 		Provider();
-    Provider(string, string, address &);
+		Provider(string n, string number, address & ad, int total, double f);
 		~Provider();
 		void addService(Service & service);
 		bool operator<(const Provider & Provider) const;
@@ -70,7 +70,6 @@ class DataCenter {
 		void addMember(const Member & member);
 		// TODO: untested
 		bool hasService(string);
-		// TODO: unimplemented
 		bool hasMember(string);
 		bool hasProvider(string);
 		void removeService(string);

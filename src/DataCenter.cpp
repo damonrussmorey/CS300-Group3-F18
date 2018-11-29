@@ -18,6 +18,7 @@ Member::Member(string n, string number, address & ad) {
 	fullAddress.zip = ad.zip;
 }
 
+Member::Member(){}
 Member::~Member(){}
 
 void Member::addService(Service & service) {
@@ -37,8 +38,16 @@ void Member::clearServices() {
 }
 
 // Provider
-Provider::Provider(string n, string number, address & ad)
-  : Member(n, number, ad) {}
+Provider::Provider(string n, string number, address & ad, int total, double f) {
+	name = n;
+	phoneNumber = number;
+	fullAddress.streetAddress = ad.streetAddress;
+	fullAddress.city = ad.city;
+	fullAddress.state = ad.state;
+	fullAddress.zip = ad.zip;
+	totalConsultations = total;
+	totalFee = f;
+}
 
 Provider::~Provider(){}
 
@@ -106,7 +115,7 @@ void DataCenter::removeService(string serviceCode) {
 
 void DataCenter::removeProvider(string providerName) {
 	providerSet.erase(providerSet.find(
-        Provider(providerName, NULL, nullAdr)));
+        Provider(providerName, NULL, nullAdr, 0, 0)));
 }
 
 void DataCenter::removeMember(string memberName) {
@@ -126,7 +135,7 @@ bool DataCenter::hasMember(string memberName) {
 
 bool DataCenter::hasProvider(string providerName) {
   return providerSet.find(
-      Provider(providerName, NULL, nullAdr)) != providerSet.end();
+      Provider(providerName, NULL, nullAdr, 0, 0)) != providerSet.end();
 }
 
 // Dummy main
