@@ -5,10 +5,13 @@ INC=-I include
 
 SOURCES=$(shell find src -type f -name *.cpp)
 
-all: bin/Test
+all: DIRECTORIES bin/Demo
+
+DIRECTORIES:
+	mkdir -p build bin manager_reports member_reports provider_reports
 
 clean:
-	rm -f build/* bin/*
+	rm -rf build bin manager_reports member_reports provider_reports
 
 bin/ProviderTerminal: build/ProviderTerminal.o build/DataCenter.o build/Reporter.o
 	$(CC) $(LIB) -o bin/ProviderTerminal build/ProviderTerminal.o build/DataCenter.o build/Reporter.o
@@ -19,9 +22,8 @@ bin/ManagerTerminal: build/ManagerTerminal.o build/DataCenter.o build/Reporter.o
 bin/UnitTests: build/*Test.o
 	$(CC) $(LIB) -o bin/UnitTests build/*Test.o
 
-bin/Test: build/DataCenter.o build/ProviderTerminal.o build/ManagerTerminal.o build/Test.o build/Reporter.o
-	$(CC) $(LIB) -o bin/Test build/DataCenter.o  build/ProviderTerminal.o build/ManagerTerminal.o build/Test.o build/Reporter.o
+bin/Demo: build/DataCenter.o build/ProviderTerminal.o build/ManagerTerminal.o build/Demo.o build/Reporter.o
+	$(CC) $(LIB) -o bin/Demo build/DataCenter.o  build/ProviderTerminal.o build/ManagerTerminal.o build/Demo.o build/Reporter.o
 
 build/%.o: src/%.cpp
-	@mkdir -p build
 	$(CC) $(FLAGS) $(INC) -c -o $@ $<

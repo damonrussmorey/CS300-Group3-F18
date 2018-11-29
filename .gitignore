@@ -1,4 +1,5 @@
 #ignored files here
-build
+build/
 **/*.swp
-*_reports
+bin/
+/*_reports/

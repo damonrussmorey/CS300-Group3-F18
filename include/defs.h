@@ -6,7 +6,6 @@ Definitions for common structures and libraries for the entire project
 */
 
 //Standard Library Includes
-
 #include <string>
 #include <vector>
 #include <set>
@@ -15,11 +14,17 @@ Definitions for common structures and libraries for the entire project
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 #define MEMBERSHIP_FEE 45.99
 #define BASE_CONSULTATION_FEE 120.00
 
 using namespace std;
+
+//helper readers
+int getOption(string prompt, int lower, int upper);
+string getString(string prompt);
+void clear();
 
 struct address {
   address();

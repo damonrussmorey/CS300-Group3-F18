@@ -4,15 +4,8 @@ ManagerTerminal.h
 */
 
 #include "DataCenter.h"
-#include <iostream>
-#include <iomanip>
-#include <cstring>
 
-//helper readers
-int getOption(string prompt, int lower, int upper);
-string getString(string prompt);
 void clear();
-
 
 class ManagerTerminal {
   public:
