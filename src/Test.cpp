@@ -1,4 +1,8 @@
+
 #include "ProviderTerminal.h"
+
+
+#define MAIN_MENU_OPTIONS 5
 
 int main(){
     DataCenter dataCenter;
@@ -14,7 +18,8 @@ int main(){
                         "1) Enter Provider Terminal\n"
                         "2) Enter Manager Terminal\n"
                         "3) Run Weekly Reports\n"
-                        "4) Exit Simulator", 1, MAIN_MENU_OPTIONS);
+                        "4) Start new week\n"
+                        "5) Exit Simulator", 1, MAIN_MENU_OPTIONS);
         clear();
         switch(opt) {
             case 1:
@@ -26,8 +31,11 @@ int main(){
                 break;
 
             case 3:
-                // dataCenter.run();
+                dataCenter.allReports();
                 break;
+
+            case 4:
+                dataCenter.newWeek();
         }
 
     } while (opt != MAIN_MENU_OPTIONS);

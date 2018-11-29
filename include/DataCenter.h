@@ -16,58 +16,64 @@ class Member {
 		Member();
 		Member(string, string, address &);
 		~Member();
-		virtual void addService(Service & service);
+		void consultation(Service & service);
 		bool operator<(const Member & member) const;
 		bool operator==(const Member & member) const;
-		virtual void clearServices();
-	protected:
+	  void clear();
 		string name;
 		string phoneNumber;
 		address fullAddress;
-		vector<Service> servicesList;
+		vector<Service> weeklyConsultations;
 };
 
 class Provider : public Member{
 	public:
 		Provider();
-		Provider(string n, string number, address & ad, int total, double f);
+		Provider(string n, string number, address & ad, double f);
 		~Provider();
-		void addService(Service & service);
+		void consultation(Service & service);
 		bool operator<(const Provider & Provider) const;
 		bool operator==(const Provider & Provider) const;
-		void clearServices();
-	protected:
-		unsigned int totalConsultations;
-		double totalFee;
+		void clear();
+		//unsigned int totalConsultations;
+        //don't need, use weeklyConsultation.size()
+    //might consider fixed sized values for money
+    //-Damon
+		double weeklyConsultationFees;
 };
 
 class Service {
 	public:
 		Service();
-		Service(Provider*, Member*, string, double);
+    Service(string,double);
+		Service(const Service &, const Member*, const Provider*);
 		~Service();
-		double getFee();
 		bool operator<(const Service & service) const;
 		bool operator==(const Service & service) const;
-	protected:
 		// Although there are indeed a pair of pointers in here,
 		// we need them to be shallow copied if they're copied
 		// (as they point to pre-existing members and providers)
 		// and thus no copy constructor is provided
-		Provider *provider;
-		Member *member;
+		const Provider *provider;
+		const Member *member;
 		string serviceCode;
 		double fee;
-		//find good ways to put in dates	
+    tm *date;
 };
 
 class DataCenter {
 	public:
 		DataCenter();
 		~DataCenter();
-		void addService(const Service & service);
-		void addProvider(const Provider & provider);
-		void addMember(const Member & member);
+
+    //ProviderTerminal calls this to submit a consultation
+    //Could add more functions to confirm IDs, etc, along the way, but not really necessary
+    bool confirmConsultation(string, string, string);
+
+    //Data management
+		void addService(Service & service);
+		void addProvider(Provider & provider);
+		void addMember(Member & member);
 		// TODO: untested
 		bool hasService(string);
 		bool hasMember(string);
@@ -76,10 +82,27 @@ class DataCenter {
 		bool modifyService(string);
 		void removeMember(string);
 		void removeProvider(string);
+
+    void newWeek();
+
+    //Reports - Reporter.cpp
+    void allReports();
+    void memberReport(string);
+    void providerReport(string);
+    void managerReport();
+    void eftReport();
 	protected:
+    void memberReport(const Member&);
+    void providerReport(const Provider&);
+
 		set<Service> serviceSet;
 		set<Member> memberSet;
 		set<Provider> providerSet;
+
+    double weeklyConsultationFees;
+    int weeklyConsultationCount;
+    int activeMemberCount;
+    //suspendedMemberCount = memberSet.size() - activeMemberCount
 
     address nullAdr;
 };

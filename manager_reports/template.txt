@@ -1,12 +1,31 @@
 // File name: DD_MM_YYYY.txt
-Provider: $(Name of provider to pay)
-Consultations: $(amt consultations provided by this provider)
-Fee: $(total fee for the week)
 
-Provider: $(Name of provider to pay)
-Consultations: $(amt consultations provided by this provider)
-Fee: $(total fee for the week)
+//summary
+[providerCount]
+[totalWeeklyConsultationCount]
+[totalWeeklyConsultationFees]
 
-$(amt providers who provided services) provided services this week.
-Total number consultations: $(Sum amt consultations provided)
-Overall Fee: $(Sum of each provider's total fee for the week)
+[memberCount]
+[activeMemberCount]
+[totalWeeklyMemberFees]
+
+[totalWeeklyNetProfit]
+
+//provider 1
+[providerName]
+[providerPhoneNumber]
+[WeeklyConsultationCount]
+[WeeklyConsultationFees]
+
+//...
+
+//active member 1
+[memberName]
+[memberPhoneNumber]
+[WeeklyConsultationCount]
+
+//...
+
+//suspended member 1
+[memberName]
+[memberPhoneNumber]

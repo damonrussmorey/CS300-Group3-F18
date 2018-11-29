@@ -10,17 +10,17 @@ all: bin/Test
 clean:
 	rm -f build/* bin/*
 
-bin/ProviderTerminal: build/ProviderTerminal.o build/DataCenter.o
-	$(CC) $(LIB) -o bin/ProviderTerminal build/ProviderTerminal.o build/DataCenter.o
+bin/ProviderTerminal: build/ProviderTerminal.o build/DataCenter.o build/Reporter.o
+	$(CC) $(LIB) -o bin/ProviderTerminal build/ProviderTerminal.o build/DataCenter.o build/Reporter.o
 
-bin/ManagerTerminal: build/ManagerTerminal.o build/DataCenter.o
-	$(CC) $(LIB) -o bin/ManagerTerminal build/ManagerTerminal.o build/DataCenter.o
+bin/ManagerTerminal: build/ManagerTerminal.o build/DataCenter.o build/Reporter.o
+	$(CC) $(LIB) -o bin/ManagerTerminal build/ManagerTerminal.o build/DataCenter.o build/Reporter.o
 
 bin/UnitTests: build/*Test.o
 	$(CC) $(LIB) -o bin/UnitTests build/*Test.o
 
-bin/Test: build/DataCenter.o build/ProviderTerminal.o build/ManagerTerminal.o build/Test.o
-	$(CC) $(LIB) -o bin/Test build/DataCenter.o  build/ProviderTerminal.o build/ManagerTerminal.o build/Test.o
+bin/Test: build/DataCenter.o build/ProviderTerminal.o build/ManagerTerminal.o build/Test.o build/Reporter.o
+	$(CC) $(LIB) -o bin/Test build/DataCenter.o  build/ProviderTerminal.o build/ManagerTerminal.o build/Test.o build/Reporter.o
 
 build/%.o: src/%.cpp
 	@mkdir -p build

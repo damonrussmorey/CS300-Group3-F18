@@ -1,1 +1,16 @@
-#stub
+// File name: DD_MM_YYYY.txt
+
+[memberName]
+[memberID]
+[memberPhoneNumber]
+[memberAddress]
+
+[WeeklyConsultationCount]
+[memberStatus]
+
+//service 1
+[serviceCode]
+[serviceDate]
+[providerName]
+
+//...

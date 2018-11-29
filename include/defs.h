@@ -11,6 +11,13 @@ Definitions for common structures and libraries for the entire project
 #include <vector>
 #include <set>
 #include <cassert>
+#include <ctime>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+#define MEMBERSHIP_FEE 45.99
+#define BASE_CONSULTATION_FEE 120.00
 
 using namespace std;
 

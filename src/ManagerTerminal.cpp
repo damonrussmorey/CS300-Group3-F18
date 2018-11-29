@@ -10,10 +10,8 @@ int getOption(string prompt, int lower, int upper) {
   int opt;
   assert(lower <= upper);
 
-
-
   while(true) {
-    cout << prompt << ": ";
+    cout << prompt << "\n: ";
     cout.flush();
     cin >> opt;
     if (cin.fail()) {
@@ -149,7 +147,8 @@ void ManagerTerminal::addMember(void) {
 	adr.city = getString("Enter city");
 	adr.state = getString("Enter state");
 	adr.zip = getString("Enter zip");
-  dc->addMember(Member(name, number, adr));
+  Member m(name, number, adr);
+  dc->addMember(m);
 }
 
 void ManagerTerminal::removeMember(void) {
@@ -186,7 +185,8 @@ void ManagerTerminal::addProvider(void) {
 	adr.city = getString("Enter city");
 	adr.state = getString("Enter state");
 	adr.zip = getString("Enter zip");
-  dc->addProvider(Provider(name, number, adr, 0, 0));
+  Provider p(name, number, adr, 0);
+  dc->addProvider(p);
 }
 
 void ManagerTerminal::removeProvider(void) {
@@ -218,8 +218,8 @@ void ManagerTerminal::addService(void) {
   code = getString("Enter code of service to be added");
   
   cin >> get_money(cost);
-
-  dc->addService(Service(NULL, NULL, code, cost));
+  Service s(code, cost);
+  dc->addService(s);
 }
 
 void ManagerTerminal::removeService(void) {
