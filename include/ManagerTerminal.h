@@ -4,6 +4,9 @@ ManagerTerminal.h
 */
 
 #include "DataCenter.h"
+#include <iostream>
+#include <iomanip>
+#include <cstring>
 
 class ManagerTerminal {
   public:
@@ -13,16 +16,10 @@ class ManagerTerminal {
     //main interface of manager terminal
     void run(void);
 
-    //force exit manager terminal from outside
-    void quit(void);
-
   private:
     //reference to main data center object
     //not allocate with manager terminal, only referenced
     DataCenter *dc;
-
-    //indicate that the manager terminal is running
-    bool running;
 
     //interfacing with data center
     void addMember(void);
@@ -35,8 +32,4 @@ class ManagerTerminal {
     void removeService(void);
     void modifyService(void);
     void requestReport(void);
-
-    //helper readers
-    int getOption(std::string prompt, int lower, int upper);
-    std::string getString(std::string prompt);
 };

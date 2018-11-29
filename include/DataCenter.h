@@ -30,6 +30,7 @@ class Member {
 class Provider : public Member{
 	public:
 		Provider();
+    Provider(string, string, address &);
 		~Provider();
 		void addService(Service & service);
 		bool operator<(const Provider & Provider) const;
@@ -77,7 +78,9 @@ class DataCenter {
 		void removeMember(string);
 		void removeProvider(string);
 	protected:
-		set<Service> servicesSet;
-		set<Member> membersSet;
+		set<Service> serviceSet;
+		set<Member> memberSet;
 		set<Provider> providerSet;
+
+    address nullAdr;
 };

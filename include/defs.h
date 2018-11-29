@@ -10,10 +10,12 @@ Definitions for common structures and libraries for the entire project
 #include <string>
 #include <vector>
 #include <set>
+#include <cassert>
 
 using namespace std;
 
 struct address {
+  address();
 	string streetAddress;
 	string city;
 	string state;
@@ -24,3 +26,5 @@ class Service;
 class Member;
 class Provider;
 class DataCenter;
+class ManagerTerminal;
+class ProviderTerminal;

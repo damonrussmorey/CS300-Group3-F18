@@ -5,6 +5,9 @@ DataCenter.cpp
 
 #include "DataCenter.h"
 
+//Address
+address::address() {}
+
 // Member
 Member::Member(string n, string number, address & ad) {
 	name = n;
@@ -34,6 +37,11 @@ void Member::clearServices() {
 }
 
 // Provider
+Provider::Provider(string n, string number, address & ad)
+  : Member(n, number, ad) {}
+
+Provider::~Provider(){}
+
 void Provider::addService(Service & service) {
 	// Went with the running total thing, seemed simpler. 
 	// Didn't call parent function cause no reason to go adding more overhead.
@@ -80,7 +88,7 @@ bool Service::operator==(const Service & service) const {
 
 // Data Center
 void DataCenter::addService(const Service & service) {
-	servicesSet.insert(service);
+	serviceSet.insert(service);
 }
 
 void DataCenter::addProvider(const Provider & provider) {
@@ -88,18 +96,37 @@ void DataCenter::addProvider(const Provider & provider) {
 }
 
 void DataCenter::addMember(const Member & member) {
-	membersSet.insert(member);
+	memberSet.insert(member);
+}
+
+void DataCenter::removeService(string serviceCode) {
+	serviceSet.erase(serviceSet.find(
+        Service(NULL, NULL, serviceCode, 0)));
+}
+
+void DataCenter::removeProvider(string providerName) {
+	providerSet.erase(providerSet.find(
+        Provider(providerName, NULL, nullAdr)));
+}
+
+void DataCenter::removeMember(string memberName) {
+	memberSet.erase(memberSet.find(
+        Member(memberName, NULL, nullAdr)));
 }
 
 bool DataCenter::hasService(string serviceCode) {
-	Service searchService(NULL, NULL, serviceCode, 0);
-	return servicesSet.find(searchService) != servicesSet.end();
+	return serviceSet.find(
+      Service(NULL, NULL, serviceCode, 0)) != serviceSet.end();
 }
 
-bool DataCenter::hasMember(string name) {
-	address dummyAddress;
-	Member searchMember(name, "dummy", dummyAddress);
-	return membersSet.find(searchMember) != membersSet.end();
+bool DataCenter::hasMember(string memberName) {
+	return memberSet.find(
+      Member(memberName, NULL, nullAdr)) != memberSet.end();
+}
+
+bool DataCenter::hasProvider(string providerName) {
+  return providerSet.find(
+      Provider(providerName, NULL, nullAdr)) != providerSet.end();
 }
 
 // Dummy main
