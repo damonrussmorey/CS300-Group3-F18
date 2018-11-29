@@ -4,3 +4,12 @@ ProviderTerminal.cpp
 */
 
 #include "ProviderTerminal.h"
+    
+ProviderTerminal::ProviderTerminal(DataCenter * dc) {
+    this->dc = dc;
+}
+
+void ProviderTerminal::run(void) {
+
+}
+

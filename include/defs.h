@@ -28,3 +28,6 @@ class Provider;
 class DataCenter;
 class ManagerTerminal;
 class ProviderTerminal;
+
+
+const int MAIN_MENU_OPTIONS = 4;

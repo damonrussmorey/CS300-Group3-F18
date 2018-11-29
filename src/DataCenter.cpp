@@ -96,6 +96,14 @@ bool Service::operator==(const Service & service) const {
 }
 
 // Data Center
+DataCenter::DataCenter() {
+
+}
+
+DataCenter::~DataCenter() {
+
+}
+
 void DataCenter::addService(const Service & service) {
 	serviceSet.insert(service);
 }
@@ -141,6 +149,6 @@ bool DataCenter::hasProvider(string providerName) {
 // Dummy main
 // Should ideally be moved elsewhere I think
 // - Sam
-int main(){
+/*int main(){
 	return 1;
-}
+}*/

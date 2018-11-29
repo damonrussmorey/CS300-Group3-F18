@@ -6,24 +6,26 @@ ManagerTerminal.cpp
 #include "ManagerTerminal.h"
 using namespace std;
 
-//helper readers
-int getOption(string prompt, int lower, int upper);
-string getString(string prompt);
-
-
 int getOption(string prompt, int lower, int upper) {
   int opt;
   assert(lower <= upper);
+
+
 
   while(true) {
     cout << prompt << ": ";
     cout.flush();
     cin >> opt;
-    cin.ignore(100);
+    if (cin.fail()) {
+        cin.clear();
+        opt = lower -1;
+    }
+
+    cin.ignore(100, '\n');
     if(opt >= lower && opt <= upper)
       break;
     else
-      cout << "Invalid option, try again." << endl;
+      cout << "Invalid option, try again.\n\n";
   }
   return opt;
 }
@@ -34,6 +36,11 @@ string getString(string prompt) {
 	string response;
 	getline(cin, response);
 	return response;
+}
+
+void clear() {
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 }
 
 //ManagerTerminal
@@ -57,12 +64,12 @@ void ManagerTerminal::run() {
            "2) Manage Memberships\n"
            "3) Manage Provider Network\n"
            "4) Request Report\n"
-           "5) Quit\n", 1, 5);
+           "5) Quit Manager Terminal", 1, 5);
     switch(opt) {
       case 1:
         switch(getOption("1) Add Service\n"
                          "2) Remove Service\n"
-                         "3) Modify Service\n", 1, 3)) {
+                         "3) Modify Service", 1, 3)) {
           case 1:
             addService();
             break;
@@ -80,7 +87,7 @@ void ManagerTerminal::run() {
       case 2:
         switch(getOption("1) Add Member\n"
                          "2) Remove Member\n"
-                         "3) Modify Member\n", 1, 3)) {
+                         "3) Modify Member", 1, 3)) {
           case 1:
             addMember();
             break;
@@ -98,7 +105,7 @@ void ManagerTerminal::run() {
       case 3:
         switch(getOption("1) Add Provider\n"
                          "2) Remove Provider\n"
-                         "3) Modify Provider\n", 1, 3)) {
+                         "3) Modify Provider", 1, 3)) {
           case 1:
             addProvider();
             break;
@@ -209,6 +216,7 @@ void ManagerTerminal::addService(void) {
   string code;
   long double cost;
   code = getString("Enter code of service to be added");
+  
   cin >> get_money(cost);
 
   dc->addService(Service(NULL, NULL, code, cost));
