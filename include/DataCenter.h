@@ -88,8 +88,8 @@ class DataCenter {
 
     //Reports - Reporter.cpp
     void allReports();
-    void memberReport(string);
-    void providerReport(string);
+    bool memberReport(string);
+    bool providerReport(string);
     void managerReport();
     void eftReport();
 	protected:

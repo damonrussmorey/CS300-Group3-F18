@@ -66,8 +66,8 @@ void ManagerTerminal::run() {
     switch(opt) {
       case 1:
         switch(getOption("1) Add Service\n"
-                         "2) Remove Service\n"
-                         "3) Modify Service", 1, 3)) {
+                         "2) Remove Service"
+                         /*"\n3) Modify Service"*/, 1, 2/*3*/)) {
           case 1:
             addService();
             break;
@@ -84,8 +84,8 @@ void ManagerTerminal::run() {
         break;
       case 2:
         switch(getOption("1) Add Member\n"
-                         "2) Remove Member\n"
-                         "3) Modify Member", 1, 3)) {
+                         "2) Remove Member"
+                         /*"\n3) Modify Member"*/, 1, 2/*3*/)) {
           case 1:
             addMember();
             break;
@@ -102,8 +102,8 @@ void ManagerTerminal::run() {
         break;
       case 3:
         switch(getOption("1) Add Provider\n"
-                         "2) Remove Provider\n"
-                         "3) Modify Provider", 1, 3)) {
+                         "2) Remove Provider"
+                         /*"\n3) Modify Provider"*/, 1, 2/*3*/)) {
           case 1:
             addProvider();
             break;
@@ -130,13 +130,6 @@ void ManagerTerminal::run() {
   }
 }
 
-
-
-//TODO read in the rest of the data
-//for all of these functions
-
-
-
 void ManagerTerminal::addMember(void) {
   string name;
   string number;
@@ -161,7 +154,7 @@ void ManagerTerminal::removeMember(void) {
     cout << "Member was not found in the system." << endl;
   }
 }
-
+/*
 void ManagerTerminal::modifyMember(void) {
   string name;
   name = getString("Enter full name of member to be modified");
@@ -174,7 +167,7 @@ void ManagerTerminal::modifyMember(void) {
     cout << "Member was not found in the system." << endl;
   }
 }
-
+*/
 void ManagerTerminal::addProvider(void) {
   string name;
   string number;
@@ -199,7 +192,7 @@ void ManagerTerminal::removeProvider(void) {
     cout << "Provider was not found in the system." << endl;
   }
 }
-
+/*
 void ManagerTerminal::modifyProvider(void) {
   string name;
   name = getString("Enter name of provider to be modified");
@@ -211,7 +204,7 @@ void ManagerTerminal::modifyProvider(void) {
     cout << "Provider was not found in the system." << endl;
   }
 }
-
+*/
 void ManagerTerminal::addService(void) {
   string code;
   long double cost;
@@ -232,7 +225,7 @@ void ManagerTerminal::removeService(void) {
     cout << "Service was not found in the system." << endl;
   }
 }
-
+/*
 void ManagerTerminal::modifyService(void) {
   string name;
   name = getString("Enter name of service to be modified");
@@ -244,8 +237,43 @@ void ManagerTerminal::modifyService(void) {
     cout << "Service was not found in the system." << endl;
   }
 }
-
+*/
 void ManagerTerminal::requestReport(void) {
-  //TODO
+  int opt;
+  string name;
+  opt = getOption("Select an option from the list:"
+      "1) All Reports\n"
+      "2) Manager Report\n"
+      "3) Member Report\n"
+      "4) Provider Report\n",1,4);
+  switch(opt) {
+    case 1:
+      dc->allReports();
+      cout << "All reports written." << endl;
+      break;
+
+    case 2:
+      dc->managerReport();
+      cout << "Manager report written." << endl;
+      break;
+
+    case 3:
+      name = getString("Enter the member name for the requested report");
+      if(dc->memberReport(name)) {
+        cout << "Member report written." << endl;
+      } else {
+        cout << "Didn't find member, no report written." << endl;
+      }
+      break;
+
+    case 4:
+      name = getString("Enter the provider name for the requested report");
+      if(dc->providerReport(provider)) {
+        cout << "Provider report written." << endl;
+      } else {
+        cout << "Didn't find provider, no report written." << endl;
+      }
+      break;
+  }
 }
 

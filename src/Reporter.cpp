@@ -6,12 +6,14 @@ Reporter.cpp
 #include "DataCenter.h"
 using namespace std;
 
-static string dateString() {
-  time_t t;
-  time(&t);
-  tm *x = localtime(&t);
+static string dateString(tm *date, char sep) {
+  if(!date) {
+    time_t t;
+    time(&t);
+    date = localtime(&t);
+  }
   ostringstream out;
-  out << x->tm_mday << "_" << x->tm_mon << "_" << x->tm_year;
+  out << date->tm_mday << sep << date->tm_mon << sep << date->tm_year;
   return out.str();
 }
 
@@ -28,17 +30,20 @@ void DataCenter::allReports() {
   eftReport();
 }
 
-void DataCenter::memberReport(string memberName) {
+bool DataCenter::memberReport(string memberName) {
   auto member = memberSet.find(Member(memberName, NULL, nullAdr));
-	if(member != memberSet.end())
+	if(member != memberSet.end()) {
     memberReport(*member);
+    return true;
+  } else
+    return false;
 }
 
 void DataCenter::memberReport(const Member &member) {
   ofstream f;
   
   //open file to write report to
-  f.open(string("member_reports/") + dateString() + "_" + member.name);
+  f.open(string("member_reports/") + dateString(NULL, '_') + "_" + member.name);
   assert(f);
 
   //preamble, member info
@@ -60,7 +65,7 @@ void DataCenter::memberReport(const Member &member) {
         x != member.weeklyConsultations.end(); ++x) {
     f << endl;
     f << x->serviceCode << endl;
-    //f << x->serviceDate << endl;
+    f << dateString(x->date, '/') << endl;
     f << x->provider->name << endl;
   }
 
@@ -70,16 +75,18 @@ void DataCenter::memberReport(const Member &member) {
 
 void DataCenter::providerReport(string providerName) {
   auto provider = providerSet.find(Provider(providerName, NULL, nullAdr, 0));
-	if(provider != providerSet.end())
+	if(provider != providerSet.end()) {
     providerReport(*provider);
-
+    return true;
+  } else
+    return false;
 }
 
 void DataCenter::providerReport(const Provider &provider) {
   ofstream f;
   
   //open file to write report to
-  f.open(string("provider_reports/") + dateString() + "_" + provider.name);
+  f.open(string("provider_reports/") + dateString(NULL, '_') + "_" + provider.name);
   assert(f);
 
   //preamble, provider info
@@ -117,7 +124,7 @@ void DataCenter::managerReport() {
   double profit = membershipIncome - weeklyConsultationFees;
   
   //open file to write report to
-  f.open(string("manager_reports/") + dateString());
+  f.open(string("manager_reports/") + dateString(NULL, '_'));
   assert(f);
   f.precision(2);
   f.fill('0');
