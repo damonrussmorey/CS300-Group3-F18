@@ -15,6 +15,7 @@ Member::Member(string n, string number, address & ad) {
 	fullAddress.zip = ad.zip;
 }
 
+Member::Member(){}
 Member::~Member(){}
 
 void Member::addService(Service & service) {
@@ -34,6 +35,19 @@ void Member::clearServices() {
 }
 
 // Provider
+Provider::Provider(string n, string number, address & ad, int total, double f) {
+	name = n;
+	phoneNumber = number;
+	fullAddress.streetAddress = ad.streetAddress;
+	fullAddress.city = ad.city;
+	fullAddress.state = ad.state;
+	fullAddress.zip = ad.zip;
+	totalConsultations = total;
+	totalFee = f;
+}
+
+Provider::~Provider(){}
+
 void Provider::addService(Service & service) {
 	// Went with the running total thing, seemed simpler. 
 	// Didn't call parent function cause no reason to go adding more overhead.
@@ -100,6 +114,12 @@ bool DataCenter::hasMember(string name) {
 	address dummyAddress;
 	Member searchMember(name, "dummy", dummyAddress);
 	return membersSet.find(searchMember) != membersSet.end();
+}
+
+bool DataCenter::hasProvider(string name) {
+	address dummyAddress;
+	Provider searchProvider(name, "dummy", dummyAddress, 0, 0.00);
+	return providerSet.find(searchProvider) != providerSet.end();
 }
 
 // Dummy main
