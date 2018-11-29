@@ -179,7 +179,7 @@ void ManagerTerminal::addProvider(void) {
 	adr.city = getString("Enter city");
 	adr.state = getString("Enter state");
 	adr.zip = getString("Enter zip");
-  dc->addProvider(Provider(name, number, adr));
+  dc->addProvider(Provider(name, number, adr, 0, 0));
 }
 
 void ManagerTerminal::removeProvider(void) {
