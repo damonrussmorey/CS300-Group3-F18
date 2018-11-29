@@ -1,4 +1,4 @@
-FLAGS=-g -Wall
+FLAGS=-g -Wall -std=c++14
 LIB=-pthread
 CC=g++
 INC=-I include
