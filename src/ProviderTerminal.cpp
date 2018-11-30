@@ -10,16 +10,24 @@ ProviderTerminal::ProviderTerminal(DataCenter * dc) {
 }
 
 void ProviderTerminal::run(void) {
-	string providerName;
+	string providerID;
 	string memberName;
 	string serviceCode;
-	//no longer using provider ID
-	//providerName = getString("Enter provider ID");
-	do
-	{
-	providerName = getString("Enter provider name: ");
-	if(!dc->hasProvider(providerName)) cout << "Invalid Provider name.\n";
-	} while(!dc->hasProvider(providerName));
+    int attempts = 3;
+    bool validatedProvider = false;
+    
+    //Using the provider ID is a requirement for this program
+    do
+    {    
+        --attempts;
+        providerID = getString("\nEnter provider ID: ");
+        validatedProvider = dc->hasProvider(providerID);
+        if(!validatedProvider) {
+            cout << "Invalid Provider ID. " << attempts << " attempts left.\n";
+            if (attempts <= 0) return;
+        }
+    } while(!validatedProvider);
+    
 
 	int choice = 0;
 	while(choice != 4) {
@@ -46,11 +54,11 @@ void ProviderTerminal::run(void) {
 				if(!dc->hasService(serviceCode)) cout << "Invalid service Code.\n";
 			} while (!dc->hasService(serviceCode));
 
-			dc->confirmConsultation(memberName, providerName, serviceCode);
+			dc->confirmConsultation(memberName, providerID, serviceCode);
 			break;
 		case 2:
 			cout << "Generating provider report at normal directory..." << endl;
-			dc->providerReport(providerName);
+			dc->providerReport(providerID);
 			cout << "Done." << endl;
 			break;
 		case 3:

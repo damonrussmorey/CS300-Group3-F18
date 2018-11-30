@@ -34,9 +34,10 @@ void Member::clear() {
 }
 
 // Provider constructor
-Provider::Provider(string n, string number, address & ad, double f) {
+Provider::Provider(string n, string number, string phone, address & ad, double f) {
 	name = n;
-	phoneNumber = number;
+    memberNumber = number;
+	phoneNumber = phone;
 	fullAddress.streetAddress = ad.streetAddress;
 	fullAddress.city = ad.city;
 	fullAddress.state = ad.state;
@@ -273,6 +274,60 @@ bool DataCenter::loadMembers(string fileName) {
 }
 
 bool DataCenter::loadProviders(string fileName) {
+    ifstream inFile;
+    
+    // Temporary vars to hold data from file
+    Provider temp; 
+    string name, number, phone, fees;
+    address ad;
+
+    // Setting max size for strings
+
+    inFile.open(fileName);
+    if (!inFile.is_open())
+        return false;
+    
+    while (!getline(inFile, name, ';').eof()) {
+        // provider name;number;phone;
+        getline(inFile, number, ';');
+        getline(inFile, phone, ';');
+
+        // streetAddress;city;state;zip;fees 
+        getline(inFile, ad.streetAddress, ';'); 
+        getline(inFile, ad.city, ';'); 
+        getline(inFile, ad.state, ';'); 
+        getline(inFile, ad.zip, ';'); 
+        getline(inFile, fees);
+
+        name.resize(25);
+        number.resize(9);
+        phone.resize(12);
+        ad.streetAddress.resize(25);
+        ad.city.resize(14);
+        ad.state.resize(2);
+        ad.zip.resize(5);
+        fees.resize(6);
+        
+        name.shrink_to_fit(); 
+        number.shrink_to_fit();
+        phone.shrink_to_fit();
+        ad.streetAddress.shrink_to_fit();
+        ad.city.shrink_to_fit();
+        ad.state.shrink_to_fit();
+        ad.zip.shrink_to_fit();
+        fees.shrink_to_fit();
+        
+        temp = Provider(name, number, phone, ad, stod(fees)); 
+        cout << temp.name << ";" <<temp.memberNumber <<";"<< temp.phoneNumber << ";" <<
+        temp.fullAddress.streetAddress << ";" << temp.fullAddress.city << ";" <<
+        temp.fullAddress.state << ";" << temp.fullAddress.zip << ";" << temp.weeklyConsultationFees <<endl;
+
+        addProvider(temp);    
+    }
+         
+    inFile.close();
+    
+    
     return true;
 }
 
@@ -299,7 +354,7 @@ bool DataCenter::saveReports(string fileName) {
 
 // add new provider to data center
 void DataCenter::addProvider(Provider & provider) {
-	providerMap[provider.name] = provider;
+	providerMap[provider.memberNumber] = provider;
 }
 
 //add new member to provider
@@ -315,8 +370,8 @@ void DataCenter::removeService(string serviceCode) {
 }
 
 //remove provider from Data center
-void DataCenter::removeProvider(string providerName) {
-  providerMap.erase(providerName);
+void DataCenter::removeProvider(string providerID) {
+  providerMap.erase(providerID);
 }
 
 //remove member from Data Center
@@ -362,9 +417,9 @@ bool DataCenter::memberStatus(string memberName) {
 
 
 //check if data center has provider
-bool DataCenter::hasProvider(string providerName) {
+bool DataCenter::hasProvider(string providerID) {
   try {
-    providerMap.at(providerName);
+    providerMap.at(providerID);
     return true;
   } catch(const out_of_range &e) {
     return false;

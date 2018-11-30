@@ -182,24 +182,26 @@ cout << "Member was not found in the system." << endl;
 void ManagerTerminal::addProvider(void) {
 	string name;
 	string number;
+    string phone;
 	address adr;
-	name = getString("Enter full name of member to be added");
-	number = getString("Enter phone number");
+	name = getString("Enter full name of provider to be added");
+    number = getString("Enter the provider ID of this new provider");
+	phone = getString("Enter phone number");
 	adr.streetAddress = getString("Enter street address");
 	adr.city = getString("Enter city");
 	adr.state = getString("Enter state");
 	adr.zip = getString("Enter zip");
-	Provider p(name, number, adr, 0);
+	Provider p(name, number, phone, adr, 0);
 	dc->addProvider(p);
 }
 
 
 //remove provider from Data Center through Manager terminal
 void ManagerTerminal::removeProvider(void) {
-	string name;
-	name = getString("Enter name of provider to be removed");
-	if(dc->hasProvider(name)) {
-		dc->removeProvider(name);
+	string id;
+	id = getString("Enter ID of provider to be removed");
+	if(dc->hasProvider(id)) {
+		dc->removeProvider(id);
 		cout << "Provider successfully removed from the system." << endl;
 	} else {
 		cout << "Provider was not found in the system." << endl;

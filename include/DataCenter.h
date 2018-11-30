@@ -32,7 +32,7 @@ class Member {
 class Provider : public Member{
     public:
         Provider();
-        Provider(string n, string number, address & ad, double f);
+        Provider(string n, string number, string phone, address & ad, double f);
         ~Provider();
         void consultation(Service & service);
         bool operator<(const Provider & Provider) const;
