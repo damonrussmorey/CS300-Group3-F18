@@ -78,7 +78,15 @@ class DataCenter {
         
         //Loading data from disk
         bool loadServices(string);
+        bool loadMembers(string);
+        bool loadProviders(string);
+        bool loadReports(string);
 
+        //Saving data to disk
+        bool saveServices(string);
+        bool saveMembers(string);
+        bool saveProviders(string);
+        bool saveReports(string);
         
         //Data management
         void addService(Service & service);

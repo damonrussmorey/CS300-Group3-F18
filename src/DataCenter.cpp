@@ -94,6 +94,25 @@ DataCenter::DataCenter() {
         cout << "Failed to load services from disk\n";
     }
 
+    if (loadMembers(MEMBERS)) {
+        cout << "Successfully members from disk\n";
+    } else {
+        cout << "Failed to load members from disk\n";
+    }
+
+    if (loadProviders(PROVIDERS)) {
+        cout << "Successfully loaded providers from disk\n";
+    } else {
+        cout << "Failed to load providers from disk\n";
+    }
+
+    // TODO
+    if (loadReports("")) {
+        cout << "Successfully loaded reports from disk\n";
+    } else {
+        cout << "Failed to load reports from disk\n";
+    }
+
 	//TODO
 	activeMemberCount = 0;
 	weeklyConsultationCount = 0;
@@ -200,6 +219,35 @@ bool DataCenter::loadServices(string fileName) {
     }
    
     inFile.close();
+    return true;
+}
+
+bool DataCenter::loadMembers(string fileName) {
+    return true;
+}
+
+bool DataCenter::loadProviders(string fileName) {
+    return true;
+}
+
+bool DataCenter::loadReports(string fileName) {
+    return true;
+}
+
+// Dave data to disk
+bool DataCenter::saveServices(string fileName) {
+    return true;
+}
+
+bool DataCenter::saveMembers(string fileName) {
+    return true;
+}
+
+bool DataCenter::saveProviders(string fileName) {
+    return true;
+}
+
+bool DataCenter::saveReports(string fileName) {
     return true;
 }
 
