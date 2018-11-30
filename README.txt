@@ -6,12 +6,25 @@ Document links:
   Design:
   https://docs.google.com/document/d/15J1Y1fHEFWMtBEzHijU7zVx3vwKrxRT6RjqQ1FPyXp0/edit?usp=sharing
 
+======= How to run ChocAn Program Demo =======
+
+***In main project directory***
+make
+cd bin
+./Demo
+
+***CRITICAL NOTE***
+DO NOT DO
+./bin/Demo
+
+WILL ENCOUTER ERRORS WITH FILE WRITES
 
 ======= How to install Google Test =======
 Instructions from https://www.srcmake.com/google-cpp-test-framework
+***If any problems are encountered, view link, it includes a video tutorial***
 
 Ultimately, what we are trying to do is install
-google test to the user's lib folder. 
+google test to the user's lib folder. (/usr/lib)
 
 We will also have to install cmake
 For Linux, this can be done with the following terminal commands
