@@ -8,7 +8,7 @@
 //Address
 address::address() {}
 
-// Member
+// Member constructor
 Member::Member(string n, string number, address & ad) {
 	name = n;
 	phoneNumber = number;
@@ -22,15 +22,17 @@ Member::Member(string n, string number, address & ad) {
 Member::Member(){}
 Member::~Member(){}
 
+//add new consultation to member
 void Member::consultation(Service & service) {
 	weeklyConsultations.push_back(service);
 }
 
+//clear member's list of consulations
 void Member::clear() {
 	weeklyConsultations.clear();
 }
 
-// Provider
+// Provider constructor
 Provider::Provider(string n, string number, address & ad, double f) {
 	name = n;
 	phoneNumber = number;
@@ -44,6 +46,7 @@ Provider::Provider(string n, string number, address & ad, double f) {
 Provider::Provider(){}
 Provider::~Provider(){}
 
+//add consultation to provider
 void Provider::consultation(Service & service) {
 	// Went with the running total thing, seemed simpler. 
 	// Didn't call parent function cause no reason to go adding more overhead.
@@ -51,12 +54,13 @@ void Provider::consultation(Service & service) {
 	weeklyConsultationFees += service.fee;
 }
 
+//remove all consultations in provider
 void Provider::clear() {
 	weeklyConsultations.clear();
 	weeklyConsultationFees = 0;
 }
 
-// Service
+// Service constructor for datacenter
 Service::Service(string code, double f) {
 	serviceCode = code;
 	fee = f;
@@ -65,6 +69,7 @@ Service::Service(string code, double f) {
 	date = NULL;
 }
 
+// Service constructor for members and providers
 Service::Service(const Service &s, const Member *m, const Provider *p) {
 	fee = s.fee;
 	serviceCode = s.serviceCode;
@@ -132,28 +137,34 @@ void DataCenter::newWeek() {
     x->second.clear();
 }
 
+//add new service to data center
 void DataCenter::addService(Service & service) {
 	serviceMap[service.serviceCode] = service;
 }
 
+// add new provider to data center
 void DataCenter::addProvider(Provider & provider) {
 	providerMap[provider.name] = provider;
 }
 
+//add new member to provider
 void DataCenter::addMember(Member & member) {
 	memberMap[member.name] = member;
   if(member.status)
     ++activeMemberCount;
 }
 
+//remove service from Data center
 void DataCenter::removeService(string serviceCode) {
   serviceMap.erase(serviceCode);
 }
 
+//remove provider from Data center
 void DataCenter::removeProvider(string providerName) {
   providerMap.erase(providerName);
 }
 
+//remove member from Data Center
 void DataCenter::removeMember(string memberName) {
   try {
     if(memberMap.at(memberName).status)
@@ -164,6 +175,7 @@ void DataCenter::removeMember(string memberName) {
   memberMap.erase(memberName);
 }
 
+//check if data center has service 
 bool DataCenter::hasService(string serviceCode) {
   try {
     serviceMap.at(serviceCode);
@@ -173,6 +185,7 @@ bool DataCenter::hasService(string serviceCode) {
   }
 }
 
+//check if data center has member in data center
 bool DataCenter::hasMember(string memberName) {
   try {
     memberMap.at(memberName);
@@ -182,6 +195,7 @@ bool DataCenter::hasMember(string memberName) {
   }
 }
 
+//check if data center has provider
 bool DataCenter::hasProvider(string providerName) {
   try {
     providerMap.at(providerName);

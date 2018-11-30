@@ -6,6 +6,7 @@
 #include "ManagerTerminal.h"
 using namespace std;
 
+//get option for menu
 int getOption(string prompt, int lower, int upper) {
 	int opt;
 	assert(lower <= upper);
@@ -28,6 +29,7 @@ int getOption(string prompt, int lower, int upper) {
 	return opt;
 }
 
+//store string in variable from user input
 string getString(string prompt) {
 	cout << endl << prompt << ": ";
 	cout.flush();
@@ -36,17 +38,19 @@ string getString(string prompt) {
 	return response;
 }
 
+//clear screen
 void clear() {
 	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 }
 
 //ManagerTerminal
-
+//Connect Manager Terminal to DataCenter
 ManagerTerminal::ManagerTerminal(DataCenter * dc) {
 	this->dc = dc;
 }
 
+//run Manager Terminal menu
 void ManagerTerminal::run() {
 	int opt;
 	bool running;
@@ -130,6 +134,7 @@ void ManagerTerminal::run() {
   }
 }
 
+//add new member to Data Center through Manager terminal
 void ManagerTerminal::addMember(void) {
 	string name;
 	string number;
@@ -144,6 +149,7 @@ void ManagerTerminal::addMember(void) {
 	dc->addMember(m);
 }
 
+//remove member to Data Center through Manager terminal
 void ManagerTerminal::removeMember(void) {
 	string name;
 	name = getString("Enter full name of member to be removed");
@@ -168,6 +174,8 @@ cout << "Member was not found in the system." << endl;
 }
 }
 */
+
+//add new provider to Data Center through Manager terminal
 void ManagerTerminal::addProvider(void) {
 	string name;
 	string number;
@@ -182,6 +190,8 @@ void ManagerTerminal::addProvider(void) {
 	dc->addProvider(p);
 }
 
+
+//remove provider from Data Center through Manager terminal
 void ManagerTerminal::removeProvider(void) {
 	string name;
 	name = getString("Enter name of provider to be removed");
@@ -205,6 +215,8 @@ cout << "Provider was not found in the system." << endl;
 }
 }
 */
+
+//add new service to service list in Data Center
 void ManagerTerminal::addService(void) {
 	string code;
 	long double cost;
@@ -215,6 +227,8 @@ void ManagerTerminal::addService(void) {
 	dc->addService(s);
 }
 
+
+//remove service from service list in Data Center
 void ManagerTerminal::removeService(void) {
 	string code;
 	code = getString("Enter code of service to be removed");
@@ -225,6 +239,7 @@ void ManagerTerminal::removeService(void) {
 		cout << "Service was not found in the system." << endl;
 	}
 }
+
 /*
    void ManagerTerminal::modifyService(void) {
    string name;
@@ -238,6 +253,8 @@ cout << "Service was not found in the system." << endl;
 }
 }
 */
+
+//Request reports through manager terminal 
 void ManagerTerminal::requestReport(void) {
 	int opt;
 	string name;
