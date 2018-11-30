@@ -1,3 +1,0 @@
-/home/son/CS300-Group3-F18/test/CMakeFiles/rebuild_cache.dir
-/home/son/CS300-Group3-F18/test/CMakeFiles/executeTests.dir
-/home/son/CS300-Group3-F18/test/CMakeFiles/edit_cache.dir
