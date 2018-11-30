@@ -12,8 +12,15 @@ ProviderTerminal::ProviderTerminal(DataCenter * dc) {
 void ProviderTerminal::run(void) {
 	string providerName;
 	string memberName;
-	string serviceName;
-	providerName = getString("Enter provider ID");
+	string serviceCode;
+	//no longer using provider ID
+	//providerName = getString("Enter provider ID");
+	do
+	{
+	providerName = getString("Enter provider name: ");
+	if(!dc->hasProvider(providerName)) cout << "Invalid Provider name.\n";
+	} while(!dc->hasProvider(providerName));
+
 	int choice = 0;
 	while(choice != 4) {
 		choice = getOption("1. Report a consultation for a member\n"
@@ -22,8 +29,24 @@ void ProviderTerminal::run(void) {
 				 "4. Log off", 1, 4);
 		switch(choice){
 		case 1:
-			memberName = getString("Enter member name");
-			serviceName = getString("Enter service name");
+			memberName = getString("Enter member name: ");
+			if(!dc->hasMember(memberName)) {
+				cout << "Invalid member name.\n";
+				break;
+			}
+
+			if(!dc->memberStatus(memberName)) {
+				cout << "Member is suspended. Cannot provide member with any services.\n";
+				break;
+			}
+				
+			do
+			{
+				serviceCode = getString("Enter service Code: ");
+				if(!dc->hasService(serviceCode)) cout << "Invalid service Code.\n";
+			} while (!dc->hasService(serviceCode));
+
+			dc->confirmConsultation(memberName, providerName, serviceCode);
 			break;
 		case 2:
 			cout << "Generating provider report at normal directory..." << endl;
@@ -39,4 +62,5 @@ void ProviderTerminal::run(void) {
 		}
 	}
 }
+
 

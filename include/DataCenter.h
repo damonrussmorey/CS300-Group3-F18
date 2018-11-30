@@ -95,6 +95,7 @@ class DataCenter {
         // TODO: untested
         bool hasService(string);
         bool hasMember(string);
+				bool memberStatus(string);
         bool hasProvider(string);
         void removeService(string);
         bool modifyService(string);

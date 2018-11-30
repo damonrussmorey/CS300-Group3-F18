@@ -304,6 +304,17 @@ bool DataCenter::hasMember(string memberName) {
   }
 }
 
+
+//check member status
+bool DataCenter::memberStatus(string memberName) {
+	if(hasMember(memberName)) {
+		return memberMap.at(memberName).status ? true : false;
+	}
+	return false;
+}
+
+
+
 //check if data center has provider
 bool DataCenter::hasProvider(string providerName) {
   try {
