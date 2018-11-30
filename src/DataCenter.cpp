@@ -1,7 +1,7 @@
 /*
-Damon Morey, Philip Prater, Samuel Shippey, Son Vu, Yves Wienecke 2018©
-DataCenter.cpp
-*/
+   Damon Morey, Philip Prater, Samuel Shippey, Son Vu, Yves Wienecke 2018©
+   DataCenter.cpp
+   */
 
 #include "DataCenter.h"
 
@@ -74,19 +74,19 @@ void Provider::clear() {
 Service::Service(string code, double f) {
 	serviceCode = code;
 	fee = f;
-  provider = NULL;
-  member = NULL;
-  date = NULL;
+	provider = NULL;
+	member = NULL;
+	date = NULL;
 }
 
 Service::Service(const Service &s, const Member *m, const Provider *p) {
-  fee = s.fee;
-  serviceCode = s.serviceCode;
-  provider = p;
-  member = m;
-  time_t t;
-  time(&t);
-  date = localtime(&t);
+	fee = s.fee;
+	serviceCode = s.serviceCode;
+	provider = p;
+	member = m;
+	time_t t;
+	time(&t);
+	date = localtime(&t);
 }
 
 Service::~Service() {}
@@ -101,67 +101,67 @@ bool Service::operator==(const Service & service) const {
 
 // Data Center
 DataCenter::DataCenter() {
-  //load data from files
-  //TODO
-  activeMemberCount = 0;
-  weeklyConsultationCount = 0;
-  weeklyConsultationFees = 0.0;
+	//load data from files
+	//TODO
+	activeMemberCount = 0;
+	weeklyConsultationCount = 0;
+	weeklyConsultationFees = 0.0;
 }
 
 DataCenter::~DataCenter() {
-  //clean up dynamic data
-  //afaik, we don't have any, but then again we may be managing memory incorrectly
-  //keep this in mind
-  //c++ containers automatically manager their memory
-  //adding to the container copies the object
-  //because our objects are very small, this is absolutely fine
+	//clean up dynamic data
+	//afaik, we don't have any, but then again we may be managing memory incorrectly
+	//keep this in mind
+	//c++ containers automatically manager their memory
+	//adding to the container copies the object
+	//because our objects are very small, this is absolutely fine
 }
 
 
 bool DataCenter::confirmConsultation(string memberName, string providerName, string serviceCode) {
-  //get the member, provider, and service
-  set<Member>::iterator mi = memberSet.find(Member(memberName, NULL, nullAdr));
-  if(mi == memberSet.end())
-    return false;
-  set<Provider>::iterator pi = providerSet.find(Provider(providerName, NULL, nullAdr, 0));
-  if(pi == providerSet.end())
-    return false;
-  set<Service>::iterator si = serviceSet.find(Service(serviceCode, 0));
-  if(si == serviceSet.end())
-    return false;
+	//get the member, provider, and service
+	set<Member>::iterator mi = memberSet.find(Member(memberName, NULL, nullAdr));
+	if(mi == memberSet.end())
+		return false;
+	set<Provider>::iterator pi = providerSet.find(Provider(providerName, NULL, nullAdr, 0));
+	if(pi == providerSet.end())
+		return false;
+	set<Service>::iterator si = serviceSet.find(Service(serviceCode, 0));
+	if(si == serviceSet.end())
+		return false;
 
-  //workaround to constness - remove from set
-  Member m = *mi;
-  memberSet.erase(mi);
-  Provider p = *pi;
-  providerSet.erase(pi);
-  Service s = *si;
-  serviceSet.erase(si);
+	//workaround to constness - remove from set
+	Member m = *mi;
+	memberSet.erase(mi);
+	Provider p = *pi;
+	providerSet.erase(pi);
+	Service s = *si;
+	serviceSet.erase(si);
 
-  //create consultaton for reporting
-  Service c = Service(s, &m, &p);
+	//create consultaton for reporting
+	Service c = Service(s, &m, &p);
 
-  //give to member and provider
-  m.consultation(c);
-  p.consultation(c);
+	//give to member and provider
+	m.consultation(c);
+	p.consultation(c);
 
-  //record fee for manager
-  ++weeklyConsultationCount;
-  weeklyConsultationFees += c.fee;
+	//record fee for manager
+	++weeklyConsultationCount;
+	weeklyConsultationFees += c.fee;
 
-  return true;
+	return true;
 }
 
 //clears all consultations for the week
 void DataCenter::newWeek() {
-  weeklyConsultationCount = 0;
-  weeklyConsultationFees = 0.0;
-  /*TODO
-  for(set<Member>::iterator x = memberSet.begin(); x != memberSet.end(); ++x)
-    x->clear();
-  for(set<Provider>::iterator x = providerSet.begin(); x != providerSet.end(); ++x)
-    x->clear();
-    */
+	weeklyConsultationCount = 0;
+	weeklyConsultationFees = 0.0;
+	/*TODO
+	  for(set<Member>::iterator x = memberSet.begin(); x != memberSet.end(); ++x)
+	  x->clear();
+	  for(set<Provider>::iterator x = providerSet.begin(); x != providerSet.end(); ++x)
+	  x->clear();
+	  */
 }
 
 void DataCenter::addService(Service & service) {
@@ -174,45 +174,45 @@ void DataCenter::addProvider(Provider & provider) {
 
 void DataCenter::addMember(Member & member) {
 	memberSet.insert(member);
-  ++activeMemberCount;
+	++activeMemberCount;
 }
 
 void DataCenter::removeService(string serviceCode) {
 	serviceSet.erase(serviceSet.find(
-        Service(serviceCode, 0)));
+				Service(serviceCode, 0)));
 }
 
 void DataCenter::removeProvider(string providerName) {
 	providerSet.erase(providerSet.find(
-        Provider(providerName, NULL, nullAdr, 0)));
+				Provider(providerName, NULL, nullAdr, 0)));
 }
 
 void DataCenter::removeMember(string memberName) {
-  unsigned int c = memberSet.size();
+	unsigned int c = memberSet.size();
 	memberSet.erase(memberSet.find(
-        Member(memberName, NULL, nullAdr)));
-  if(c != memberSet.size())
-    --activeMemberCount;
+				Member(memberName, NULL, nullAdr)));
+	if(c != memberSet.size())
+		--activeMemberCount;
 }
 
 bool DataCenter::hasService(string serviceCode) {
 	return serviceSet.find(
-      Service(serviceCode, 0)) != serviceSet.end();
+			Service(serviceCode, 0)) != serviceSet.end();
 }
 
 bool DataCenter::hasMember(string memberName) {
 	return memberSet.find(
-      Member(memberName, NULL, nullAdr)) != memberSet.end();
+			Member(memberName, NULL, nullAdr)) != memberSet.end();
 }
 
 bool DataCenter::hasProvider(string providerName) {
-  return providerSet.find(
-      Provider(providerName, NULL, nullAdr, 0)) != providerSet.end();
+	return providerSet.find(
+			Provider(providerName, NULL, nullAdr, 0)) != providerSet.end();
 }
 
 // Dummy main
 // Should ideally be moved elsewhere I think
 // - Sam
 /*int main(){
-	return 1;
-}*/
+  return 1;
+  }*/

@@ -73,7 +73,7 @@ void DataCenter::memberReport(const Member &member) {
   f.close();
 }
 
-void DataCenter::providerReport(string providerName) {
+bool DataCenter::providerReport(string providerName) {
   auto provider = providerSet.find(Provider(providerName, NULL, nullAdr, 0));
 	if(provider != providerSet.end()) {
     providerReport(*provider);
