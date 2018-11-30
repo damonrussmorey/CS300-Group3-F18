@@ -1,0 +1,12 @@
+// File name: DD_MM_YYYY.txt
+Provider: $(Name of provider to pay)
+Consultations: $(amt consultations provided by this provider)
+Fee: $(total fee for the week)
+
+Provider: $(Name of provider to pay)
+Consultations: $(amt consultations provided by this provider)
+Fee: $(total fee for the week)
+
+$(amt providers who provided services) provided services this week.
+Total number consultations: $(Sum amt consultations provided)
+Overall Fee: $(Sum of each provider's total fee for the week)
