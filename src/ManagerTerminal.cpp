@@ -138,18 +138,32 @@ void ManagerTerminal::run() {
 
 //add new member to Data Center through Manager terminal
 void ManagerTerminal::addMember(void) {
-	string name, number;
-	string phone;
-	address adr;
-	name = getString("Enter full name of member to be added");
-    number = getString("Enter member number of member to be added");
-	phone = getString("Enter phone number");
-	adr.streetAddress = getString("Enter street address");
-	adr.city = getString("Enter city");
-	adr.state = getString("Enter state");
-	adr.zip = getString("Enter zip");
+	string name, number, phone;
+	address adr;  
+
+	do { name = getString("Enter full name of member to be added, up to 25 letters"); } while (name.size() > 25);
+    
+    do { number = getString("Enter the 9 digit member ID of this new member");
+    } while (stoi(number) < 100000000 || stoi(number) > 999999999);
+    
+    do { phone = getString("Enter phone number in the form ###-###-####");
+       //TODO this check doesn't work.
+    } while (phone.size() != 12);
+    
+    do { adr.streetAddress = getString("Enter street address, up to 25 letters"); } while (adr.streetAddress.size() > 25);	
+
+    do { adr.city = getString("Enter city, up to 14 letters"); } while (adr.city.size() > 14);
+
+    do { adr.state = getString("Enter state, ex. OR"); } while (adr.state.size() != 2);
+    
+
+    do{ adr.zip = getString("Enter zip code");
+    } while (stoi(adr.zip) < 10000 || stoi(adr.zip) > 99999);
+
 	Member m(name, number, phone, adr);
 	dc->addMember(m);
+
+    cout << "Added " << m.name << " to members!\n\n";
 }
 
 //remove member to Data Center through Manager terminal
@@ -183,39 +197,30 @@ void ManagerTerminal::addProvider(void) {
 	string name, number, phone;
 	address adr;
 
-	name = getString("Enter full name of provider to be added");
+	do { name = getString("Enter full name of provider to be added, up to 25 letters"); } while (name.size() > 25);
     
-    do {
-        number = getString("Enter the 9 digit provider ID of this new provider");
-        number.resize(9);
-        number.shrink_to_fit();
+    do { number = getString("Enter the 9 digit provider ID of this new provider");
     } while (stoi(number) < 100000000 || stoi(number) > 999999999);
     
-    do {
-        phone = getString("Enter phone number in the form ###-###-####");
-       phone.resize(12);
-       phone.shrink_to_fit();
+    do { phone = getString("Enter phone number in the form ###-###-####");
        //TODO this check doesn't work.
-    } while (phone < "000-000-0000" || phone > "999-999-9999");
-
-    adr.streetAddress = getString("Enter street address");
-	adr.city = getString("Enter city");
-	adr.state = getString("Enter state, ex. OR");
+    } while (phone.size() != 12);
     
-    adr.streetAddress.resize(25);
-    adr.city.resize(14);
-    adr.state.resize(2);
-    adr.streetAddress.shrink_to_fit();
-    adr.city.shrink_to_fit();
-    adr.state.shrink_to_fit();
+    do { adr.streetAddress = getString("Enter street address, up to 25 letters"); } while (adr.streetAddress.size() > 25);	
 
-    do{
-        adr.zip = getString("Enter zip code");
-        adr.zip.resize(5);
-        adr.zip.shrink_to_fit();
+    do { adr.city = getString("Enter city, up to 14 letters"); } while (adr.city.size() > 14);
+
+    do { adr.state = getString("Enter state, ex. OR"); } while (adr.state.size() != 2);
+    
+
+    do{ adr.zip = getString("Enter zip code");
     } while (stoi(adr.zip) < 10000 || stoi(adr.zip) > 99999);
+
+
 	Provider p(name, number, phone, adr, 0);
 	dc->addProvider(p);
+    
+    cout << "Added " << p.name << " to providers!\n\n";
 }
 
 
@@ -247,21 +252,13 @@ cout << "Provider was not found in the system." << endl;
 //add new service to service list in Data Center
 void ManagerTerminal::addService(void) {
 	string code, name, cost;
-    do {
-	    code = getString("Enter 6 digit code of service to be added");
-        code.resize(6);
-        code.shrink_to_fit(); 
+    do { code = getString("Enter 6 digit code of service to be added");
     } while (stoi(code) < 100000 || stoi(code) > 999999);
 
-    name = getString("Enter name of service to be added"); 
-    name.resize(20);
-    name.shrink_to_fit(); 
+    do { name = getString("Enter name of service to be added, up to 20 letters"); } while (name.size() > 20);
 
-    do {
-        cout << "\nEnter cost of service to be added, up to 999.99: ";
+    do { cout << "\nEnter cost of service to be added, up to 999.99: ";
         cin >> get_money(cost);
-        cost.resize(6);
-        cost.shrink_to_fit();
     } while (stold(cost) > 999.99);
 
 	Service s(code, name, stof(cost));

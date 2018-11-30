@@ -128,6 +128,32 @@ DataCenter::~DataCenter() {
 	//c++ containers automatically manager their memory
 	//adding to the container copies the object
 	//because our objects are very small, this is absolutely fine
+
+    // Save data to disk
+    if (saveServices(PROVIDER_DIRECTORY)) {
+        cout << "Successfully saved services from disk\n";
+    } else {
+        cout << "Failed to save services from disk\n";
+    }
+
+    if (saveMembers(MEMBERS)) {
+        cout << "Successfully members from disk\n";
+    } else {
+        cout << "Failed to save members from disk\n";
+    }
+
+    if (saveProviders(PROVIDERS)) {
+        cout << "Successfully saved providers from disk\n";
+    } else {
+        cout << "Failed to save providers from disk\n";
+    }
+    
+    // TODO
+    if (saveReports("")) {
+        cout << "Successfully saved reports from disk\n";
+    } else {
+        cout << "Failed to save reports from disk\n";
+    }
 }
 
 
@@ -218,14 +244,6 @@ bool DataCenter::loadServices(string fileName) {
         // service name;cost;code 
         getline(inFile, fee, ';');
         getline(inFile, code); 
-
-        name.resize(20);
-        code.resize(6);
-        fee.resize(6); 
-        
-        name.shrink_to_fit(); 
-        fee.shrink_to_fit();
-        code.shrink_to_fit();
         
         temp = Service(code, name, stof(fee));
         addService(temp);    
@@ -260,22 +278,6 @@ bool DataCenter::loadMembers(string fileName) {
         getline(inFile, ad.city, ';'); 
         getline(inFile, ad.state, ';'); 
         getline(inFile, ad.zip); 
-
-        name.resize(25);
-        number.resize(9);
-        phone.resize(12);
-        ad.streetAddress.resize(25);
-        ad.city.resize(14);
-        ad.state.resize(2);
-        ad.zip.resize(5);
-        
-        name.shrink_to_fit(); 
-        number.shrink_to_fit();
-        phone.shrink_to_fit();
-        ad.streetAddress.shrink_to_fit();
-        ad.city.shrink_to_fit();
-        ad.state.shrink_to_fit();
-        ad.zip.shrink_to_fit();
         
         temp = Member(name, number, phone, ad); 
         addMember(temp);    
@@ -312,24 +314,6 @@ bool DataCenter::loadProviders(string fileName) {
         getline(inFile, ad.zip, ';'); 
         getline(inFile, fees);
 
-        name.resize(25);
-        number.resize(9);
-        phone.resize(12);
-        ad.streetAddress.resize(25);
-        ad.city.resize(14);
-        ad.state.resize(2);
-        ad.zip.resize(5);
-        fees.resize(6);
-        
-        name.shrink_to_fit(); 
-        number.shrink_to_fit();
-        phone.shrink_to_fit();
-        ad.streetAddress.shrink_to_fit();
-        ad.city.shrink_to_fit();
-        ad.state.shrink_to_fit();
-        ad.zip.shrink_to_fit();
-        fees.shrink_to_fit();
-        
         temp = Provider(name, number, phone, ad, stod(fees)); 
         cout << temp.name << ";" <<temp.memberNumber <<";"<< temp.phoneNumber << ";" <<
         temp.fullAddress.streetAddress << ";" << temp.fullAddress.city << ";" <<
@@ -350,6 +334,19 @@ bool DataCenter::loadReports(string fileName) {
 
 // Dave data to disk
 bool DataCenter::saveServices(string fileName) {
+    ofstream outFile(fileName);
+    
+    map<string,Service> servicesAlphaOrder;
+
+    for(auto x = serviceMap.begin(); x != serviceMap.end(); ++x) {
+        servicesAlphaOrder[x->second.serviceName] = x->second;
+    }
+
+    outFile << "// service name;cost;code" << endl;
+    for(auto x = servicesAlphaOrder.begin(); x != servicesAlphaOrder.end(); ++x) {
+      outFile << x->second.serviceName << ";" << x->second.fee << ";" << x->second.serviceCode << endl;
+  }
+
     return true;
 }
 
