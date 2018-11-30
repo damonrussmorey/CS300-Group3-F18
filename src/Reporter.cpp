@@ -163,7 +163,7 @@ void DataCenter::managerReport() {
   }
 
   //list each suspended member
-  f << endl << endl << "Suspended MEmbers";
+  f << endl << endl << "Suspended Members";
   for(auto x = memberMap.begin(); x != memberMap.end(); ++x) {
     if(x->second.status)
       continue;
@@ -173,6 +173,7 @@ void DataCenter::managerReport() {
   }
 
   //cleanup
+  f << endl << endl;
   f.close();
 }
 

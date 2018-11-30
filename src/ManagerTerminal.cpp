@@ -29,7 +29,7 @@ int getOption(string prompt, int lower, int upper) {
 }
 
 string getString(string prompt) {
-	cout << prompt << ": ";
+	cout << endl << prompt << ": ";
 	cout.flush();
 	string response;
 	getline(cin, response);
