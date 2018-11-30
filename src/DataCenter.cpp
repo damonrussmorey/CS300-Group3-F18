@@ -237,14 +237,14 @@ bool DataCenter::loadMembers(string fileName) {
         return false;
     
     while (!getline(inFile, name, ';').eof()) {
-        // member name;number;phone;address
+        // member name;number;phone;
         getline(inFile, number, ';');
         getline(inFile, phone, ';');
 
-        // address;city;state;zip 
-        getline(inFile, ad.streetAddress); 
-        getline(inFile, ad.city); 
-        getline(inFile, ad.state); 
+        // streetAddress;city;state;zip 
+        getline(inFile, ad.streetAddress, ';'); 
+        getline(inFile, ad.city, ';'); 
+        getline(inFile, ad.state, ';'); 
         getline(inFile, ad.zip); 
 
         name.resize(25);
@@ -263,7 +263,7 @@ bool DataCenter::loadMembers(string fileName) {
         ad.state.shrink_to_fit();
         ad.zip.shrink_to_fit();
         
-        temp = Member(name, number, phone, ad);
+        temp = Member(name, number, phone, ad); 
         addMember(temp);    
     }
    
