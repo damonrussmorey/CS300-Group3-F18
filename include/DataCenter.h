@@ -73,6 +73,7 @@ class DataCenter {
 		bool confirmConsultation(string, string, string);
 
     void newWeek();
+    void printServiceList();
 
 		//Data management
 		void addService(Service & service);

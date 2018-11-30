@@ -13,20 +13,17 @@ void ProviderTerminal::run(void) {
 	string providerName;
 	string memberName;
 	string serviceName;
-	providerName = getString("Enter provider ID: ");
+	providerName = getString("Enter provider ID");
 	int choice = 0;
 	while(choice != 4) {
-		cout 	<< "1. Report a consultation for a member\n"
-				<< "2. Output a weekly report\n"
-				<< "3. View master service list\n"
-				<< "4. Log off"
-				<< endl;
-		cout << "> ";
-		cin >> choice;
+		choice = getOption("1. Report a consultation for a member\n"
+				 "2. Output a weekly report\n"
+				 "3. View master service list\n"
+				 "4. Log off", 1, 4);
 		switch(choice){
 		case 1:
-			memberName = getString("Enter member name: ");
-			serviceName = getString("Enter service name: ");
+			memberName = getString("Enter member name");
+			serviceName = getString("Enter service name");
 			break;
 		case 2:
 			cout << "Generating provider report at normal directory..." << endl;
@@ -34,7 +31,7 @@ void ProviderTerminal::run(void) {
 			cout << "Done." << endl;
 			break;
 		case 3:
-			//TODO: Write method in data center to output all services
+      dc->printServiceList();
 			break;
 		case 4:
 			//already done and while loop will terminate

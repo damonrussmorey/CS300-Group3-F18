@@ -132,6 +132,20 @@ void DataCenter::newWeek() {
     x->second.clear();
 }
 
+//returns a list of services for the provider
+void DataCenter::printServiceList() {
+  cout << "Master Service List: (" << serviceMap.size() << ")" << endl;
+  if(serviceMap.size() == 0) {
+    cout << "No services available" << endl;
+    return;
+  }
+  for(auto x = serviceMap.begin(); x != serviceMap.end(); ++x) {
+      cout.precision(2);
+      cout.fill('0');
+      cout << x->second.serviceCode << " - $" << x->second.fee;
+  }
+}
+
 void DataCenter::addService(Service & service) {
 	serviceMap[service.serviceCode] = service;
 }
