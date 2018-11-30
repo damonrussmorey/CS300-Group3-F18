@@ -18,6 +18,7 @@ Definitions for common structures and libraries for the entire project
 
 #define MEMBERSHIP_FEE 45.99
 #define BASE_CONSULTATION_FEE 120.00
+#define PROVIDER_DIRECTORY "../stash/provider_directory.txt"
 
 using namespace std;
 
@@ -40,6 +41,3 @@ class Provider;
 class DataCenter;
 class ManagerTerminal;
 class ProviderTerminal;
-
-
-const int MAIN_MENU_OPTIONS = 4;

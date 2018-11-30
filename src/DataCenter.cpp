@@ -61,8 +61,9 @@ void Provider::clear() {
 }
 
 // Service constructor for datacenter
-Service::Service(string code, double f) {
+Service::Service(string code, string name, double f) {
 	serviceCode = code;
+    serviceName = name;
 	fee = f;
 	provider = NULL;
 	member = NULL;
@@ -73,6 +74,7 @@ Service::Service(string code, double f) {
 Service::Service(const Service &s, const Member *m, const Provider *p) {
 	fee = s.fee;
 	serviceCode = s.serviceCode;
+    serviceName = s.serviceName;
 	provider = p;
 	member = m;
 	time_t t;
@@ -86,6 +88,12 @@ Service::~Service(){}
 // Data Center
 DataCenter::DataCenter() {
 	//load data from files
+    if (loadServices(PROVIDER_DIRECTORY)) {
+        cout << "Successfully loaded services from disk\n";
+    } else {
+        cout << "Failed to load services from disk\n";
+    }
+
 	//TODO
 	activeMemberCount = 0;
 	weeklyConsultationCount = 0;
@@ -148,12 +156,50 @@ void DataCenter::printServiceList() {
   for(auto x = serviceMap.begin(); x != serviceMap.end(); ++x) {
       cout.precision(2);
       cout.fill('0');
-      cout << x->second.serviceCode << " - $" << x->second.fee;
+      cout << x->second.serviceCode << " - " << x->second.serviceName << " $" << x->second.fee;
   }
 }
 
 void DataCenter::addService(Service & service) {
 	serviceMap[service.serviceCode] = service;
+}
+
+// Loading from disk
+bool DataCenter::loadServices(string fileName) {
+    ifstream inFile;
+    
+    // Temporary vars to hold data from file
+    Service temp; 
+    string name, code, fee;
+
+    // Setting max size for strings
+
+    inFile.open(fileName);
+    if (!inFile.is_open())
+        return false;
+    
+    // Ignore the first line in the file
+    getline(inFile, name);
+    while (!getline(inFile, name, ';').eof()) {
+        // service name;cost;code 
+        getline(inFile, fee, ';');
+        getline(inFile, code); 
+
+        name.resize(20);
+        code.resize(6);
+        fee.resize(6);
+        
+        name.shrink_to_fit(); 
+        fee.shrink_to_fit();
+        code.shrink_to_fit();
+        
+        temp = Service(code, name, stof(fee));
+        addService(temp);    
+        inFile.peek();
+    }
+   
+    inFile.close();
+    return true;
 }
 
 // add new provider to data center

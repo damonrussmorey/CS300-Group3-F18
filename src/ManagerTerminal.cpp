@@ -218,12 +218,13 @@ cout << "Provider was not found in the system." << endl;
 
 //add new service to service list in Data Center
 void ManagerTerminal::addService(void) {
-	string code;
+	string code, name;
 	long double cost;
 	code = getString("Enter code of service to be added");
+    name = getString("Enter name of service to be added");
 
 	cin >> get_money(cost);
-	Service s(code, cost);
+	Service s(code, name, cost);
 	dc->addService(s);
 }
 

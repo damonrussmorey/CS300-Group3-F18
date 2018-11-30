@@ -6,7 +6,7 @@ ProviderTerminal.cpp
 #include "ProviderTerminal.h"
     
 ProviderTerminal::ProviderTerminal(DataCenter * dc) {
-    dc = dc;
+    this->dc = dc;
 }
 
 void ProviderTerminal::run(void) {
@@ -31,7 +31,7 @@ void ProviderTerminal::run(void) {
 			cout << "Done." << endl;
 			break;
 		case 3:
-      dc->printServiceList();
+            dc->printServiceList();
 			break;
 		case 4:
 			//already done and while loop will terminate
