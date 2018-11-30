@@ -183,8 +183,8 @@ void DataCenter::printServiceList() {
 }
 
 void DataCenter::printProviders() {
-cout << "All Providers: (" << serviceMap.size() << ")" << endl;
-  if(serviceMap.size() == 0) {
+cout << "All Providers: (" << providerMap.size() << ")" << endl;
+  if(providerMap.size() == 0) {
     cout << "No providers available" << endl;
     return;
   }

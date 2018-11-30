@@ -180,17 +180,40 @@ cout << "Member was not found in the system." << endl;
 
 //add new provider to Data Center through Manager terminal
 void ManagerTerminal::addProvider(void) {
-	string name;
-	string number;
-    string phone;
+	string name, number, phone;
 	address adr;
+
 	name = getString("Enter full name of provider to be added");
-    number = getString("Enter the provider ID of this new provider");
-	phone = getString("Enter phone number");
-	adr.streetAddress = getString("Enter street address");
+    
+    do {
+        number = getString("Enter the 9 digit provider ID of this new provider");
+        number.resize(9);
+        number.shrink_to_fit();
+    } while (stoi(number) < 100000000 || stoi(number) > 999999999);
+    
+    do {
+        phone = getString("Enter phone number in the form ###-###-####");
+       phone.resize(12);
+       phone.shrink_to_fit();
+       //TODO this check doesn't work.
+    } while (phone < "000-000-0000" || phone > "999-999-9999");
+
+    adr.streetAddress = getString("Enter street address");
 	adr.city = getString("Enter city");
-	adr.state = getString("Enter state");
-	adr.zip = getString("Enter zip");
+	adr.state = getString("Enter state, ex. OR");
+    
+    adr.streetAddress.resize(25);
+    adr.city.resize(14);
+    adr.state.resize(2);
+    adr.streetAddress.shrink_to_fit();
+    adr.city.shrink_to_fit();
+    adr.state.shrink_to_fit();
+
+    do{
+        adr.zip = getString("Enter zip code");
+        adr.zip.resize(5);
+        adr.zip.shrink_to_fit();
+    } while (stoi(adr.zip) < 10000 || stoi(adr.zip) > 99999);
 	Provider p(name, number, phone, adr, 0);
 	dc->addProvider(p);
 }
