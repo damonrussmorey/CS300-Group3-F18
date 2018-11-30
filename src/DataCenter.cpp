@@ -182,6 +182,18 @@ void DataCenter::printServiceList() {
     cout << "\n\n";
 }
 
+void DataCenter::printProviders() {
+cout << "All Providers: (" << serviceMap.size() << ")" << endl;
+  if(serviceMap.size() == 0) {
+    cout << "No providers available" << endl;
+    return;
+  }
+    for(auto x = providerMap.begin(); x != providerMap.end(); ++x) {
+        cout << x->second.memberNumber << " - " <<x->second.name << endl;
+    }
+
+}
+
 void DataCenter::addService(Service & service) {
 	serviceMap[service.serviceCode] = service;
 }
@@ -209,7 +221,7 @@ bool DataCenter::loadServices(string fileName) {
 
         name.resize(20);
         code.resize(6);
-        fee.resize(6);
+        fee.resize(6); 
         
         name.shrink_to_fit(); 
         fee.shrink_to_fit();
@@ -222,6 +234,7 @@ bool DataCenter::loadServices(string fileName) {
     inFile.close();
     return true;
 }
+
 
 bool DataCenter::loadMembers(string fileName) {
     ifstream inFile;

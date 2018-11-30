@@ -14,13 +14,19 @@ void ProviderTerminal::run(void) {
 	string memberName;
 	string serviceCode;
     int attempts = 3;
-    bool validatedProvider = false;
+    bool validatedProvider = false;   
     
+    //For testing purposes
+    dc->printProviders(); 
+
     //Using the provider ID is a requirement for this program
     do
     {    
         --attempts;
         providerID = getString("\nEnter provider ID: ");
+        providerID.resize(9);
+        providerID.shrink_to_fit();
+
         validatedProvider = dc->hasProvider(providerID);
         if(!validatedProvider) {
             cout << "Invalid Provider ID. " << attempts << " attempts left.\n";
