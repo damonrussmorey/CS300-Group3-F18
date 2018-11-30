@@ -61,8 +61,9 @@ class Service {
         const Member *member;
         string serviceCode;
         string serviceName;
+        string dateEntered;
+        string dateProvided;
         double fee;
-        tm *date;
 };
 
 class DataCenter {

@@ -21,6 +21,7 @@ Definitions for common structures and libraries for the entire project
 #define PROVIDER_DIRECTORY "../stash/provider_directory.txt"
 #define PROVIDERS "../stash/providers.txt"
 #define MEMBERS "../stash/members.txt"
+#define REPORTS "../stash/reports.txt"
 
 using namespace std;
 
