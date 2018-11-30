@@ -63,7 +63,7 @@ void DataCenter::memberReport(const Member &member) {
         x != member.weeklyConsultations.end(); ++x) {
     f << endl;
     f << x->serviceCode << endl;
-    f << dateString(x->date, '/') << endl;
+    //f << dateString(x->date, '/') << endl;
     f << x->provider->name << endl;
   }
 
@@ -106,7 +106,7 @@ void DataCenter::providerReport(const Provider &provider) {
         x != provider.weeklyConsultations.end(); ++x) {
     f << endl;
     f << x->serviceCode << endl;
-    f << dateString(x->date, '/') << endl;
+    //f << dateString(x->date, '/') << endl;
     f << x->member->name << endl;
     f << x->fee << endl;
   }
