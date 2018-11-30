@@ -12,6 +12,10 @@ class ProviderTerminal {
 
         //main interface of provider terminal
         void run(void);
+		void addConsultation();
+		void viewWeeklyReport();
+		void viewServiceList();
+		void exit();
 
     private:
         DataCenter * dc;

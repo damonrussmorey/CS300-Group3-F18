@@ -6,6 +6,7 @@ INC=-I include
 SOURCES=$(shell find src -type f -name *.cpp)
 
 all: DIRECTORIES bin/Demo
+terminals: DIRECTORIES bin/ManagerTerminal bin/ProviderTerminal 
 
 DIRECTORIES:
 	mkdir -p build bin manager_reports member_reports provider_reports

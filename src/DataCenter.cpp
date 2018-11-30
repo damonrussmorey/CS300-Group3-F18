@@ -1,7 +1,7 @@
 /*
-Damon Morey, Philip Prater, Samuel Shippey, Son Vu, Yves Wienecke 2018©
-DataCenter.cpp
-*/
+   Damon Morey, Philip Prater, Samuel Shippey, Son Vu, Yves Wienecke 2018©
+   DataCenter.cpp
+   */
 
 #include "DataCenter.h"
 
@@ -60,19 +60,19 @@ void Provider::clear() {
 Service::Service(string code, double f) {
 	serviceCode = code;
 	fee = f;
-  provider = NULL;
-  member = NULL;
-  date = NULL;
+	provider = NULL;
+	member = NULL;
+	date = NULL;
 }
 
 Service::Service(const Service &s, const Member *m, const Provider *p) {
-  fee = s.fee;
-  serviceCode = s.serviceCode;
-  provider = p;
-  member = m;
-  time_t t;
-  time(&t);
-  date = localtime(&t);
+	fee = s.fee;
+	serviceCode = s.serviceCode;
+	provider = p;
+	member = m;
+	time_t t;
+	time(&t);
+	date = localtime(&t);
 }
 
 Service::Service(){}
@@ -80,20 +80,20 @@ Service::~Service(){}
 
 // Data Center
 DataCenter::DataCenter() {
-  //load data from files
-  //TODO
-  activeMemberCount = 0;
-  weeklyConsultationCount = 0;
-  weeklyConsultationFees = 0.0;
+	//load data from files
+	//TODO
+	activeMemberCount = 0;
+	weeklyConsultationCount = 0;
+	weeklyConsultationFees = 0.0;
 }
 
 DataCenter::~DataCenter() {
-  //clean up dynamic data
-  //afaik, we don't have any, but then again we may be managing memory incorrectly
-  //keep this in mind
-  //c++ containers automatically manager their memory
-  //adding to the container copies the object
-  //because our objects are very small, this is absolutely fine
+	//clean up dynamic data
+	//afaik, we don't have any, but then again we may be managing memory incorrectly
+	//keep this in mind
+	//c++ containers automatically manager their memory
+	//adding to the container copies the object
+	//because our objects are very small, this is absolutely fine
 }
 
 
