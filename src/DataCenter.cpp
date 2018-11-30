@@ -154,10 +154,11 @@ void DataCenter::printServiceList() {
     return;
   }
   for(auto x = serviceMap.begin(); x != serviceMap.end(); ++x) {
-      cout.precision(2);
+      cout.precision(6);
       cout.fill('0');
-      cout << x->second.serviceCode << " - " << x->second.serviceName << " $" << x->second.fee;
+      cout << x->second.serviceCode << " - " << x->second.serviceName << " $" << x->second.fee << endl;
   }
+    cout << "\n\n";
 }
 
 void DataCenter::addService(Service & service) {

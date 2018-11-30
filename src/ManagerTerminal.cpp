@@ -54,7 +54,8 @@ ManagerTerminal::ManagerTerminal(DataCenter * dc) {
 void ManagerTerminal::run() {
 	int opt;
 	bool running;
-
+    
+    clear();
 	cout << "Starting Manager Terminal..." << endl;
 
   //main loop for manager terminal operations
@@ -67,6 +68,7 @@ void ManagerTerminal::run() {
            "3) Manage Provider Network\n"
            "4) Request Report\n"
            "5) Quit Manager Terminal", 1, 5);
+      clear();
     switch(opt) {
       case 1:
         switch(getOption("1) Add Service\n"
