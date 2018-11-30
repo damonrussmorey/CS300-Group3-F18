@@ -137,8 +137,8 @@ void DataCenter::newWeek() {
     x->second.clear();
 }
 
-//prints a list of services
-//XXX should probably be given an output stream
+<<<<<<< HEAD
+//returns a list of services for the provider
 void DataCenter::printServiceList() {
   cout << "Master Service List: (" << serviceMap.size() << ")" << endl;
   if(serviceMap.size() == 0) {
@@ -152,6 +152,9 @@ void DataCenter::printServiceList() {
   }
 }
 
+=======
+//add new service to data center
+>>>>>>> 5134938a9f45e5d4ae105e706147251a2bd74ca1
 void DataCenter::addService(Service & service) {
 	serviceMap[service.serviceCode] = service;
 }

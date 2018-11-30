@@ -1,4 +1,4 @@
-# Install script for directory: /home/phil/Desktop/CS300_SftEng/CS300-Group3-F18/test
+# Install script for directory: /home/son/CS300-Group3-F18/test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/phil/Desktop/CS300_SftEng/CS300-Group3-F18/test/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/son/CS300-Group3-F18/test/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
