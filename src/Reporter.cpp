@@ -18,25 +18,25 @@ static string dateString(tm *date, char sep) {
 }
 
 void DataCenter::allReports() {
-  for(set<Member>::iterator x = memberSet.begin();
-      x != memberSet.end(); ++x) {
-    memberReport(*x);
+  for(auto x = memberMap.begin();
+      x != memberMap.end(); ++x) {
+    memberReport(x->second);
   }
-  for(set<Provider>::iterator x = providerSet.begin();
-      x != providerSet.end(); ++x) {
-    providerReport(*x);
+  for(auto x = providerMap.begin();
+      x != providerMap.end(); ++x) {
+    providerReport(x->second);
   }
   managerReport();
   eftReport();
 }
 
 bool DataCenter::memberReport(string memberName) {
-  auto member = memberSet.find(Member(memberName, NULL, nullAdr));
-	if(member != memberSet.end()) {
-    memberReport(*member);
+  try {
+    memberReport(memberMap.at(memberName));
     return true;
-  } else
+  } catch(const out_of_range &) {
     return false;
+  }
 }
 
 void DataCenter::memberReport(const Member &member) {
@@ -48,7 +48,6 @@ void DataCenter::memberReport(const Member &member) {
 
   //preamble, member info
   f << member.name << endl
-    //<< member.id << endl
     << member.phoneNumber << endl
     << member.fullAddress.streetAddress << endl
     << member.fullAddress.city << ", " << member.fullAddress.state << endl
@@ -56,9 +55,8 @@ void DataCenter::memberReport(const Member &member) {
 
   //summary of week
   f << "Consultations: " << member.weeklyConsultations.size() << endl;
-  /*if(member.status) f << "Active" << endl;
+  if(member.status) f << "Active" << endl;
   else              f << "Suspended" << endl;
-  */
   
   //list each consultation
   for(  auto x = member.weeklyConsultations.begin();
@@ -73,13 +71,13 @@ void DataCenter::memberReport(const Member &member) {
   f.close();
 }
 
-void DataCenter::providerReport(string providerName) {
-  auto provider = providerSet.find(Provider(providerName, NULL, nullAdr, 0));
-	if(provider != providerSet.end()) {
-    providerReport(*provider);
+bool DataCenter::providerReport(string providerName) {
+  try {
+    providerReport(providerMap.at(providerName));
     return true;
-  } else
+  } catch(const out_of_range &) {
     return false;
+  }
 }
 
 void DataCenter::providerReport(const Provider &provider) {
@@ -91,7 +89,6 @@ void DataCenter::providerReport(const Provider &provider) {
 
   //preamble, provider info
   f << provider.name << endl
-  //<< provider.id << endl
     << provider.phoneNumber << endl
     << provider.fullAddress.streetAddress << endl
     << provider.fullAddress.city << ", "
@@ -99,6 +96,8 @@ void DataCenter::providerReport(const Provider &provider) {
     << provider.fullAddress.zip << endl << endl;
 
   //summary of week
+  f.precision(2);
+  f.fill('0');
   f << "Consultations: " << provider.weeklyConsultations.size() << endl
     << "Fees           $" << provider.weeklyConsultationFees << endl;
   
@@ -107,7 +106,7 @@ void DataCenter::providerReport(const Provider &provider) {
         x != provider.weeklyConsultations.end(); ++x) {
     f << endl;
     f << x->serviceCode << endl;
-    //f << x->serviceDate << endl;
+    f << dateString(x->date, '/') << endl;
     f << x->member->name << endl;
     f << x->fee << endl;
   }
@@ -130,12 +129,12 @@ void DataCenter::managerReport() {
   f.fill('0');
 
   //summarize consultations
-  f << "Number of Providers:     " << providerSet.size() << endl;
+  f << "Number of Providers:     " << providerMap.size() << endl;
   f << "Total Consultations:     " << weeklyConsultationCount << endl;
   f << "Total Consultation Fees: $" << weeklyConsultationFees << endl << endl;
 
   //summarize memberships
-  f << "Number of Members:        " << memberSet.size() << endl;
+  f << "Number of Members:        " << memberMap.size() << endl;
   f << "Number of Active Members: " << activeMemberCount << endl;
   f << "Total Member Fees:        $" << membershipIncome;
 
@@ -144,34 +143,34 @@ void DataCenter::managerReport() {
 
   //list each provider
   cout << endl << "Providers";
-  for(auto x = providerSet.begin(); x != providerSet.end(); ++x) {
+  for(auto x = providerMap.begin(); x != providerMap.end(); ++x) {
     f << endl
-      << "Provider:      " << x->name << endl
-      << "Phone:         " << x->phoneNumber << endl
-      << "Consultations: " << x->weeklyConsultations.size() << endl
-      << "Fees:          " << x->weeklyConsultationFees;
+      << "Provider:      " << x->second.name << endl
+      << "Phone:         " << x->second.phoneNumber << endl
+      << "Consultations: " << x->second.weeklyConsultations.size() << endl
+      << "Fees:          " << x->second.weeklyConsultationFees;
   }
 
   //list each active member
   f << endl << endl << "Active Members";
-  for(auto x = memberSet.begin(); x != memberSet.end(); ++x) {
+  for(auto x = memberMap.begin(); x != memberMap.end(); ++x) {
     /*if(!x->status)
       continue;*/
     f << endl
-      << "Member:        " << x->name << endl
-      << "Phone:         " << x->phoneNumber << endl
-      << "Consultations: " << x->weeklyConsultations.size();
+      << "Member:        " << x->second.name << endl
+      << "Phone:         " << x->second.phoneNumber << endl
+      << "Consultations: " << x->second.weeklyConsultations.size();
   }
-/*
+
   //list each suspended member
   f << endl << endl << "Suspended MEmbers";
-  for(auto x = memberSet.begin(); x != memberSet.end(); ++x) {
-    if(x->status)
+  for(auto x = memberMap.begin(); x != memberMap.end(); ++x) {
+    if(x->second.status)
       continue;
     f << endl
-      << "Member:        " << x->name << endl
-      << "Phone:         " << x->phoneNumber;
-  }*/
+      << "Member:        " << x->second.name << endl
+      << "Phone:         " << x->second.phoneNumber;
+  }
 
   //cleanup
   f.close();

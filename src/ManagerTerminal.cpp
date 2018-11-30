@@ -74,9 +74,9 @@ void ManagerTerminal::run() {
           case 2:
             removeService();
             break;
-          case 3:
+          /*case 3:
             modifyService();
-            break;
+            break;*/
           default:
             assert(true);
             break;
@@ -92,9 +92,9 @@ void ManagerTerminal::run() {
           case 2:
             removeMember();
             break;
-          case 3:
+          /*case 3:
             modifyMember();
-            break;
+            break;*/
           default:
             assert(true);
             break;
@@ -110,9 +110,9 @@ void ManagerTerminal::run() {
           case 2:
             removeProvider();
             break;
-          case 3:
+          /*case 3:
             modifyProvider();
-            break;
+            break;*/
           default:
             assert(true);
             break;
@@ -268,7 +268,7 @@ void ManagerTerminal::requestReport(void) {
 
     case 4:
       name = getString("Enter the provider name for the requested report");
-      if(dc->providerReport(provider)) {
+      if(dc->providerReport(name)) {
         cout << "Provider report written." << endl;
       } else {
         cout << "Didn't find provider, no report written." << endl;

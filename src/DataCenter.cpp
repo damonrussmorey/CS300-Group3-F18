@@ -16,6 +16,7 @@ Member::Member(string n, string number, address & ad) {
 	fullAddress.city = ad.city;
 	fullAddress.state = ad.state;
 	fullAddress.zip = ad.zip;
+  status = true;
 }
 
 Member::Member(){}
@@ -23,14 +24,6 @@ Member::~Member(){}
 
 void Member::consultation(Service & service) {
 	weeklyConsultations.push_back(service);
-}
-
-bool Member::operator<(const Member & member) const {
-	return (member.name > name ? true : false);
-}
-
-bool Member::operator==(const Member & member) const {
-	return member.name == name;
 }
 
 void Member::clear() {
@@ -48,6 +41,7 @@ Provider::Provider(string n, string number, address & ad, double f) {
 	weeklyConsultationFees = f;
 }
 
+Provider::Provider(){}
 Provider::~Provider(){}
 
 void Provider::consultation(Service & service) {
@@ -55,14 +49,6 @@ void Provider::consultation(Service & service) {
 	// Didn't call parent function cause no reason to go adding more overhead.
 	weeklyConsultations.push_back(service);
 	weeklyConsultationFees += service.fee;
-}
-
-bool Provider::operator<(const Provider & provider) const {
-	return (provider.name > name ? true : false);
-}
-
-bool Provider::operator==(const Provider & provider) const {
-	return provider.name == name;
 }
 
 void Provider::clear() {
@@ -89,15 +75,8 @@ Service::Service(const Service &s, const Member *m, const Provider *p) {
   date = localtime(&t);
 }
 
-Service::~Service() {}
-
-bool Service::operator<(const Service & service) const {
-	return (service.serviceCode > serviceCode ? true : false);
-}
-
-bool Service::operator==(const Service & service) const {
-	return service.serviceCode == serviceCode;
-}
+Service::Service(){}
+Service::~Service(){}
 
 // Data Center
 DataCenter::DataCenter() {
@@ -119,100 +98,95 @@ DataCenter::~DataCenter() {
 
 
 bool DataCenter::confirmConsultation(string memberName, string providerName, string serviceCode) {
-  //get the member, provider, and service
-  set<Member>::iterator mi = memberSet.find(Member(memberName, NULL, nullAdr));
-  if(mi == memberSet.end())
+  try{
+    //get the member, provider, and service
+    Member &m = memberMap.at(memberName);
+    Provider &p = providerMap.at(providerName);
+    Service &s = serviceMap.at(serviceCode);
+
+    //create consultaton for reporting
+    Service c(s, &m, &p);
+
+    //give to member and provider
+    m.consultation(c);
+    p.consultation(c);
+
+    //record fee for manager
+    ++weeklyConsultationCount;
+    weeklyConsultationFees += c.fee;
+
+    return true;
+
+  } catch(const out_of_range &) {
     return false;
-  set<Provider>::iterator pi = providerSet.find(Provider(providerName, NULL, nullAdr, 0));
-  if(pi == providerSet.end())
-    return false;
-  set<Service>::iterator si = serviceSet.find(Service(serviceCode, 0));
-  if(si == serviceSet.end())
-    return false;
-
-  //workaround to constness - remove from set
-  Member m = *mi;
-  memberSet.erase(mi);
-  Provider p = *pi;
-  providerSet.erase(pi);
-  Service s = *si;
-  serviceSet.erase(si);
-
-  //create consultaton for reporting
-  Service c = Service(s, &m, &p);
-
-  //give to member and provider
-  m.consultation(c);
-  p.consultation(c);
-
-  //record fee for manager
-  ++weeklyConsultationCount;
-  weeklyConsultationFees += c.fee;
-
-  return true;
+  }
 }
 
 //clears all consultations for the week
 void DataCenter::newWeek() {
   weeklyConsultationCount = 0;
   weeklyConsultationFees = 0.0;
-  /*TODO
-  for(set<Member>::iterator x = memberSet.begin(); x != memberSet.end(); ++x)
-    x->clear();
-  for(set<Provider>::iterator x = providerSet.begin(); x != providerSet.end(); ++x)
-    x->clear();
-    */
+  for(auto x = memberMap.begin(); x != memberMap.end(); ++x)
+    x->second.clear();
+  for(auto x = providerMap.begin(); x != providerMap.end(); ++x)
+    x->second.clear();
 }
 
 void DataCenter::addService(Service & service) {
-	serviceSet.insert(service);
+	serviceMap[service.serviceCode] = service;
 }
 
 void DataCenter::addProvider(Provider & provider) {
-	providerSet.insert(provider);
+	providerMap[provider.name] = provider;
 }
 
 void DataCenter::addMember(Member & member) {
-	memberSet.insert(member);
-  ++activeMemberCount;
+	memberMap[member.name] = member;
+  if(member.status)
+    ++activeMemberCount;
 }
 
 void DataCenter::removeService(string serviceCode) {
-	serviceSet.erase(serviceSet.find(
-        Service(serviceCode, 0)));
+  serviceMap.erase(serviceCode);
 }
 
 void DataCenter::removeProvider(string providerName) {
-	providerSet.erase(providerSet.find(
-        Provider(providerName, NULL, nullAdr, 0)));
+  providerMap.erase(providerName);
 }
 
 void DataCenter::removeMember(string memberName) {
-  unsigned int c = memberSet.size();
-	memberSet.erase(memberSet.find(
-        Member(memberName, NULL, nullAdr)));
-  if(c != memberSet.size())
-    --activeMemberCount;
+  try {
+    if(memberMap.at(memberName).status)
+      --activeMemberCount;
+  } catch(const out_of_range &e) {
+    return;
+  }
+  memberMap.erase(memberName);
 }
 
 bool DataCenter::hasService(string serviceCode) {
-	return serviceSet.find(
-      Service(serviceCode, 0)) != serviceSet.end();
+  try {
+    serviceMap.at(serviceCode);
+    return true;
+  } catch(const out_of_range &e) {
+    return false;
+  }
 }
 
 bool DataCenter::hasMember(string memberName) {
-	return memberSet.find(
-      Member(memberName, NULL, nullAdr)) != memberSet.end();
+  try {
+    memberMap.at(memberName);
+    return true;
+  } catch(const out_of_range &e) {
+    return false;
+  }
 }
 
 bool DataCenter::hasProvider(string providerName) {
-  return providerSet.find(
-      Provider(providerName, NULL, nullAdr, 0)) != providerSet.end();
+  try {
+    providerMap.at(providerName);
+    return true;
+  } catch(const out_of_range &e) {
+    return false;
+  }
 }
-
-// Dummy main
-// Should ideally be moved elsewhere I think
-// - Sam
-/*int main(){
-	return 1;
-}*/

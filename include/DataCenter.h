@@ -24,6 +24,7 @@ class Member {
 		string name;
 		string phoneNumber;
 		address fullAddress;
+    bool status;
 		vector<Service> weeklyConsultations;
 };
 
@@ -71,6 +72,8 @@ class DataCenter {
     //Could add more functions to confirm IDs, etc, along the way, but not really necessary
     bool confirmConsultation(string, string, string);
 
+    void newWeek();
+
     //Data management
 		void addService(Service & service);
 		void addProvider(Provider & provider);
@@ -84,8 +87,6 @@ class DataCenter {
 		void removeMember(string);
 		void removeProvider(string);
 
-    void newWeek();
-
     //Reports - Reporter.cpp
     void allReports();
     bool memberReport(string);
@@ -96,14 +97,14 @@ class DataCenter {
     void memberReport(const Member&);
     void providerReport(const Provider&);
 
-		set<Service> serviceSet;
-		set<Member> memberSet;
-		set<Provider> providerSet;
+		map<string,Service> serviceMap;
+		map<string,Member> memberMap;
+		map<string,Provider> providerMap;
 
     double weeklyConsultationFees;
     int weeklyConsultationCount;
     int activeMemberCount;
-    //suspendedMemberCount = memberSet.size() - activeMemberCount
+    //suspendedMemberCount = memberMap.size() - activeMemberCount
 
     address nullAdr;
 };
