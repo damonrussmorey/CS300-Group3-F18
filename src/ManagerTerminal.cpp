@@ -138,16 +138,17 @@ void ManagerTerminal::run() {
 
 //add new member to Data Center through Manager terminal
 void ManagerTerminal::addMember(void) {
-	string name;
-	string number;
+	string name, number;
+	string phone;
 	address adr;
 	name = getString("Enter full name of member to be added");
-	number = getString("Enter phone number");
+    number = getString("Enter member number of member to be added");
+	phone = getString("Enter phone number");
 	adr.streetAddress = getString("Enter street address");
 	adr.city = getString("Enter city");
 	adr.state = getString("Enter state");
 	adr.zip = getString("Enter zip");
-	Member m(name, number, adr);
+	Member m(name, number, phone, adr);
 	dc->addMember(m);
 }
 

@@ -9,9 +9,10 @@
 address::address() {}
 
 // Member constructor
-Member::Member(string n, string number, address & ad) {
+Member::Member(string n, string number, string phone, address & ad) {
 	name = n;
-	phoneNumber = number;
+	phoneNumber = phone;
+    memberNumber = number;
 	fullAddress.streetAddress = ad.streetAddress;
 	fullAddress.city = ad.city;
 	fullAddress.state = ad.state;
@@ -215,7 +216,6 @@ bool DataCenter::loadServices(string fileName) {
         
         temp = Service(code, name, stof(fee));
         addService(temp);    
-        inFile.peek();
     }
    
     inFile.close();
@@ -223,6 +223,52 @@ bool DataCenter::loadServices(string fileName) {
 }
 
 bool DataCenter::loadMembers(string fileName) {
+    ifstream inFile;
+    
+    // Temporary vars to hold data from file
+    Member temp; 
+    string name, number, phone;
+    address ad;
+
+    // Setting max size for strings
+
+    inFile.open(fileName);
+    if (!inFile.is_open())
+        return false;
+    
+    while (!getline(inFile, name, ';').eof()) {
+        // member name;number;phone;
+        getline(inFile, number, ';');
+        getline(inFile, phone, ';');
+
+        // streetAddress;city;state;zip 
+        getline(inFile, ad.streetAddress, ';'); 
+        getline(inFile, ad.city, ';'); 
+        getline(inFile, ad.state, ';'); 
+        getline(inFile, ad.zip); 
+
+        name.resize(25);
+        number.resize(9);
+        phone.resize(12);
+        ad.streetAddress.resize(25);
+        ad.city.resize(14);
+        ad.state.resize(2);
+        ad.zip.resize(5);
+        
+        name.shrink_to_fit(); 
+        number.shrink_to_fit();
+        phone.shrink_to_fit();
+        ad.streetAddress.shrink_to_fit();
+        ad.city.shrink_to_fit();
+        ad.state.shrink_to_fit();
+        ad.zip.shrink_to_fit();
+        
+        temp = Member(name, number, phone, ad); 
+        addMember(temp);    
+    }
+   
+    inFile.close();
+    
     return true;
 }
 
