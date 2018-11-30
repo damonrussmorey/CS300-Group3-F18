@@ -183,6 +183,8 @@ void DataCenter::managerReport() {
 //don't need membership payment, ACME gives us membership payments
 //(need to mock membership payments coming from ACME?)
 //-Damon
+
+// Refer back to the design document, section 4.6, page 13 -Yves
 void DataCenter::eftReport() {
   //TODO
 }

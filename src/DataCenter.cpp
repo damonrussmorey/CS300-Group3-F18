@@ -220,6 +220,18 @@ cout << "All Providers: (" << providerMap.size() << ")" << endl;
 
 }
 
+void DataCenter::printMembers() {
+cout << "All Members: (" << memberMap.size() << ")" << endl;
+  if(memberMap.size() == 0) {
+    cout << "No members available" << endl;
+    return;
+  }
+    for(auto x = memberMap.begin(); x != memberMap.end(); ++x) {
+        cout << x->second.memberNumber << " - " <<x->second.name << endl;
+    }
+
+}
+
 void DataCenter::addService(Service & service) {
 	serviceMap[service.serviceCode] = service;
 }
@@ -322,20 +334,22 @@ bool DataCenter::loadProviders(string fileName) {
         addProvider(temp);    
     }
          
-    inFile.close();
-    
-    
+    inFile.close(); 
     return true;
 }
 
 bool DataCenter::loadReports(string fileName) {
+    // TODO
     return true;
 }
 
 // Dave data to disk
 bool DataCenter::saveServices(string fileName) {
     ofstream outFile(fileName);
-    
+    if (!outFile.is_open())
+        return false; 
+
+    // Reorders the services to be stored in alphabetical order
     map<string,Service> servicesAlphaOrder;
 
     for(auto x = serviceMap.begin(); x != serviceMap.end(); ++x) {
@@ -351,14 +365,39 @@ bool DataCenter::saveServices(string fileName) {
 }
 
 bool DataCenter::saveMembers(string fileName) {
+    ofstream outFile(fileName);
+    if (!outFile.is_open())
+        return false; 
+
+    for(auto x = memberMap.begin(); x != memberMap.end(); ++x) {
+        outFile.precision(6);
+        outFile.fill('0');
+        outFile << x->second.name << ";" << x->second.memberNumber << ";" << x->second.phoneNumber << ";"<<
+        x->second.fullAddress.streetAddress << ";" << x->second.fullAddress.city << ";" << x->second.fullAddress.state << ";" <<
+        x->second.fullAddress.zip << endl;
+    }
+
     return true;
 }
 
 bool DataCenter::saveProviders(string fileName) {
+    ofstream outFile(fileName);
+    if (!outFile.is_open())
+        return false; 
+    
+    for(auto x = providerMap.begin(); x != providerMap.end(); ++x) {
+        outFile.precision(6);
+        outFile.fill('0');
+        outFile << x->second.name << ";" << x->second.memberNumber << ";" << x->second.phoneNumber << ";"<<
+        x->second.fullAddress.streetAddress << ";" << x->second.fullAddress.city << ";" << x->second.fullAddress.state << ";" <<
+        x->second.fullAddress.zip << ";" << x->second.weeklyConsultationFees << endl;
+    }
+
     return true;
 }
 
 bool DataCenter::saveReports(string fileName) {
+    //TODO 
     return true;
 }
 

@@ -77,6 +77,7 @@ class DataCenter {
         void newWeek();
         void printServiceList();
         void printProviders();
+        void printMembers();
         
         //Loading data from disk
         bool loadServices(string);
@@ -88,7 +89,7 @@ class DataCenter {
         bool saveServices(string);
         bool saveMembers(string);
         bool saveProviders(string);
-        bool saveReports(string);
+        bool saveReports(string); //TODO
         
         //Data management
         void addService(Service & service);

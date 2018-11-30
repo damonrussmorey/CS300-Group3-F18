@@ -1,10 +1,10 @@
 // service name;cost;code
+Acupuncture;110.5;549567
 Aerobics Exercise;100;883948
+Aromatherapy;42.24;710478
 Dietitian;50;598470
+Gentle Hug;5.6;420690
 Massage;15;169420
 Shock Therapy;200;666420
-Gentle Hug;5.60;420690
-Acupuncture;110.5;549567
-Water Torture;666.69;340291
 Slap on the Face;11;392850
-Aromatherapy;42.24;710478
+Water Torture;666.69;340291

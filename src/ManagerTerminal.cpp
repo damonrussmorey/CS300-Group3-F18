@@ -61,6 +61,7 @@ void ManagerTerminal::run() {
   //main loop for manager terminal operations
   running = true;
   while(running) {
+      cout << "\n\nManager Terminal Main Menu\n";
     opt = getOption(
            "Select an option from the list:\n" 
            "1) Manage Service Directory\n"
@@ -72,15 +73,19 @@ void ManagerTerminal::run() {
     switch(opt) {
       case 1:
         switch(getOption("1) Add Service\n"
-                         "2) Remove Service"
-                         /*"\n3) Modify Service"*/, 1, 2/*3*/)) {
+                         "2) Remove Service\n"
+                         "3) Display All services"
+                         /*"\n4) Modify Service"*/, 1, 3/*4*/)) {
           case 1:
             addService();
             break;
           case 2:
             removeService();
             break;
-          /*case 3:
+        case 3:
+            dc->printServiceList();
+            break;
+          /*case 4:
             modifyService();
             break;*/
           default:
@@ -90,15 +95,20 @@ void ManagerTerminal::run() {
         break;
       case 2:
         switch(getOption("1) Add Member\n"
-                         "2) Remove Member"
-                         /*"\n3) Modify Member"*/, 1, 2/*3*/)) {
+                         "2) Remove Member\n"
+                         "3) Display All Memes"
+
+                         /*"\n4) Modify Member"*/, 1, 3 /*4*/)) {
           case 1:
             addMember();
             break;
           case 2:
             removeMember();
             break;
-          /*case 3:
+        case 3:
+            dc->printMembers();
+            break;
+          /*case 4:
             modifyMember();
             break;*/
           default:
@@ -108,15 +118,19 @@ void ManagerTerminal::run() {
         break;
       case 3:
         switch(getOption("1) Add Provider\n"
-                         "2) Remove Provider"
-                         /*"\n3) Modify Provider"*/, 1, 2/*3*/)) {
+                         "2) Remove Provider\n"
+                         "3) Display all Providers\n"
+                         /*"\n4) Modify Provider"*/, 1, 3/*4*/)) {
           case 1:
             addProvider();
             break;
           case 2:
             removeProvider();
             break;
-          /*case 3:
+        case 3:
+            dc->printProviders();
+            break;
+          /*case 4:
             modifyProvider();
             break;*/
           default:
@@ -167,8 +181,8 @@ void ManagerTerminal::addMember(void) {
 }
 
 //remove member to Data Center through Manager terminal
-void ManagerTerminal::removeMember(void) {
-	string name;
+void ManagerTerminal::removeMember(void) { 
+    string name;
 	name = getString("Enter full name of member to be removed");
 	if(dc->hasMember(name)) {
 		dc->removeMember(name);
