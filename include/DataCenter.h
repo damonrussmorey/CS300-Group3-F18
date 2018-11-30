@@ -15,13 +15,14 @@ DataCenter class definition
 class Member {
     public:
         Member();
-        Member(string, string, address &);
+        Member(string, string, string, address &);
         ~Member();
         void consultation(Service & service);
         bool operator<(const Member & member) const;
         bool operator==(const Member & member) const;
         void clear();
         string name;
+        string memberNumber;
         string phoneNumber;
         address fullAddress;
         bool status;
