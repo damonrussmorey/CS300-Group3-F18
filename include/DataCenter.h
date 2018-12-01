@@ -99,10 +99,12 @@ class DataCenter {
         // TODO: untested
         bool hasService(string);
         bool hasMember(string);
-            bool memberStatus(string);
+        bool memberStatus(string);
         bool hasProvider(string);
-        void removeService(string);
         bool modifyService(string);
+        bool modifyMember(string);
+        bool modifyProvider(string);
+        void removeService(string);
         void removeMember(string);
         void removeProvider(string);
 

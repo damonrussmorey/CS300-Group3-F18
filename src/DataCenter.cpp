@@ -485,6 +485,74 @@ void DataCenter::removeMember(string memberName) {
   memberMap.erase(memberName);
 }
 
+    
+bool DataCenter::modifyService(string serviceCode) { 
+    // Try to retrieve service from database
+    Service * service = &serviceMap.at(serviceCode);
+    int choice = 0;
+
+    // If couldn't retrieve service, return failure
+    if (!service)
+        return false;
+    
+    do {
+        cout << "Service name: " << service->serviceName << endl;
+        cout << "Enter a new name for this service? 0-no;1-yes";
+        cin >> choice;
+        if (cin.fail()) {cin.clear(); choice = 2;} 
+    } while (choice != 0 && choice != 1);
+    
+    // Modify name of service
+    if (choice) {
+        do {
+            cout << "Enter new name, up to 20 chars:\n";
+            getline(cin, service->serviceName); 
+        } while(service->serviceName.size() > 20);
+    }
+
+    do {
+        cout << "Service fee: " << service->fee << endl;
+        cout << "Enter a new fee for this service? 0-no;1-yes";
+        cin >> choice;
+        if (cin.fail()) {cin.clear(); choice = 2;} 
+    } while (choice != 0 && choice != 1);
+    
+    // Modify cost of service
+    if (choice) {
+        string tempMoney;
+        do { cout << "\nEnter new fee, up to 999.99: ";
+            cin >> get_money(tempMoney);
+        } while (stold(tempMoney) > 999.99);
+        service->fee = stold(tempMoney);
+    }
+    return true;
+}
+
+bool DataCenter::modifyProvider(string providerID) { 
+    // Try to retrieve provider from database
+    Provider * provider= &providerMap.at(providerID);
+    //int choice = 0;
+
+    // If couldn't retrieve provider, return failure
+    if (!provider)
+        return false;
+    
+    return true;
+}
+ 
+
+bool DataCenter::modifyMember(string memberID) { 
+    // Try to retrieve member from database
+    Member * member = &memberMap.at(memberID);
+    //int choice = 0;
+
+    // If couldn't retrieve member, return failure
+    if (!member)
+        return false;
+
+    return true;
+}
+
 //check if data center has service 
 bool DataCenter::hasService(string serviceCode) {
   try {
