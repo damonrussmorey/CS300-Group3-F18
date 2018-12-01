@@ -21,12 +21,31 @@ cd bin
 ***CRITICAL NOTE***
 DO NOT DO
 ./bin/Demo
-
 WILL ENCOUTER ERRORS WITH FILE WRITES
+
 
 ======= How to install Google Test =======
 Instructions from https://www.srcmake.com/google-cpp-test-framework
 ***If any problems are encountered, view link, it includes a video tutorial***
+
+***A STARTING NOTE***
+At present, there are extra files in the test directory, these were established and left to 
+accept more tests at a later time.
+
+***ALSO***
+Check the test directory of this project before you start INSTALLING.
+If there are any folders or directories besides the following list, remove them immediately.
+
+defs.h
+DataCenter.h
+DataCenter.cpp
+DataCenterTest.cpp
+CMakeLists.txt
+ManagerTerminalTest.cpp
+ProviderTerminalTest.cpp
+ReporterTest.cpp
+stash (a directory)
+
 
 Ultimately, what we are trying to do is install
 google test to the user's lib folder. (/usr/lib)
@@ -50,8 +69,9 @@ For our ChocAn project, tests are compiled and run in the following way.
 ***from directory 'test'***
 make
 ./executeTests
-make clean     //Cleaning can be a good habit
+make clean     //Cleaning can be a good habit :)
 
+DONE
 
 ======= Extra On Making and Setting up Google Test =======
 To actually start makeing and running tests, create the following files in
