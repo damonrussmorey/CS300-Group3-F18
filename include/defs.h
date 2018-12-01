@@ -30,6 +30,7 @@ using namespace std;
 int getOption(string prompt, int lower, int upper);
 string getString(string prompt);
 void clear();
+bool getYesOrNo(string prompt);
 
 struct address {
   address();

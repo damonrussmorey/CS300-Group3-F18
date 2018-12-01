@@ -5,8 +5,6 @@ ManagerTerminal.h
 
 #include "DataCenter.h"
 
-void clear();
-
 class ManagerTerminal {
   public:
     //create manager terminal/with reference to data center
@@ -24,6 +22,8 @@ class ManagerTerminal {
     void addMember(void);
     void removeMember(void);
     void modifyMember(void);
+    void suspendMember(void);
+    void activateMember(void);
     void addProvider(void);
     void removeProvider(void);
     void modifyProvider(void);

@@ -38,6 +38,24 @@ string getString(string prompt) {
 	return response;
 }
 
+bool getYesOrNo(string prompt) {
+  char opt;
+  while(true) {
+    cout << prompt << " (y/n): ";
+    cout.flush();
+    cin >> opt;
+    if(cin.fail()) {
+      cin.clear();
+      opt = 'n';
+    }
+    cin.ignore(100, '\n');
+    if(opt == 'y')
+      return true;
+    else if(opt == 'n')
+      return false;
+  }
+}
+
 //clear screen
 void clear() {
 	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
@@ -72,20 +90,17 @@ void ManagerTerminal::run() {
       clear();
     switch(opt) {
       case 1:
+        dc->printServiceList();
         switch(getOption("1) Add Service\n"
                          "2) Remove Service\n"
-                         "3) Display All services"
-                         "\n4) Modify Service", 1, 4)) {
+                         "3) Modify Service", 1, 3)) {
           case 1:
             addService();
             break;
           case 2:
             removeService();
             break;
-        case 3:
-            dc->printServiceList();
-            break;
-        case 4:
+          case 3:
             modifyService();
             break;
           default:
@@ -94,22 +109,26 @@ void ManagerTerminal::run() {
         }
         break;
       case 2:
+            dc->printMembers();
         switch(getOption("1) Add Member\n"
                          "2) Remove Member\n"
-                         "3) Display All Memes"
-
-                         "\n4) Modify Member", 1, 4)) {
+                         "3) Modify Member\n"
+                         "4) Suspend Member\n"
+                         "5) Activate Member", 1, 5)) {
           case 1:
             addMember();
             break;
           case 2:
             removeMember();
             break;
-        case 3:
-            dc->printMembers();
+          case 3:
+            modifyMember();
             break;
           case 4:
-            modifyMember();
+            suspendMember();
+            break;
+          case 5:
+            activateMember();
             break;
           default:
             assert(true);
@@ -117,20 +136,17 @@ void ManagerTerminal::run() {
         }
         break;
       case 3:
+        dc->printProviders();
         switch(getOption("1) Add Provider\n"
                          "2) Remove Provider\n"
-                         "3) Display all Providers\n"
-                         "\n4) Modify Provider", 1, 4)) {
+                         "3) Modify Provider", 1, 3)) {
           case 1:
             addProvider();
             break;
           case 2:
             removeProvider();
             break;
-        case 3:
-            dc->printProviders();
-            break;
-        case 4:
+          case 3:
             modifyProvider();
             break;
           default:
@@ -183,7 +199,7 @@ void ManagerTerminal::addMember(void) {
 //remove member to Data Center through Manager terminal
 void ManagerTerminal::removeMember(void) { 
     string id;
-	id = getString("Enter 9 digit ID of member to be removed");
+	id = getString("Enter ID of member to be removed");
 	if(dc->hasMember(id)) {
 		dc->removeMember(id);
 		cout << "Member successfully removed from the system." << endl;
@@ -195,13 +211,37 @@ void ManagerTerminal::removeMember(void) {
 void ManagerTerminal::modifyMember(void) {
     string id;
 
-    id = getString("Enter full id of member to be modified");
+    id = getString("Enter ID of member to be modified");
 
     if (dc->modifyMember(id)) {
         cout << "Member updated!" << endl;
     } else {
         cout << "Member was not found in the system." << endl;
     }
+}
+
+void ManagerTerminal::suspendMember(void) {
+  string id;
+
+  id = getString("Enter ID of member to supend");
+
+  if(dc->suspendMember(id)) {
+    cout << "Member suspended." << endl;
+  } else {
+    cout << "Member was not found in the system." << endl;
+  }
+}
+
+void ManagerTerminal::activateMember(void) {
+  string id;
+
+  id = getString("Enter ID of member to activate");
+
+  if(dc->activateMember(id)) {
+    cout << "Member activated." << endl;
+  } else {
+    cout << "Member was not found in the system." << endl;
+  }
 }
 
 //add new provider to Data Center through Manager terminal
@@ -226,13 +266,13 @@ void ManagerTerminal::addProvider(void) {
     
 
     do{ adr.zip = getString("Enter zip code");
-    } while (stoi(adr.zip) < 10000 || stoi(adr.zip) > 99999);
+  } while (stoi(adr.zip) < 10000 || stoi(adr.zip) > 99999);
 
 
 	Provider p(name, number, phone, adr, 0);
 	dc->addProvider(p);
     
-    cout << "Added " << p.name << " to providers!\n\n";
+  cout << "Added " << p.name << " to providers!\n\n";
 }
 
 
@@ -249,9 +289,9 @@ void ManagerTerminal::removeProvider(void) {
 }
 
 void ManagerTerminal::modifyProvider(void) {
-   string name;
-   name = getString("Enter the 9 digit providerID to be modified");
-   if(dc->modifyProvider(name)) {
+   string id;
+   id = getString("Enter ID of provider to be modified");
+   if(dc->modifyProvider(id)) {
        cout << "Provider modified!\n";
    } else {
        cout << "Provider was not found in the system." << endl;
@@ -266,7 +306,7 @@ void ManagerTerminal::addService(void) {
 
     do { name = getString("Enter name of service to be added, up to 20 letters"); } while (name.size() > 20);
 
-    do { cout << "\nEnter cost of service to be added, up to 999.99: ";
+    do { cout << "\nEnter cost of service to be added, up to $999.99: ";
         cin >> get_money(cost);
     } while (stold(cost) > 999.99);
 
@@ -290,7 +330,7 @@ void ManagerTerminal::removeService(void) {
 
 void ManagerTerminal::modifyService(void) {
     string name;
-    name = getString("Enter name of service to be modified");
+    name = getString("Enter code of service to be modified");
     if(dc->modifyService(name)) {
         cout << "Modified service!\n";
     } else {
@@ -301,12 +341,12 @@ void ManagerTerminal::modifyService(void) {
 //Request reports through manager terminal 
 void ManagerTerminal::requestReport(void) {
 	int opt;
-	string name;
+	string id;
 	opt = getOption("Select an option from the list:"
 			"1) All Reports\n"
 			"2) Manager Report\n"
 			"3) Member Report\n"
-			"4) Provider Report\n",1,4);
+			"4) Provider Report",1,4);
 	switch(opt) {
 		case 1:
 			dc->allReports();
@@ -319,8 +359,9 @@ void ManagerTerminal::requestReport(void) {
 			break;
 
 		case 3:
-			name = getString("Enter the member name for the requested report");
-			if(dc->memberReport(name)) {
+      dc->printMembers();
+			id = getString("Enter the member ID for the requested report");
+			if(dc->memberReport(id)) {
 				cout << "Member report written." << endl;
 			} else {
 				cout << "Didn't find member, no report written." << endl;
@@ -328,8 +369,9 @@ void ManagerTerminal::requestReport(void) {
 			break;
 
     case 4:
-      name = getString("Enter the provider name for the requested report");
-      if(dc->providerReport(name)) {
+      dc->printProviders();
+      id = getString("Enter the provider ID for the requested report");
+      if(dc->providerReport(id)) {
         cout << "Provider report written." << endl;
       } else {
         cout << "Didn't find provider, no report written." << endl;
