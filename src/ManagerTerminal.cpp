@@ -157,8 +157,8 @@ void ManagerTerminal::addMember(void) {
 
 	do { name = getString("Enter full name of member to be added, up to 25 letters"); } while (name.size() > 25);
     
-    do { number = getString("Enter the 9 digit member ID of this new member");
-    } while (stoi(number) < 100000000 || stoi(number) > 999999999);
+    do { number = getString("Enter the 9 digit member ID of this new member. IDs must not start with a 0");
+    } while (number.size());
     
     do { phone = getString("Enter phone number in the form ###-###-####");
        //TODO this check doesn't work.
@@ -213,7 +213,7 @@ void ManagerTerminal::addProvider(void) {
 
 	do { name = getString("Enter full name of provider to be added, up to 25 letters"); } while (name.size() > 25);
     
-    do { number = getString("Enter the 9 digit provider ID of this new provider");
+    do { number = getString("Enter the 9 digit provider ID of this new provider. IDs must not start with 0");
     } while (stoi(number) < 100000000 || stoi(number) > 999999999);
     
     do { phone = getString("Enter phone number in the form ###-###-####");

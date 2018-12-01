@@ -1,10 +1,10 @@
-Chris Grimjack;111111111;5123-456-7890;36 Ashcraft Court;La Mesa;CA;91941;0
+Chris Grimjack;111111111;5123-456-7890;36 Ashcraft Court;La Mesa;CA;91941;931.5
 Truco Lance;220603494;2909-414-2046;249 Bel Meadow Drive;Los Angeles;CA;90017;0
 Lamda Funca;249853649;4617-371-5901;834 Aspen Court;Boston;MA;02114;0
 Phil Fillip;268149370;4757-447-0356;459 Murry Street;Norfolk;VA;23510;0
 Marca Lanley;627151058;907-960-978;92862 Ritter Avenue;Detroit;MI;48226;0
 Chandler Puth;804454595;907-822-5218;2136 Kidd Avenue;Glennallen;AK;99588;0
-Janet Macki;869188478;8240-695-2364;47 Chatham Way;Temple Hills;MD;20031;0
+Janet Macki;869188478;8240-695-2364;47 Chatham Way;Temple Hills;MD;20031;204.72
 Melanie Mamais;902938870;409-243-6889;2317 Brookview Drive;Hamshire;TX;77445;0
 George Glass;910189247;4361-815-0865;326 Glenview Drive;Corpus Christi;TX;78401;0
-Jeffrey Ster;930478870;951-676-9996;3603 Brown Bear Drive;Rancho California;CA;92390;0
+Jeffrey Ster;930478870;951-676-9996;3603 Brown Bear Drive;Rancho California;CA;92390;150

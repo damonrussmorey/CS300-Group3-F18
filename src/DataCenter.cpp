@@ -148,8 +148,7 @@ DataCenter::~DataCenter() {
         cout << "Failed to save providers from disk\n";
     }
     
-    // TODO
-    if (saveReports("")) {
+    if (saveReports(REPORTS)) {
         cout << "Successfully saved reports from disk\n";
     } else {
         cout << "Failed to save reports from disk\n";
@@ -338,8 +337,8 @@ bool DataCenter::loadReports(string fileName) {
     ifstream inFile;  
     
     // Temporary variables to read from file
-    Provider provider;
-    Member member;
+    Provider * provider;
+    Member * member;
     Service service;
 
     string providerID, memberName, serviceCode;
@@ -358,22 +357,18 @@ bool DataCenter::loadReports(string fileName) {
         getline(inFile, dateEntered);
 
         // Point to references of read in provider, member, service
-        provider = providerMap.at(providerID);
-        member = memberMap.at(memberName);
+        provider = &providerMap.at(providerID);
+        member = &memberMap.at(memberName);
 
         service = Service(serviceMap.at(serviceCode));
-        service.member = &member;
-        service.provider = &provider;
+        service.member = member;
+        service.provider = provider;
         service.dateProvided = dateProvided;
         service.dateEntered = dateEntered; 
-
         // Add service to provider and member
-        provider.consultation(service);
-        member.consultation(service); 
+        provider->consultation(service);
+        member->consultation(service); 
     }
-
-    // Create Member report from Provider report
-    // Create Manager report from Provider report
 
     inFile.close();
     return true;
@@ -433,7 +428,27 @@ bool DataCenter::saveProviders(string fileName) {
 }
 
 bool DataCenter::saveReports(string fileName) {
-    //TODO 
+    ofstream outFile(fileName);
+
+    if (!outFile.is_open())
+        return false; 
+    
+    // provider id;member name;service code;dateProvided;dateEntered
+    int size = 0;
+    Provider currProv;
+    Service currServ;
+    for(auto x = providerMap.begin(); x != providerMap.end(); ++x) { 
+        currProv = x->second;
+        size = currProv.weeklyConsultations.size();
+        // Write to disk all rendered services by this provider
+        for (int i = 0; i < size; ++i) {
+            currServ= currProv.weeklyConsultations[i];
+            outFile << currProv.memberNumber << ";" << currServ.member->name << ";" 
+            << currServ.serviceCode << ";" << currServ.dateProvided << ";" << currServ.dateEntered << endl;
+        }
+    }
+    
+    outFile.close();
     return true;
 }
 

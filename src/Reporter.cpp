@@ -41,16 +41,17 @@ bool DataCenter::memberReport(string memberName) {
 
 void DataCenter::memberReport(const Member &member) {
   ofstream f;
+  ofstream outFile;
   
-  //open file to write report to
+ //open files to write report to
   f.open(string("member_reports/") + dateString(NULL, '_') + "_" + member.name);
-  assert(f);
 
   //preamble, member info
-  f << member.name << endl
-    << member.phoneNumber << endl
+  f << "Member name: " << member.name << endl
+    << "Member number: " << member.memberNumber << endl
+    << "Member phone: " << member.phoneNumber << endl
     << member.fullAddress.streetAddress << endl
-    << member.fullAddress.city << ", " << member.fullAddress.state << endl
+    << member.fullAddress.city << ", " << member.fullAddress.state << ", "
     << member.fullAddress.zip << endl << endl;
 
   //summary of week
