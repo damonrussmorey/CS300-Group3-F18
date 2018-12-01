@@ -153,7 +153,8 @@ void ManagerTerminal::run() {
 //add new member to Data Center through Manager terminal
 void ManagerTerminal::addMember(void) {
 	string name, number, phone;
-	address adr;  
+	address adr;
+	regex phone_format("\\d{3}-\\d{3}-\\d{4}");
 
 	do { name = getString("Enter full name of member to be added, up to 25 letters"); } while (name.size() > 25);
     
@@ -161,8 +162,7 @@ void ManagerTerminal::addMember(void) {
     } while (stoi(number) < 100000000 || stoi(number) > 999999999);
     
     do { phone = getString("Enter phone number in the form ###-###-####");
-       //TODO this check doesn't work.
-    } while (phone.size() != 12);
+    } while (!regex_match(phone, phone_format));
     
     do { adr.streetAddress = getString("Enter street address, up to 25 letters"); } while (adr.streetAddress.size() > 25);	
 
@@ -210,6 +210,7 @@ cout << "Member was not found in the system." << endl;
 void ManagerTerminal::addProvider(void) {
 	string name, number, phone;
 	address adr;
+	regex phone_format("\\d{3}-\\d{3}-\\d{4}");
 
 	do { name = getString("Enter full name of provider to be added, up to 25 letters"); } while (name.size() > 25);
     
@@ -217,8 +218,7 @@ void ManagerTerminal::addProvider(void) {
     } while (stoi(number) < 100000000 || stoi(number) > 999999999);
     
     do { phone = getString("Enter phone number in the form ###-###-####");
-       //TODO this check doesn't work.
-    } while (phone.size() != 12);
+    } while (!regex_match(phone, phone_format));
     
     do { adr.streetAddress = getString("Enter street address, up to 25 letters"); } while (adr.streetAddress.size() > 25);	
 
