@@ -30,9 +30,9 @@ void DataCenter::allReports() {
   eftReport();
 }
 
-bool DataCenter::memberReport(string memberName) {
+bool DataCenter::memberReport(string memberID) {
   try {
-    memberReport(memberMap.at(memberName));
+    memberReport(memberMap.at(memberID));
     return true;
   } catch(const out_of_range &) {
     return false;

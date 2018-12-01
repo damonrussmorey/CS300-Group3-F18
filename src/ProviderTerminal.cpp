@@ -17,7 +17,7 @@ ProviderTerminal::ProviderTerminal(DataCenter * dc) {
 
 void ProviderTerminal::run(void) {
 	string providerID;
-	string memberName;
+	string memberID;
 	string serviceCode;
   string dateProvided;
 
@@ -52,13 +52,13 @@ void ProviderTerminal::run(void) {
 		switch(choice){
 		case 1:
       dc->printMembers();
-			memberName = getString("Enter member name");
-			if(!dc->hasMember(memberName)) {
-				cout << "Invalid member name.\n";
+			memberID = getString("Enter 9 digit member ID");
+			if(!dc->hasMember(memberID)) {
+				cout << "Invalid member ID.\n";
 				break;
 			}
 
-			if(!dc->memberStatus(memberName)) {
+			if(!dc->memberStatus(memberID)) {
 				cout << "Member is suspended. Cannot provide member with any services.\n";
 				break;
 			}
@@ -78,7 +78,7 @@ void ProviderTerminal::run(void) {
         cout << "Invalid date format." << endl;
       } while(true);
 
-			if(dc->confirmConsultation(memberName, providerID, serviceCode, dateProvided)) {
+			if(dc->confirmConsultation(memberID, providerID, serviceCode, dateProvided)) {
         cout << "Consultation successfully recorded with Data Center." << endl;
       } else {
         cout << "Error recording consultation with Data Center, try again later." << endl;

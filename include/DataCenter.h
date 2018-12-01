@@ -100,6 +100,8 @@ class DataCenter {
         bool hasService(string);
         bool hasMember(string);
         bool memberStatus(string);
+        bool suspendMember(string);
+        bool activateMember(string);
         bool hasProvider(string);
         bool modifyService(string);
         bool modifyMember(string);
