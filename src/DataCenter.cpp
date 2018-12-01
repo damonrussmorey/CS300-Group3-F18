@@ -72,25 +72,21 @@ Service::Service(string code, string name, double f) {
 }
 
 // Service constructor for members and providers
-Service::Service(const Service &s, const Member *m, const Provider *p) {
+Service::Service(const Service &s, const Member *m, const Provider *p, string dateProvided) {
   stringstream ss;
   tm *timeinfo;
+	time_t t;
 
 	fee = s.fee;
 	serviceCode = s.serviceCode;
-    serviceName = s.serviceName;
+  serviceName = s.serviceName;
 	provider = p;
 	member = m;
-    dateEntered = s.dateEntered;
-    dateProvided = s.dateProvided;
-	time_t t;
-	time(&t);
-	timeinfo = localtime(&t);
-  ss << timeinfo->tm_mon << '-' << timeinfo->tm_mday << '-' << timeinfo->tm_year+1900;//11-30-2018;11-30-2018 15:35:23
-  dateProvided = ss.str();
-  ss.clear();ss.str("");
+  this->dateProvided = s.dateProvided;
 
-  t += 300;   //5min to record, artificial delay
+  //record now as the date entered
+  //schould have used date format function strftime
+	time(&t);
   timeinfo = localtime(&t);
   ss << timeinfo->tm_mon << '-' << timeinfo->tm_mday << '-' << timeinfo->tm_year+1900 << ' ' << timeinfo->tm_hour << ':' << timeinfo->tm_min << ':' << timeinfo->tm_sec;
   dateEntered = ss.str();
@@ -167,7 +163,7 @@ DataCenter::~DataCenter() {
 }
 
 
-bool DataCenter::confirmConsultation(string memberName, string providerID, string serviceCode) {
+bool DataCenter::confirmConsultation(string memberName, string providerID, string serviceCode, string dateProvided) {
   try{
     //get the member, provider, and service
     Member &m = memberMap.at(memberName);
@@ -175,7 +171,7 @@ bool DataCenter::confirmConsultation(string memberName, string providerID, strin
     Service &s = serviceMap.at(serviceCode);
 
     //create consultaton for reporting
-    Service c(s, &m, &p);
+    Service c(s, &m, &p, dateProvided);
 
     //give to member and provider
     m.consultation(c);
