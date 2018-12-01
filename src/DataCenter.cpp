@@ -504,7 +504,8 @@ bool DataCenter::modifyService(string serviceCode) {
     // If couldn't retrieve service, return failure
     if (!service)
         return false;
-    
+   
+    // Ask is user wants to modify name
     do {
         cout << "Service name: " << service->serviceName << endl;
         cout << "Enter a new name for this service? 0-no;1-yes";
@@ -520,6 +521,7 @@ bool DataCenter::modifyService(string serviceCode) {
         } while(service->serviceName.size() > 20);
     }
 
+    // Ask is user wants to modify service fee
     do {
         cout << "Service fee: " << service->fee << endl;
         cout << "Enter a new fee for this service? 0-no;1-yes";
@@ -541,12 +543,63 @@ bool DataCenter::modifyService(string serviceCode) {
 bool DataCenter::modifyProvider(string providerID) { 
     // Try to retrieve provider from database
     Provider * provider= &providerMap.at(providerID);
-    //int choice = 0;
+    int choice = 0;
 
     // If couldn't retrieve provider, return failure
     if (!provider)
         return false;
+
+    // Ask is user wants to modify name
+    do {
+        cout << "provider name: " << provider->name << endl;
+        cout << "Enter a new name for this provider? 0-no;1-yes";
+        cin >> choice;
+        if (cin.fail()) {cin.clear(); choice = 2;} 
+    } while (choice != 0 && choice != 1);
     
+    // Modify name of provider
+    if (choice) {
+        do {
+            cout << "Enter new name, up to 25 chars:\n";
+            getline(cin, provider->name); 
+        } while(provider->name.size() > 25);
+    }
+
+    // Ask if user wants to change phone
+    do {
+        cout << "provider phone: " << provider->phoneNumber << endl;
+        cout << "Enter a new phone number for this provider? 0-no;1-yes";
+        cin >> choice;
+        if (cin.fail()) {cin.clear(); choice = 2;} 
+    } while (choice != 0 && choice != 1);
+
+    // Modify phone of provider
+    regex phone_format("\\d{3}-\\d{3}-\\d{4}");
+    if (choice) {
+        do { provider->phoneNumber = getString("Enter new phone number in the form ###-###-####");
+        } while (!regex_match(provider->phoneNumber, phone_format));
+
+    }
+
+    // Ask if user wants to change address
+    do {
+        cout << "provider address: " << provider->fullAddress.streetAddress << endl;
+        cout << provider->fullAddress.city << ", " << provider->fullAddress.state << ", " << provider->fullAddress.zip << endl;
+        cout << "Enter a new address for this provider? 0-no;1-yes";
+        cin >> choice;
+        if (cin.fail()) {cin.clear(); choice = 2;} 
+    } while (choice != 0 && choice != 1);
+    
+    // Modify address
+    if (choice) {
+        do { provider->fullAddress.streetAddress = getString("Enter new street address, up to 25 letters"); } while (provider->fullAddress.streetAddress.size() > 25);
+        do { provider->fullAddress.city = getString("Enter new city, up to 14 letters"); } while (provider->fullAddress.city.size() > 14);
+        do { provider->fullAddress.state = getString("Enter new state, ex. OR"); } while (provider->fullAddress.state.size() != 2); 
+        do{ provider->fullAddress.zip = getString("Enter new zip code");
+        } while (stoi(provider->fullAddress.zip) < 10000 || stoi(provider->fullAddress.zip) > 99999);
+    }
+
+
     return true;
 }
  
@@ -554,11 +607,62 @@ bool DataCenter::modifyProvider(string providerID) {
 bool DataCenter::modifyMember(string memberID) { 
     // Try to retrieve member from database
     Member * member = &memberMap.at(memberID);
-    //int choice = 0;
+    int choice = 0;
 
     // If couldn't retrieve member, return failure
     if (!member)
         return false;
+    
+    // Ask is user wants to modify name
+    do {
+        cout << "Member name: " << member->name << endl;
+        cout << "Enter a new name for this member? 0-no;1-yes";
+        cin >> choice;
+        if (cin.fail()) {cin.clear(); choice = 2;} 
+    } while (choice != 0 && choice != 1);
+    
+    // Modify name of member
+    if (choice) {
+        do {
+            cout << "Enter new name, up to 25 chars:\n";
+            getline(cin, member->name); 
+        } while(member->name.size() > 25);
+    }
+
+    // Ask if user wants to change phone
+    do {
+        cout << "Member phone: " << member->phoneNumber << endl;
+        cout << "Enter a new phone number for this member? 0-no;1-yes";
+        cin >> choice;
+        if (cin.fail()) {cin.clear(); choice = 2;} 
+    } while (choice != 0 && choice != 1);
+
+    // Modify phone of member
+    regex phone_format("\\d{3}-\\d{3}-\\d{4}");
+    if (choice) {
+        do { member->phoneNumber = getString("Enter new phone number in the form ###-###-####");
+        } while (!regex_match(member->phoneNumber, phone_format));
+
+    }
+
+    // Ask if user wants to change address
+    do {
+        cout << "Member address: " << member->fullAddress.streetAddress << endl;
+        cout << member->fullAddress.city << ", " << member->fullAddress.state << ", " << member->fullAddress.zip << endl;
+        cout << "Enter a new address for this member? 0-no;1-yes";
+        cin >> choice;
+        if (cin.fail()) {cin.clear(); choice = 2;} 
+    } while (choice != 0 && choice != 1);
+    
+    // Modify address
+    if (choice) {
+        do { member->fullAddress.streetAddress = getString("Enter new street address, up to 25 letters"); } while (member->fullAddress.streetAddress.size() > 25);
+        do { member->fullAddress.city = getString("Enter new city, up to 14 letters"); } while (member->fullAddress.city.size() > 14);
+        do { member->fullAddress.state = getString("Enter new state, ex. OR"); } while (member->fullAddress.state.size() != 2); 
+        do{ member->fullAddress.zip = getString("Enter new zip code");
+        } while (stoi(member->fullAddress.zip) < 10000 || stoi(member->fullAddress.zip) > 99999);
+    }
+
 
     return true;
 }
