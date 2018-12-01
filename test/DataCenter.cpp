@@ -78,8 +78,9 @@ Service::Service(const Service &s, const Member *m, const Provider *p) {
     serviceName = s.serviceName;
 	provider = p;
 	member = m;
-    dateEntered = s.dateEntered;
-    dateProvided = s.dateProvided;
+	//Not ready at time of writing test
+    //dateEntered = s.dateEntered;
+    //dateProvided = s.dateProvided;
 	/*time_t t;
 	time(&t);
 	date = localtime(&t);*/
@@ -88,31 +89,33 @@ Service::Service(const Service &s, const Member *m, const Provider *p) {
 Service::Service(){}
 Service::~Service(){}
 
-// Data Center
+// Data Center 
+//
+// (muted for testing, readout makes tests long to read)
 DataCenter::DataCenter() {
 	//load data from files
     if (loadServices(PROVIDER_DIRECTORY)) {
-        cout << "Successfully loaded services from disk\n";
+	//cout << "Successfully loaded services from disk\n";
     } else {
-        cout << "Failed to load services from disk\n";
+        //cout << "Failed to load services from disk\n";
     }
 
     if (loadMembers(MEMBERS)) {
-        cout << "Successfully members from disk\n";
+        //cout << "Successfully members from disk\n";
     } else {
-        cout << "Failed to load members from disk\n";
+        //cout << "Failed to load members from disk\n";
     }
 
     if (loadProviders(PROVIDERS)) {
-        cout << "Successfully loaded providers from disk\n";
+        //cout << "Successfully loaded providers from disk\n";
     } else {
-        cout << "Failed to load providers from disk\n";
+        //cout << "Failed to load providers from disk\n";
     }
 
     if (loadReports(REPORTS)) {
-        cout << "Successfully loaded reports from disk\n";
+        //cout << "Successfully loaded reports from disk\n";
     } else {
-        cout << "Failed to load reports from disk\n";
+        //cout << "Failed to load reports from disk\n";
     }
 
 	//TODO
@@ -121,6 +124,8 @@ DataCenter::DataCenter() {
 	weeklyConsultationFees = 0.0;
 }
 
+
+// (muted for testing, readout makes tests long to read)
 DataCenter::~DataCenter() {
 	//clean up dynamic data
 	//afaik, we don't have any, but then again we may be managing memory incorrectly
@@ -131,27 +136,27 @@ DataCenter::~DataCenter() {
 
     // Save data to disk
     if (saveServices(PROVIDER_DIRECTORY)) {
-        cout << "Successfully saved services from disk\n";
+        //cout << "Successfully saved services from disk\n";
     } else {
-        cout << "Failed to save services from disk\n";
+        //cout << "Failed to save services from disk\n";
     }
 
     if (saveMembers(MEMBERS)) {
-        cout << "Successfully members from disk\n";
+        //cout << "Successfully members from disk\n";
     } else {
-        cout << "Failed to save members from disk\n";
+        //cout << "Failed to save members from disk\n";
     }
 
     if (saveProviders(PROVIDERS)) {
-        cout << "Successfully saved providers from disk\n";
+        //cout << "Successfully saved providers from disk\n";
     } else {
-        cout << "Failed to save providers from disk\n";
+        //cout << "Failed to save providers from disk\n";
     }
     
     if (saveReports(REPORTS)) {
-        cout << "Successfully saved reports from disk\n";
+        //cout << "Successfully saved reports from disk\n";
     } else {
-        cout << "Failed to save reports from disk\n";
+        //cout << "Failed to save reports from disk\n";
     }
 }
 
@@ -302,6 +307,7 @@ bool DataCenter::loadMembers(string fileName) {
     return true;
 }
 
+// (muted for testing, readout makes tests long to read)
 bool DataCenter::loadProviders(string fileName) {
     ifstream inFile;
     
@@ -327,9 +333,10 @@ bool DataCenter::loadProviders(string fileName) {
         getline(inFile, fees);
 
         temp = Provider(name, number, phone, ad, stod(fees)); 
-        cout << temp.name << ";" <<temp.memberNumber <<";"<< temp.phoneNumber << ";" <<
+        /*cout << temp.name << ";" <<temp.memberNumber <<";"<< temp.phoneNumber << ";" <<
         temp.fullAddress.streetAddress << ";" << temp.fullAddress.city << ";" <<
         temp.fullAddress.state << ";" << temp.fullAddress.zip << ";" << temp.weeklyConsultationFees <<endl;
+	*/
 
         addProvider(temp);    
     }
