@@ -23,7 +23,7 @@ void ProviderTerminal::run(void) {
     do
     {    
         --attempts;
-        providerID = getString("\nEnter provider ID: ");
+        providerID = getString("\nEnter provider ID");
         providerID.resize(9);
         providerID.shrink_to_fit();
 
@@ -43,7 +43,8 @@ void ProviderTerminal::run(void) {
 				 "4. Log off", 1, 4);
 		switch(choice){
 		case 1:
-			memberName = getString("Enter member name: ");
+      dc->printMembers();
+			memberName = getString("Enter member name");
 			if(!dc->hasMember(memberName)) {
 				cout << "Invalid member name.\n";
 				break;
@@ -54,13 +55,19 @@ void ProviderTerminal::run(void) {
 				break;
 			}
 				
+      dc->printServiceList();
 			do
 			{
 				serviceCode = getString("Enter service Code: ");
 				if(!dc->hasService(serviceCode)) cout << "Invalid service Code.\n";
 			} while (!dc->hasService(serviceCode));
 
-			dc->confirmConsultation(memberName, providerID, serviceCode);
+			if(dc->confirmConsultation(memberName, providerID, serviceCode)) {
+        cout << "Consultation successfully recorded with Data Center." << endl;
+      } else {
+        cout << "Error recording consultation with Data Center, try again later." << endl;
+      }
+
 			break;
 		case 2:
 			cout << "Generating provider report at normal directory..." << endl;

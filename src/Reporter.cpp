@@ -44,7 +44,7 @@ void DataCenter::memberReport(const Member &member) {
   int serviceNum = 1;
   
  //open files to write report to
-  f.open(string("member_reports/") + member.name + "_" + dateString(NULL, '_') + ".txt");
+  f.open(string("../member_reports/") + member.name + "_" + dateString(NULL, '_') + ".txt");
 
   //preamble, member info
   f << "Member name: " << member.name << endl
@@ -87,7 +87,7 @@ void DataCenter::providerReport(const Provider &provider) {
   int serviceNum = 1;
   
   //open file to write report to
-  f.open(string("provider_reports/") + provider.name + "_" + dateString(NULL, '_') + ".txt");
+  f.open(string("../provider_reports/") + provider.name + "_" + dateString(NULL, '_') + ".txt");
 
   //preamble, provider info
   f << "Provider name: " << provider.name << endl
@@ -132,12 +132,11 @@ void DataCenter::managerReport() {
     int sumServices = 0;
     double sumFee = 0;
 
-  //financial math, ezpz
   //double membershipIncome = activeMemberCount * MEMBERSHIP_FEE;
   //double profit = membershipIncome - weeklyConsultationFees;
 
     //open file to write report to
-    f.open(string("manager_reports/") + dateString(NULL, '_')+ ".txt");
+    f.open(string("../manager_reports/") + dateString(NULL, '_')+ ".txt");
     f.precision(2);
     f.fill('0');
 
@@ -217,7 +216,7 @@ void DataCenter::managerReport() {
 // Refer back to the design document, section 4.6, page 13 -Yves
 void DataCenter::eftReport() {
     ofstream outFile;
-    outFile.open("EFT.txt");
+    outFile.open("../EFT.txt");
     
     // Check that the file is opened
     if (!outFile.is_open())
