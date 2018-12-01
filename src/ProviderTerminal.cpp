@@ -65,7 +65,7 @@ void ProviderTerminal::run(void) {
 		case 2:
 			cout << "Generating provider report at normal directory..." << endl;
 			dc->providerReport(providerID);
-			cout << "Done." << endl;
+			cout << "Done. Output and emailed provider reports." << endl;
 			break;
 		case 3:
             dc->printServiceList();
