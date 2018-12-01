@@ -73,6 +73,9 @@ Service::Service(string code, string name, double f) {
 
 // Service constructor for members and providers
 Service::Service(const Service &s, const Member *m, const Provider *p) {
+  stringstream ss;
+  tm *timeinfo;
+
 	fee = s.fee;
 	serviceCode = s.serviceCode;
     serviceName = s.serviceName;
@@ -80,9 +83,17 @@ Service::Service(const Service &s, const Member *m, const Provider *p) {
 	member = m;
     dateEntered = s.dateEntered;
     dateProvided = s.dateProvided;
-	/*time_t t;
+	time_t t;
 	time(&t);
-	date = localtime(&t);*/
+	timeinfo = localtime(&t);
+  ss << timeinfo->tm_mon << '-' << timeinfo->tm_mday << '-' << timeinfo->tm_year+1900;//11-30-2018;11-30-2018 15:35:23
+  dateProvided = ss.str();
+  ss.clear();ss.str("");
+
+  t += 300;   //5min to record, artificial delay
+  timeinfo = localtime(&t);
+  ss << timeinfo->tm_mon << '-' << timeinfo->tm_mday << '-' << timeinfo->tm_year+1900 << ' ' << timeinfo->tm_hour << ':' << timeinfo->tm_min << ':' << timeinfo->tm_sec;
+  dateEntered = ss.str();
 }
 
 Service::Service(){}
