@@ -15,6 +15,7 @@ Definitions for common structures and libraries for the entire project
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <regex>
 
 #define MEMBERSHIP_FEE 45.99
 #define BASE_CONSULTATION_FEE 120.00
