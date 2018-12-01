@@ -4,6 +4,12 @@ ProviderTerminal.cpp
 */
 
 #include "ProviderTerminal.h"
+
+//date format: MM-DD-YYYY
+static bool properDate(string date) {
+  int x;
+  return 3 == sscanf(date.c_str(), "%d-%d-%d", &x, &x, &x);
+}
     
 ProviderTerminal::ProviderTerminal(DataCenter * dc) {
     this->dc = dc;
@@ -13,6 +19,8 @@ void ProviderTerminal::run(void) {
 	string providerID;
 	string memberID;
 	string serviceCode;
+  string dateProvided;
+
     int attempts = 3;
     bool validatedProvider = false;   
     
@@ -62,7 +70,15 @@ void ProviderTerminal::run(void) {
 				if(!dc->hasService(serviceCode)) cout << "Invalid service Code.\n";
 			} while (!dc->hasService(serviceCode));
 
-			if(dc->confirmConsultation(memberID, providerID, serviceCode)) {
+      do {
+        dateProvided = getString("Enter consultation date (MM-DD-YYYY)");
+        //confirm proper date formatting
+        if(properDate(dateProvided))
+          break;
+        cout << "Invalid date format." << endl;
+      } while(true);
+
+			if(dc->confirmConsultation(memberID, providerID, serviceCode, dateProvided)) {
         cout << "Consultation successfully recorded with Data Center." << endl;
       } else {
         cout << "Error recording consultation with Data Center, try again later." << endl;
