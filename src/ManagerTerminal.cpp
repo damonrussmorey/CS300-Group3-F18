@@ -301,7 +301,7 @@ void ManagerTerminal::modifyService(void) {
 //Request reports through manager terminal 
 void ManagerTerminal::requestReport(void) {
 	int opt;
-	string name;
+	string nameID;
 	opt = getOption("Select an option from the list:"
 			"1) All Reports\n"
 			"2) Manager Report\n"
@@ -319,8 +319,8 @@ void ManagerTerminal::requestReport(void) {
 			break;
 
 		case 3:
-			name = getString("Enter the member name for the requested report");
-			if(dc->memberReport(name)) {
+			nameID = getString("Enter the member ID for the requested report");
+			if(dc->memberReport(nameID)) {
 				cout << "Member report written." << endl;
 			} else {
 				cout << "Didn't find member, no report written." << endl;
@@ -328,8 +328,8 @@ void ManagerTerminal::requestReport(void) {
 			break;
 
     case 4:
-      name = getString("Enter the provider name for the requested report");
-      if(dc->providerReport(name)) {
+      nameID = getString("Enter the provider ID for the requested report");
+      if(dc->providerReport(nameID)) {
         cout << "Provider report written." << endl;
       } else {
         cout << "Didn't find provider, no report written." << endl;
