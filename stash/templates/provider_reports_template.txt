@@ -1,6 +1,7 @@
 // Name of file: providerLastName_firstName_MMDDYYYY.txt
 Provider name: $(providerName)
 Provider number: $(providerNum)
+Provider phone: $(providerPhone)
 $(Provider street address)
 $(Provider city), $(state), $(zip)
 
