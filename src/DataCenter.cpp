@@ -156,11 +156,11 @@ DataCenter::~DataCenter() {
 }
 
 
-bool DataCenter::confirmConsultation(string memberName, string providerName, string serviceCode) {
+bool DataCenter::confirmConsultation(string memberName, string providerID, string serviceCode) {
   try{
     //get the member, provider, and service
     Member &m = memberMap.at(memberName);
-    Provider &p = providerMap.at(providerName);
+    Provider &p = providerMap.at(providerID);
     Service &s = serviceMap.at(serviceCode);
 
     //create consultaton for reporting
@@ -204,7 +204,6 @@ void DataCenter::printServiceList() {
       cout.fill('0');
       cout << x->second.serviceCode << " - " << x->second.serviceName << " $" << x->second.fee << endl;
   }
-    cout << "\n\n";
 }
 
 void DataCenter::printProviders() {

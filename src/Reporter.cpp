@@ -216,7 +216,7 @@ void DataCenter::managerReport() {
 // Refer back to the design document, section 4.6, page 13 -Yves
 void DataCenter::eftReport() {
     ofstream outFile;
-    outFile.open("EFT.txt");
+    outFile.open("../EFT.txt");
     
     // Check that the file is opened
     if (!outFile.is_open())
