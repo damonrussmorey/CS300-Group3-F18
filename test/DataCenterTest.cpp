@@ -3,7 +3,9 @@ Damon Morey, Philip Prater, Samuel Shippey, Son Vu, Yves Wienecke 2018©
 DataCenterTest.cpp
 */
 
-#include "../include/DataCenter.h"
+
+//#include "DataCenter.h"
+#include "DataCenter.cpp"
 #include <iostream>
 #include <gtest/gtest.h>
 /*"lib/googletest-master/googletest/include/gtest/"*/
@@ -17,6 +19,109 @@ DataCenterTest.cpp
 
 //**Not sure what in this is 'Re-sharper' and what is google test**
 //**need to fix**
+
+
+TEST(AddressTest, AddressSetting)
+{
+	string street_ad("12345 SprucePineMaine St.");
+	string city("Portlandialand");
+	string state("OR");
+	string zip("98765");
+
+	address ad;
+	ad.streetAddress = street_ad;
+	ad.city = city;
+	ad.state = state;
+	ad.zip = zip;
+	
+	EXPECT_TRUE(street_ad == ad.streetAddress);
+	EXPECT_TRUE(city == ad.city);
+	EXPECT_TRUE(state == ad.state);
+	EXPECT_TRUE(zip == ad.zip);
+}
+
+TEST(MemberTest, MemberConstruction)
+{
+	string n("Bob");
+	string num ("123456789");
+	string phn ("503-867-5309");
+	string street_ad("12345 SprucePineMaine St.");
+	string city("Portlandialand");
+	string state("OR");
+	string zip("98765");
+
+	address ad;
+	ad.streetAddress = street_ad;
+	ad.city = city;
+	ad.state = state;
+	ad.zip = zip;
+
+	Member to_add(n, num, phn, ad);
+
+	EXPECT_TRUE(n == to_add.name);
+	EXPECT_TRUE(num == to_add.memberNumber);
+	EXPECT_TRUE(phn == to_add.phoneNumber);
+	EXPECT_TRUE(street_ad == to_add.fullAddress.streetAddress);
+	EXPECT_TRUE(city == to_add.fullAddress.city);
+	EXPECT_TRUE(state == to_add.fullAddress.state);
+	EXPECT_TRUE(zip == to_add.fullAddress.zip);
+}
+
+
+struct DataCenterTest : testing::Test
+{
+	DataCenter* dc;
+	DataCenterTest()
+	{
+		dc = new DataCenter;
+	}
+
+	~DataCenterTest()
+	{
+		delete dc;
+	}
+};
+
+
+TEST_F(DataCenterTest, confirmConsultBad)
+{
+	string mem = "Chris Gilmore";
+	string prov = "Dr. Nick";
+	string serv_code = "549567";
+
+	EXPECT_FALSE(dc->confirmConsultation(mem, prov, serv_code));
+}
+
+TEST_F(DataCenterTest, confirmConsultGood)
+{
+	string mem = "Chris Gilmore";
+	string prov = "Chris Grimjack";
+	string serv_code = "549567";
+
+	EXPECT_TRUE(dc->confirmConsultation(mem, prov, serv_code));
+}
+
+/*
+TEST_F(DataCenterTest, addService)
+{
+	dc.
+}
+
+TEST_F(DataCenterTest, addService)
+{
+	dc.
+}
+
+TEST_F(DataCenterTest, addService)
+{
+	dc.
+}
+
+TEST_F(DataCenterTest, addService)
+{
+	dc.
+}
+*/
 
 /*
 struct AddressTest : testing::Test
@@ -54,154 +159,6 @@ TEST(AddressTest, SetValuesTest)
 	//EXPECT_TRUE(dum_add->zip == d_zip);
 }
 
-/*
-struct EmptyMemberTest : testing::Test
-{
-	Member* e_mem;t
-
-	EmptyMemberTest()
-	{
-		e_mem = new Member(NULL, NULL, NULL);
-	}
-
-	EmptyMemberTest()
-	{
-		delete e_mem;
-	}
-};
-
-TEST_F(MemberTest, EmptyMember)
-{
-	EXPECT_EQ(e_mem->name, nullptr);
-	EXPECT_EQ(e_mem->phoneNumber, nullptr);
-	EXPECT_EQ(e_mem->fullAddress, nullptr);
-	EXPECT_EQ(e_mem->servicesList, nullptr);
-}
-*/
-
-/*
-struct MemberTest :testing::Test
-{
-	Member* mem;
-	string dum_name;
-	string dum_phone;
-	address dum_address;
-
-	MemberTest()
-	{
-		mem = new Member(dum_name, dum_phone, dum_address);
-	}
-
-	~MemberTest()
-	{
-		delete mem;
-	}
-};
-
-
-
-TEST_F(MemberTest, Happy)
-{
-	EXPECT_EQ(mem->name
-}
-
-TEST_F(MemberTest, NameBig)
-{
-}
-
-TEST_F(MemberTest, PhoneBig)
-{
-}
-*/
-
-/*
-struct DataCenterTest : testing::Test
-{
-	DataCenter* fake;
-	//Member* fake_mem;
-	//Priovider* dr.nick;
-	//Service* fake_serv;
-	//EFT* fake_mon;
-
-	DataCenterTest()
-	{
-		fake = new DataCenter;
-		//fake_mem = new Member;
-		//dr.nick = new Provider;
-		//fake_serv = new Service;
-		//fake_mon = new EFT;
-	}
-
-	virtual ~DataCenterTest()
-	{
-		delete fake;
-		//delete fake_mem;
-		//delete dr.nick;
-		//delete fake_serv;
-		//delete fake_mon;
-	}
-		
-};
-
-TEST_F(DataCenterTest, EmptyCenter)
-{
-	EXPECT_EQ(0, fake->members);
-	EXPECT_EQ(0, fake->providers);
-	EXPECT_EQ(0, fake->providerDirectory);
-	EXPECT_EQ(0, fake->recordsEFT);
-}
-
-TEST_F(DataCenterTest, CanAddMem)
-{
-	//fake->addMem(fake_mem);
-	//EXPECT_EQ(fake_mem, fake->members);
-}
-
-TEST_F(DataCenterTest, CanAddProv)
-{
-	//fake->addProv(dr.nick);
-	//EXPECT_EQ(dr.nick, fake->dr.nick);
-}
-
-TEST_F(DataCenterTest, CanAddServ)
-{
-	//fake->addServ(fake_serv);
-	//EXPECT_EQ(fake_serv, fake->providerDirectory);
-}
-
-TEST_F(DataCenterTest, CanAddEFT)
-{
-	//fake->addEFT(fake_mon);
-	//EXPECT_EQ(fake_mon, fake->EFTdata);
-}
-*/
-
-/*
-struct dc_state
-{
-	Member fake_mem;
-	Provider fake_prov;
-	Service fake_serv;
-	EFT fake_cash;
-	bool success;
-};
-
-struct addDataTest : DataCenterTest, testing::withParameterInterface<dc_state>
-{
-	addDataTest()
-	{
-		fake->members = GetParam().fake_mem;
-	}
-};
-
-
-//set of different test cases we can use with parameterized tests (big feed list)
-INSTANTIATE_TEST_CASE_P(Default, addDataTest,
-		testing::Values(
-			dc_state{x,y,z,a,true}, //set we expect to work
-			dc_state{a,b,c,d,false} //set we expect to fail (good for testing classes like Member/Provider)
-		));
-*/
 
 int main(int argc, char* argv[])
 {
@@ -209,33 +166,4 @@ int main(int argc, char* argv[])
 	return RUN_ALL_TESTS();
 }
 
-/*
-bool addServiceTest() {
-	try {
-		Service dummyService;
-		Member dummyMember;
-		dummyMember.addService(dummyService);
-		// probably do real testing here this is just a skeleton
-		// is this an integration test or a unit test? Several classes involved.
-	}
-	catch (...) {
-		// pass/fail conditions here
-		cout << "addService test failed, reason unknown." << endl;
-		return false;
-	}
-	return true;
-}
 
-bool providerAddServiceTest() {
-	try {
-		Service dummyService;
-		Provider dummyProvider;
-		dummyProvider.addService(dummyService);
-	}
-	catch (...) {
-		cout << "addService test failed, reason unknown." << endl;
-		return false;
-	}
-	return true;
-}
-*/

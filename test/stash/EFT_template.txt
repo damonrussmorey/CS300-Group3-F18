@@ -1,0 +1,2 @@
+Provider 1 ID: Provider 1 total weekly fees
+Provider 2 ID: Provider 2 total weekly fees
