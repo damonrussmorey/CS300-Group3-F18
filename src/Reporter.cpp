@@ -44,7 +44,7 @@ void DataCenter::memberReport(const Member &member) {
   ofstream outFile;
   
  //open files to write report to
-  f.open(string("member_reports/") + dateString(NULL, '_') + "_" + member.name);
+  f.open(string("../member_reports/") + dateString(NULL, '_') + "_" + member.name);
 
   //preamble, member info
   f << "Member name: " << member.name << endl
@@ -85,7 +85,7 @@ void DataCenter::providerReport(const Provider &provider) {
   ofstream f;
   
   //open file to write report to
-  f.open(string("provider_reports/") + dateString(NULL, '_') + "_" + provider.name);
+  f.open(string("../provider_reports/") + dateString(NULL, '_') + "_" + provider.name);
   assert(f);
 
   //preamble, provider info
@@ -124,7 +124,7 @@ void DataCenter::managerReport() {
   double profit = membershipIncome - weeklyConsultationFees;
   
   //open file to write report to
-  f.open(string("manager_reports/") + dateString(NULL, '_'));
+  f.open(string("../manager_reports/") + dateString(NULL, '_'));
   assert(f);
   f.precision(2);
   f.fill('0');

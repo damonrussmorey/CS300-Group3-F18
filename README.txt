@@ -5,7 +5,12 @@ Document links:
   https://docs.google.com/document/d/1VVRtT8Bagtg6XWmBbnYXdioFyLTKA0IeCZ0oR9lsJ7I/edit?usp=sharing
   Design:
   https://docs.google.com/document/d/15J1Y1fHEFWMtBEzHijU7zVx3vwKrxRT6RjqQ1FPyXp0/edit?usp=sharing
+  Test:
+  https://docs.google.com/document/d/1jSgFzduvDiMJ-ywP_bxDs4WD1aTDJ83w8HVdXMtB--A/edit?usp=sharing
+  Presentation:
+  https://docs.google.com/presentation/d/1uvMDj10YuBkS1RQgOFaU9Ruf5H_6td8T-bgskhWYn6U/edit?usp=sharing
 
+ 
 ======= How to run ChocAn Program Demo =======
 
 ***In main project directory***
