@@ -49,7 +49,7 @@ class Service {
     public:
         Service();
         Service(string,string,double);
-        Service(const Service &, const Member*, const Provider*);
+        Service(const Service &, const Member*, const Provider*, string);
         ~Service();
         bool operator<(const Service & service) const;
         bool operator==(const Service & service) const;
@@ -73,7 +73,7 @@ class DataCenter {
 
         //ProviderTerminal calls this to submit a consultation
         //Could add more functions to confirm IDs, etc, along the way, but not really necessary
-        bool confirmConsultation(string, string, string);
+        bool confirmConsultation(string, string, string, string);
 
         void newWeek();
         void printServiceList();
@@ -99,10 +99,12 @@ class DataCenter {
         // TODO: untested
         bool hasService(string);
         bool hasMember(string);
-            bool memberStatus(string);
+        bool memberStatus(string);
         bool hasProvider(string);
-        void removeService(string);
         bool modifyService(string);
+        bool modifyMember(string);
+        bool modifyProvider(string);
+        void removeService(string);
         void removeMember(string);
         void removeProvider(string);
 

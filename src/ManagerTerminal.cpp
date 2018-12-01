@@ -75,7 +75,7 @@ void ManagerTerminal::run() {
         switch(getOption("1) Add Service\n"
                          "2) Remove Service\n"
                          "3) Display All services"
-                         /*"\n4) Modify Service"*/, 1, 3/*4*/)) {
+                         "\n4) Modify Service", 1, 4)) {
           case 1:
             addService();
             break;
@@ -85,9 +85,9 @@ void ManagerTerminal::run() {
         case 3:
             dc->printServiceList();
             break;
-          /*case 4:
+        case 4:
             modifyService();
-            break;*/
+            break;
           default:
             assert(true);
             break;
@@ -98,7 +98,7 @@ void ManagerTerminal::run() {
                          "2) Remove Member\n"
                          "3) Display All Memes"
 
-                         /*"\n4) Modify Member"*/, 1, 3 /*4*/)) {
+                         "\n4) Modify Member", 1, 4)) {
           case 1:
             addMember();
             break;
@@ -108,9 +108,9 @@ void ManagerTerminal::run() {
         case 3:
             dc->printMembers();
             break;
-          /*case 4:
+          case 4:
             modifyMember();
-            break;*/
+            break;
           default:
             assert(true);
             break;
@@ -120,7 +120,7 @@ void ManagerTerminal::run() {
         switch(getOption("1) Add Provider\n"
                          "2) Remove Provider\n"
                          "3) Display all Providers\n"
-                         /*"\n4) Modify Provider"*/, 1, 3/*4*/)) {
+                         "\n4) Modify Provider", 1, 4)) {
           case 1:
             addProvider();
             break;
@@ -130,9 +130,9 @@ void ManagerTerminal::run() {
         case 3:
             dc->printProviders();
             break;
-          /*case 4:
+        case 4:
             modifyProvider();
-            break;*/
+            break;
           default:
             assert(true);
             break;
@@ -191,20 +191,18 @@ void ManagerTerminal::removeMember(void) {
 		cout << "Member was not found in the system." << endl;
 	}
 }
-/*
-   void ManagerTerminal::modifyMember(void) {
-   string name;
-   name = getString("Enter full name of member to be modified");
-   if(dc->hasMember(name)) {
-//TODO figure out how to modify
-//I think we should probably be referencing Member objects directly
-//-Damon
-cout << "todo";
-} else {
-cout << "Member was not found in the system." << endl;
+
+void ManagerTerminal::modifyMember(void) {
+    string name;
+
+    name = getString("Enter full name of member to be modified");
+
+    if (dc->modifyMember(name)) {
+        cout << "Member updated!" << endl;
+    } else {
+        cout << "Member was not found in the system." << endl;
+    }
 }
-}
-*/
 
 //add new provider to Data Center through Manager terminal
 void ManagerTerminal::addProvider(void) {
@@ -249,19 +247,16 @@ void ManagerTerminal::removeProvider(void) {
 		cout << "Provider was not found in the system." << endl;
 	}
 }
-/*
-   void ManagerTerminal::modifyProvider(void) {
+
+void ManagerTerminal::modifyProvider(void) {
    string name;
-   name = getString("Enter name of provider to be modified");
-   if(dc->hasProvider(name)) {
-//TODO figure out how to modify
-//I think we should probably be referencing Provider objects directly
-//-Damon
-} else {
-cout << "Provider was not found in the system." << endl;
+   name = getString("Enter the 9 digit providerID to be modified");
+   if(dc->modifyProvider(name)) {
+       cout << "Provider modified!\n";
+   } else {
+       cout << "Provider was not found in the system." << endl;
+   }
 }
-}
-*/
 
 //add new service to service list in Data Center
 void ManagerTerminal::addService(void) {
@@ -293,19 +288,15 @@ void ManagerTerminal::removeService(void) {
 	}
 }
 
-/*
-   void ManagerTerminal::modifyService(void) {
-   string name;
-   name = getString("Enter name of service to be modified");
-   if(dc->hasService(name)) {
-//TODO figure out how to modify
-//I think we should probably be referencing Service objects directly
-//-Damon
-} else {
-cout << "Service was not found in the system." << endl;
+void ManagerTerminal::modifyService(void) {
+    string name;
+    name = getString("Enter name of service to be modified");
+    if(dc->modifyService(name)) {
+        cout << "Modified service!\n";
+    } else {
+        cout << "Service was not found in the system." << endl;
+    }
 }
-}
-*/
 
 //Request reports through manager terminal 
 void ManagerTerminal::requestReport(void) {

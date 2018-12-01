@@ -4,6 +4,12 @@ ProviderTerminal.cpp
 */
 
 #include "ProviderTerminal.h"
+
+//date format: MM-DD-YYYY
+static bool properDate(string date) {
+  int x;
+  return 3 == sscanf(date.c_str(), "%d-%d-%d", &x, &x, &x);
+}
     
 ProviderTerminal::ProviderTerminal(DataCenter * dc) {
     this->dc = dc;
@@ -13,6 +19,8 @@ void ProviderTerminal::run(void) {
 	string providerID;
 	string memberName;
 	string serviceCode;
+  string dateProvided;
+
     int attempts = 3;
     bool validatedProvider = false;   
     
@@ -23,7 +31,7 @@ void ProviderTerminal::run(void) {
     do
     {    
         --attempts;
-        providerID = getString("\nEnter provider ID: ");
+        providerID = getString("\nEnter provider ID");
         providerID.resize(9);
         providerID.shrink_to_fit();
 
@@ -43,7 +51,8 @@ void ProviderTerminal::run(void) {
 				 "4. Log off", 1, 4);
 		switch(choice){
 		case 1:
-			memberName = getString("Enter member name: ");
+      dc->printMembers();
+			memberName = getString("Enter member name");
 			if(!dc->hasMember(memberName)) {
 				cout << "Invalid member name.\n";
 				break;
@@ -54,13 +63,27 @@ void ProviderTerminal::run(void) {
 				break;
 			}
 				
+      dc->printServiceList();
 			do
 			{
 				serviceCode = getString("Enter service Code: ");
 				if(!dc->hasService(serviceCode)) cout << "Invalid service Code.\n";
 			} while (!dc->hasService(serviceCode));
 
-			dc->confirmConsultation(memberName, providerID, serviceCode);
+      do {
+        dateProvided = getString("Enter consultation date (MM-DD-YYYY)");
+        //confirm proper date formatting
+        if(properDate(dateProvided))
+          break;
+        cout << "Invalid date format." << endl;
+      } while(true);
+
+			if(dc->confirmConsultation(memberName, providerID, serviceCode, dateProvided)) {
+        cout << "Consultation successfully recorded with Data Center." << endl;
+      } else {
+        cout << "Error recording consultation with Data Center, try again later." << endl;
+      }
+
 			break;
 		case 2:
 			cout << "Generating provider report at normal directory..." << endl;
