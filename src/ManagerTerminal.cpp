@@ -182,10 +182,10 @@ void ManagerTerminal::addMember(void) {
 
 //remove member to Data Center through Manager terminal
 void ManagerTerminal::removeMember(void) { 
-    string name;
-	name = getString("Enter full name of member to be removed");
-	if(dc->hasMember(name)) {
-		dc->removeMember(name);
+    string id;
+	id = getString("Enter 9 digit ID of member to be removed");
+	if(dc->hasMember(id)) {
+		dc->removeMember(id);
 		cout << "Member successfully removed from the system." << endl;
 	} else {
 		cout << "Member was not found in the system." << endl;
@@ -193,11 +193,11 @@ void ManagerTerminal::removeMember(void) {
 }
 
 void ManagerTerminal::modifyMember(void) {
-    string name;
+    string id;
 
-    name = getString("Enter full name of member to be modified");
+    id = getString("Enter full id of member to be modified");
 
-    if (dc->modifyMember(name)) {
+    if (dc->modifyMember(id)) {
         cout << "Member updated!" << endl;
     } else {
         cout << "Member was not found in the system." << endl;

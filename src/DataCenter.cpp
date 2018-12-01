@@ -167,10 +167,10 @@ DataCenter::~DataCenter() {
 }
 
 
-bool DataCenter::confirmConsultation(string memberName, string providerID, string serviceCode) {
+bool DataCenter::confirmConsultation(string memberID, string providerID, string serviceCode) {
   try{
     //get the member, provider, and service
-    Member &m = memberMap.at(memberName);
+    Member &m = memberMap.at(memberID);
     Provider &p = providerMap.at(providerID);
     Service &s = serviceMap.at(serviceCode);
 
@@ -351,7 +351,7 @@ bool DataCenter::loadReports(string fileName) {
     Member * member;
     Service service;
 
-    string providerID, memberName, serviceCode;
+    string providerID, memberID, serviceCode;
     string dateProvided, dateEntered;
 
     inFile.open(fileName);
@@ -361,14 +361,14 @@ bool DataCenter::loadReports(string fileName) {
     
     // Read in reports from file
     while (!getline(inFile, providerID, ';').eof()) {
-        getline(inFile, memberName, ';');
+        getline(inFile, memberID, ';');
         getline(inFile, serviceCode, ';');
         getline(inFile, dateProvided, ';');
         getline(inFile, dateEntered);
 
         // Point to references of read in provider, member, service
         provider = &providerMap.at(providerID);
-        member = &memberMap.at(memberName);
+        member = &memberMap.at(memberID);
 
         service = Service(serviceMap.at(serviceCode));
         service.member = member;
@@ -443,7 +443,7 @@ bool DataCenter::saveReports(string fileName) {
     if (!outFile.is_open())
         return false; 
     
-    // provider id;member name;service code;dateProvided;dateEntered
+    // provider id;member id;service code;dateProvided;dateEntered
     int size = 0;
     Provider currProv;
     Service currServ;
@@ -453,7 +453,7 @@ bool DataCenter::saveReports(string fileName) {
         // Write to disk all rendered services by this provider
         for (int i = 0; i < size; ++i) {
             currServ= currProv.weeklyConsultations[i];
-            outFile << currProv.memberNumber << ";" << currServ.member->name << ";" 
+            outFile << currProv.memberNumber << ";" << currServ.member->memberNumber << ";" 
             << currServ.serviceCode << ";" << currServ.dateProvided << ";" << currServ.dateEntered << endl;
         }
     }
@@ -469,7 +469,7 @@ void DataCenter::addProvider(Provider & provider) {
 
 //add new member to provider
 void DataCenter::addMember(Member & member) {
-	memberMap[member.name] = member;
+	memberMap[member.memberNumber] = member;
   if(member.status)
     ++activeMemberCount;
 }
@@ -485,14 +485,14 @@ void DataCenter::removeProvider(string providerID) {
 }
 
 //remove member from Data Center
-void DataCenter::removeMember(string memberName) {
+void DataCenter::removeMember(string memberID) {
   try {
-    if(memberMap.at(memberName).status)
+    if(memberMap.at(memberID).status)
       --activeMemberCount;
   } catch(const out_of_range &e) {
     return;
   }
-  memberMap.erase(memberName);
+  memberMap.erase(memberID);
 }
 
     
@@ -678,9 +678,9 @@ bool DataCenter::hasService(string serviceCode) {
 }
 
 //check if data center has member in data center
-bool DataCenter::hasMember(string memberName) {
+bool DataCenter::hasMember(string memberID) {
   try {
-    memberMap.at(memberName);
+    memberMap.at(memberID);
     return true;
   } catch(const out_of_range &e) {
     return false;
@@ -689,9 +689,9 @@ bool DataCenter::hasMember(string memberName) {
 
 
 //check member status
-bool DataCenter::memberStatus(string memberName) {
-	if(hasMember(memberName)) {
-		return memberMap.at(memberName).status ? true : false;
+bool DataCenter::memberStatus(string memberID) {
+	if(hasMember(memberID)) {
+		return memberMap.at(memberID).status ? true : false;
 	}
 	return false;
 }
