@@ -69,7 +69,6 @@ Service::Service(string code, string name, double f) {
 	fee = f;
 	provider = NULL;
 	member = NULL;
-	date = NULL;
 }
 
 // Service constructor for members and providers
@@ -79,9 +78,11 @@ Service::Service(const Service &s, const Member *m, const Provider *p) {
     serviceName = s.serviceName;
 	provider = p;
 	member = m;
-	time_t t;
+    dateEntered = s.dateEntered;
+    dateProvided = s.dateProvided;
+	/*time_t t;
 	time(&t);
-	date = localtime(&t);
+	date = localtime(&t);*/
 }
 
 Service::Service(){}
@@ -108,8 +109,7 @@ DataCenter::DataCenter() {
         cout << "Failed to load providers from disk\n";
     }
 
-    // TODO
-    if (loadReports("")) {
+    if (loadReports(REPORTS)) {
         cout << "Successfully loaded reports from disk\n";
     } else {
         cout << "Failed to load reports from disk\n";
@@ -148,14 +148,18 @@ DataCenter::~DataCenter() {
         cout << "Failed to save providers from disk\n";
     }
     
-    // TODO
-    if (saveReports("")) {
+    if (saveReports(REPORTS)) {
         cout << "Successfully saved reports from disk\n";
     } else {
         cout << "Failed to save reports from disk\n";
     }
 }
 
+//Additions for Testing
+int DataCenter::giveMemCount(){
+	return activeMemberCount;
+}
+//End of Additions
 
 bool DataCenter::confirmConsultation(string memberName, string providerName, string serviceCode) {
   try{
@@ -274,8 +278,6 @@ bool DataCenter::loadMembers(string fileName) {
     string name, number, phone;
     address ad;
 
-    // Setting max size for strings
-
     inFile.open(fileName);
     if (!inFile.is_open())
         return false;
@@ -308,8 +310,6 @@ bool DataCenter::loadProviders(string fileName) {
     string name, number, phone, fees;
     address ad;
 
-    // Setting max size for strings
-
     inFile.open(fileName);
     if (!inFile.is_open())
         return false;
@@ -339,7 +339,43 @@ bool DataCenter::loadProviders(string fileName) {
 }
 
 bool DataCenter::loadReports(string fileName) {
-    // TODO
+    ifstream inFile;  
+    
+    // Temporary variables to read from file
+    Provider * provider;
+    Member * member;
+    Service service;
+
+    string providerID, memberName, serviceCode;
+    string dateProvided, dateEntered;
+
+    inFile.open(fileName);
+    if (!inFile.is_open()) {
+        return false;
+    }
+    
+    // Read in reports from file
+    while (!getline(inFile, providerID, ';').eof()) {
+        getline(inFile, memberName, ';');
+        getline(inFile, serviceCode, ';');
+        getline(inFile, dateProvided, ';');
+        getline(inFile, dateEntered);
+
+        // Point to references of read in provider, member, service
+        provider = &providerMap.at(providerID);
+        member = &memberMap.at(memberName);
+
+        service = Service(serviceMap.at(serviceCode));
+        service.member = member;
+        service.provider = provider;
+        service.dateProvided = dateProvided;
+        service.dateEntered = dateEntered; 
+        // Add service to provider and member
+        provider->consultation(service);
+        member->consultation(service); 
+    }
+
+    inFile.close();
     return true;
 }
 
@@ -397,7 +433,27 @@ bool DataCenter::saveProviders(string fileName) {
 }
 
 bool DataCenter::saveReports(string fileName) {
-    //TODO 
+    ofstream outFile(fileName);
+
+    if (!outFile.is_open())
+        return false; 
+    
+    // provider id;member name;service code;dateProvided;dateEntered
+    int size = 0;
+    Provider currProv;
+    Service currServ;
+    for(auto x = providerMap.begin(); x != providerMap.end(); ++x) { 
+        currProv = x->second;
+        size = currProv.weeklyConsultations.size();
+        // Write to disk all rendered services by this provider
+        for (int i = 0; i < size; ++i) {
+            currServ= currProv.weeklyConsultations[i];
+            outFile << currProv.memberNumber << ";" << currServ.member->name << ";" 
+            << currServ.serviceCode << ";" << currServ.dateProvided << ";" << currServ.dateEntered << endl;
+        }
+    }
+    
+    outFile.close();
     return true;
 }
 

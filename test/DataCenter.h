@@ -61,8 +61,9 @@ class Service {
         const Member *member;
         string serviceCode;
         string serviceName;
+        string dateEntered;
+        string dateProvided;
         double fee;
-        tm *date;
 };
 
 class DataCenter {
@@ -70,6 +71,10 @@ class DataCenter {
         DataCenter();
         ~DataCenter();
 
+	//Additions for testing
+	int giveMemCount();
+	//End of Additions for testing
+	
         //ProviderTerminal calls this to submit a consultation
         //Could add more functions to confirm IDs, etc, along the way, but not really necessary
         bool confirmConsultation(string, string, string);
@@ -89,7 +94,7 @@ class DataCenter {
         bool saveServices(string);
         bool saveMembers(string);
         bool saveProviders(string);
-        bool saveReports(string); //TODO
+        bool saveReports(string); 
         
         //Data management
         void addService(Service & service);

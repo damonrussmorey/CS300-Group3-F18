@@ -21,9 +21,11 @@ DataCenterTest.cpp
 //**need to fix**
 
 
+//test that we can set an address
+//necessary for next test
 TEST(AddressTest, AddressSetting)
 {
-	string street_ad("12345 SprucePineMaine St.");
+	string street_ad("12345 MapleSprucePine St.");
 	string city("Portlandialand");
 	string state("OR");
 	string zip("98765");
@@ -40,6 +42,7 @@ TEST(AddressTest, AddressSetting)
 	EXPECT_TRUE(zip == ad.zip);
 }
 
+//test that we can construct a member with simulated entry
 TEST(MemberTest, MemberConstruction)
 {
 	string n("Bob");
@@ -67,7 +70,7 @@ TEST(MemberTest, MemberConstruction)
 	EXPECT_TRUE(zip == to_add.fullAddress.zip);
 }
 
-
+//testing fixture (constructor for a test if you're gonna be testing a class or struct repeatedly)
 struct DataCenterTest : testing::Test
 {
 	DataCenter* dc;
@@ -83,30 +86,62 @@ struct DataCenterTest : testing::Test
 };
 
 
+//test confirmConsult() rejects bad entries
 TEST_F(DataCenterTest, confirmConsultBad)
 {
 	string mem = "Chris Gilmore";
-	string prov = "Dr. Nick";
+	string prov = "Dr. Nick";  //searching by a name, not an ID
 	string serv_code = "549567";
 
 	EXPECT_FALSE(dc->confirmConsultation(mem, prov, serv_code));
 }
 
+//test confirmConsult() accepts good entries
 TEST_F(DataCenterTest, confirmConsultGood)
 {
 	string mem = "Chris Gilmore";
-	string prov = "Chris Grimjack";
+	string prov = "111111111";
 	string serv_code = "549567";
 
 	EXPECT_TRUE(dc->confirmConsultation(mem, prov, serv_code));
 }
 
-/*
-TEST_F(DataCenterTest, addService)
+TEST_F(DataCenterTest, MemberSearch)
 {
-	dc.
+	EXPECT_TRUE(dc->hasMember("Chris Gilmore"));
+	EXPECT_FALSE(dc->hasMember("Det. Pikachu"));
 }
 
+TEST_F(DataCenterTest, AddAndRemoveMember)
+{
+	string n("Bob");
+	string num ("123456789");
+	string phn ("503-867-5309");
+	string street_ad("12345 SprucePineMaine St.");
+	string city("Portlandialand");
+	string state("OR");
+	string zip("98765");
+
+	address ad;
+	ad.streetAddress = street_ad;
+	ad.city = city;
+	ad.state = state;
+	ad.zip = zip;
+
+	Member to_add(n, num, phn, ad);
+
+	int mem_count = dc->giveMemCount();
+
+	dc->addMember(to_add);
+	++mem_count;
+	EXPECT_EQ(mem_count, dc->giveMemCount());
+
+	dc->removeMember("Bob");
+	--mem_count;
+	EXPECT_EQ(mem_count, dc->giveMemCount());
+}
+
+/*
 TEST_F(DataCenterTest, addService)
 {
 	dc.
@@ -140,6 +175,7 @@ struct AddressTest : testing::Test
 };
 */
 
+/*
 TEST(AddressTest, SetValuesTest)
 {
 	//struct address dum_add = new address;
@@ -158,6 +194,7 @@ TEST(AddressTest, SetValuesTest)
 	//EXPECT_TRUE(dum_add->state == d_state);
 	//EXPECT_TRUE(dum_add->zip == d_zip);
 }
+*/
 
 
 int main(int argc, char* argv[])
